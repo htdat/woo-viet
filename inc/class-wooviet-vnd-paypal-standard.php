@@ -30,9 +30,10 @@ class WooViet_VND_Paypal_Standard {
 	 *
 	 * @param int $exchange_rate_to_vnd
 	 */
-	public function __construct( $exchange_rate_to_vnd = 22770 ) {
+	public function __construct( $exchange_rate_to_vnd = 22770, $paypal_currency ) {
 
-		$this->exchange_rate_to_vnd = $exchange_rate_to_vnd;
+		$this->exchange_rate_to_vnd = (int) $exchange_rate_to_vnd;
+		$this->paypal_currency = $paypal_currency;
 
 		// Add VND to the Paypal supported currencies
 		add_filter( 'woocommerce_paypal_supported_currencies', array( $this, 'add_vnd_paypal_valid_currency' ) );
