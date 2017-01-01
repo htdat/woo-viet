@@ -32,12 +32,9 @@ new WooViet();
  */
 class WooViet {
 
-	protected $Provinces;
-	protected $Currency;
-	protected $VND_Paypal_Standard;
-
-	// protected $settings;
-
+	/**
+	 * @var array The default settings for the whole plugin
+	 */
 	static $default_settings = array(
 		'add_province'           =>
 			array(
@@ -60,6 +57,17 @@ class WooViet {
 				'rate'     => '22770',
 			),
 	);
+	/**
+	 * The properties to manage all classes under the "inc/" folder
+	 * Example:
+	 * - File name: class-wooviet-provinces.php
+	 * - Class Name: \WooViet_Provinces
+	 * - Method Name: WooViet->Provinces
+	 */
+	protected $Provinces;
+	protected $Currency;
+	protected $VND_Paypal_Standard;
+	protected $Admin_Page;
 
 	/**
 	 * Setup class.
@@ -75,9 +83,9 @@ class WooViet {
 	public function init() {
 
 		if ( is_admin() ) {
-			// @todo: Add the admin setting page
+			// Add the admin setting page
 			include( WOO_VIET_DIR . 'inc/class-wooviet-admin-page.php' );
-			new WooViet_Admin_Page();
+			$this->Admin_Page = new WooViet_Admin_Page();
 
 		}
 
@@ -115,16 +123,19 @@ class WooViet {
 	}
 
 	/**
+	 * The wrapper method to get the settings of the plugin
+	 * @return array
+	 */
+	static function get_settings() {
+		return get_option( 'woocommerce-for-vietnam', self::$default_settings );
+	}
+
+	/**
 	 * Localize the plugin
 	 * @since 1.0
 	 */
 	public function i18n() {
 		load_plugin_textdomain( 'freshfunbits', false, basename( dirname( __FILE__ ) ) . '/languages/' );
-	}
-
-	static function get_settings() {
-
-		return get_option( 'woocommerce-for-vietnam', self::$default_settings );
 	}
 
 }
