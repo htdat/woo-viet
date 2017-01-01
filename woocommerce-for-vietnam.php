@@ -81,11 +81,11 @@ class WooViet {
 	/**
 	 * Throw a notice if WooCommerce is NOT active
 	 */
-	public function notice_if_not_woocommerce(){
+	public function notice_if_not_woocommerce() {
 		$class = 'notice notice-error';
 
-		$message =  __( 'WooCommerce for Vietnam is not running because WooCommerce is not active. Please activate both plugins',
-				'woocommerce-for-vietnam' );
+		$message = __( 'WooCommerce for Vietnam is not running because WooCommerce is not active. Please activate both plugins',
+			'woocommerce-for-vietnam' );
 
 		printf( '<div class="%1$s"><p><strong>%2$s</strong></p></div>', $class, $message );
 	}
@@ -93,7 +93,7 @@ class WooViet {
 	/**
 	 * Run this method under the "init" action
 	 */
-	public function init(){
+	public function init() {
 
 		// Load the localization feature
 		$this->i18n();
@@ -103,8 +103,16 @@ class WooViet {
 			$this->main();
 		} else {
 			// Throw a notice if WooCommerce is NOT active
-			add_action( 'admin_notices', array($this, 'notice_if_not_woocommerce') );
+			add_action( 'admin_notices', array( $this, 'notice_if_not_woocommerce' ) );
 		}
+	}
+
+	/**
+	 * Localize the plugin
+	 * @since 1.0
+	 */
+	public function i18n() {
+		load_plugin_textdomain( 'freshfunbits', false, basename( dirname( __FILE__ ) ) . '/languages/' );
 	}
 
 	/**
@@ -158,14 +166,6 @@ class WooViet {
 	 */
 	static function get_settings() {
 		return get_option( 'woocommerce-for-vietnam', self::$default_settings );
-	}
-
-	/**
-	 * Localize the plugin
-	 * @since 1.0
-	 */
-	public function i18n() {
-		load_plugin_textdomain( 'freshfunbits', false, basename( dirname( __FILE__ ) ) . '/languages/' );
 	}
 
 }
