@@ -66,7 +66,7 @@ class WooViet {
 	 */
 	protected $Provinces;
 	protected $Currency;
-	protected $VND_Paypal_Standard;
+	protected $VND_PayPal_Standard;
 	protected $Admin_Page;
 
 	/**
@@ -149,10 +149,10 @@ class WooViet {
 		}
 
 
-		// Check if "Support VND for the Paypal Standard gateway" is enabled
+		// Check if "Support VND for the PayPal Standard gateway" is enabled
 		if ( 'yes' == $settings['vnd_paypal_standard']['enabled'] ) {
 			include( WOO_VIET_DIR . 'inc/class-wooviet-vnd-paypal-standard.php' );
-			$this->VND_Paypal_Standard = new WooViet_VND_Paypal_Standard(
+			$this->VND_PayPal_Standard = new WooViet_VND_PayPal_Standard(
 				$settings['vnd_paypal_standard']['rate'],
 				$settings['vnd_paypal_standard']['currency']
 			);

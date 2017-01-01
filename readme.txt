@@ -21,7 +21,7 @@ Add features to WooCommerce stores having anything related to Vietnam: currency,
 * Change the VND currency symbol `đ` to anything, e.g: `VND`, `VNĐ`, `đồng`, etc.
 * Add provinces for Vietnam when visitors select Vietanm as a country of the shipping (billing) address. This is not available in WooCommerce by default.
 * Convert `000` of prices to K (or anything). E.g: `50000` (VND) will be `50K` (VND), or `50 thousands` (VND).
-* Support `VND` for the [PayPal Standard gateway](https://docs.woocommerce.com/document/paypal-standard/). Convert `VND` prices to any PayPal supported currency before sending visitors to the PayPal pages.
+* Support `VND` for [the PayPal Standard gateway](https://docs.woocommerce.com/document/paypal-standard/). Convert `VND` prices to any PayPal supported currency before sending visitors to the PayPal pages.
 
 **Road Map**
 

@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * The class to add the support for VND when using the Paypal Standard gateway
+ * The class to add the support for VND when using the PayPal Standard gateway
  *
  * @see https://docs.woocommerce.com/document/paypal-standard/
  *
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @since    1.0
  *
  */
-class WooViet_VND_Paypal_Standard {
+class WooViet_VND_PayPal_Standard {
 
 	/**
 	 * @var int
@@ -26,7 +26,7 @@ class WooViet_VND_Paypal_Standard {
 	protected $paypal_currency = 'USD';
 
 	/**
-	 * WooViet_VND_Paypal_Standard constructor.
+	 * WooViet_VND_PayPal_Standard constructor.
 	 *
 	 * @param int $exchange_rate_to_vnd
 	 */
@@ -35,13 +35,13 @@ class WooViet_VND_Paypal_Standard {
 		$this->exchange_rate_to_vnd = (int) $exchange_rate_to_vnd;
 		$this->paypal_currency      = $paypal_currency;
 
-		// Add VND to the Paypal supported currencies
+		// Add VND to the PayPal supported currencies
 		add_filter( 'woocommerce_paypal_supported_currencies', array( $this, 'add_vnd_paypal_valid_currency' ) );
 
-		// Covert VND prices to the selected currency (by default, it's USD) prices before checking out with Paypal Standard
+		// Covert VND prices to the selected currency (by default, it's USD) prices before checking out with PayPal Standard
 		add_filter( 'woocommerce_paypal_args', array( $this, 'convert_prices' ), 11 );
 
-		// Add the exchange rate info for this gateway in the checkout page before proceeding in the Paypal pages
+		// Add the exchange rate info for this gateway in the checkout page before proceeding in the PayPal pages
 		add_filter( 'option_woocommerce_paypal_settings', array( $this, 'add_exchange_rate_info' ), 11 );
 	}
 
@@ -97,7 +97,7 @@ class WooViet_VND_Paypal_Standard {
 
 			$value['description'] .= '<br />';
 			$value['description'] .=
-				sprintf( __( 'The prices will be converted to %1$s in the Paypal pages with the exchange rate %2$s.', 'woocommerce-for-vietnam' ),
+				sprintf( __( 'The prices will be converted to %1$s in the PayPal pages with the exchange rate %2$s.', 'woocommerce-for-vietnam' ),
 					"<span style='color:red'> $this->paypal_currency</span>",
 					"<span style='color:red'> $this->paypal_currency / VND = $this->exchange_rate_to_vnd</span>"
 				);

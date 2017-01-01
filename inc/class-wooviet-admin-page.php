@@ -136,7 +136,7 @@ class WooViet_Admin_Page {
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row"><?php printf( __( 'Support VND for <a href="%s">the Paypal Standard gateway</a>', 'woocommerce-for-vietnam' ), 'https://docs.woocommerce.com/document/paypal-standard/' ) ?></th>
+                        <th scope="row"><?php printf( __( 'Support VND for <a href="%s">the PayPal Standard gateway</a>', 'woocommerce-for-vietnam' ), 'https://docs.woocommerce.com/document/paypal-standard/' ) ?></th>
                         <td>
                             <input name="settings[vnd_paypal_standard][enabled]" type="hidden" value="no">
                             <input name="settings[vnd_paypal_standard][enabled]" type="checkbox"
@@ -188,7 +188,7 @@ class WooViet_Admin_Page {
 									}
 									?>
                                 </select>
-                                <label for="vnd_paypal_standard_currency"><?php _e( 'Select a Paypal supported currency (like USD, EUR, etc), which is used to convert VND prices', 'woocommerce-for-vietnam' ) ?></label>
+                                <label for="vnd_paypal_standard_currency"><?php _e( 'Select a PayPal supported currency (like USD, EUR, etc), which is used to convert VND prices', 'woocommerce-for-vietnam' ) ?></label>
                                 <br/>
                                 <br/>
 
