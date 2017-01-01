@@ -1,13 +1,13 @@
 <?php
 /**
- * Plugin Name: WooCommerce for Vietnam by htdat
- * Plugin URI: https://github.com/htdat
+ * Plugin Name: WooCommerce for Vietnam
+ * Plugin URI: https://github.com/htdat/woocommerce-for-vietnam
  * Description: This plugin provides features and integrations specifically for Vietnam.
  * Author: htdat
  * Author URI: https://profiles.wordpress.org/htdat
  * Text Domain: woocommerce-for-vietnam
  * Domain Path: /languages
- * Version: 1.0-dev
+ * Version: 1.0
  * License:     GPLv2+
  */
 
