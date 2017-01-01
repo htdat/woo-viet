@@ -75,12 +75,42 @@ class WooViet {
 	 * @since 1.0
 	 */
 	public function __construct() {
-		add_action( 'init', array( $this, 'i18n' ) );
 		add_action( 'init', array( $this, 'init' ) );
-
 	}
 
-	public function init() {
+	/**
+	 * Throw a notice if WooCommerce is NOT active
+	 */
+	public function notice_if_not_woocommerce(){
+		$class = 'notice notice-error';
+
+		$message =  __( 'WooCommerce for Vietnam is not running because WooCommerce is not active. Please activate both plugins',
+				'woocommerce-for-vietnam' );
+
+		printf( '<div class="%1$s"><p><strong>%2$s</strong></p></div>', $class, $message );
+	}
+
+	/**
+	 * Run this method under the "init" action
+	 */
+	public function init(){
+
+		// Load the localization feature
+		$this->i18n();
+
+		if ( class_exists( 'WooCommerce' ) ) {
+			// Run this plugin normally if WooCommerce is active
+			$this->main();
+		} else {
+			// Throw a notice if WooCommerce is NOT active
+			add_action( 'admin_notices', array($this, 'notice_if_not_woocommerce') );
+		}
+	}
+
+	/**
+	 * The main method to load the components
+	 */
+	public function main() {
 
 		if ( is_admin() ) {
 			// Add the admin setting page
