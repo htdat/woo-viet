@@ -90,5 +90,11 @@ Follow these steps to install and use the plugin:
 
 == Changelog ==
 
+= 1.1 =
+* Replace all “WooCommerce for Vietnam” to “Woo Viet”
+* Replace all “woocomerce-fo-vietnam” to “woo-viet”
+* Re-upload to WordPress.org
+
 = 1.0 =
 * First release.
+* Upload to WordPress.org
