@@ -1,11 +1,11 @@
 <?php
 /**
- * Plugin Name: WooCommerce for Vietnam
- * Plugin URI: https://github.com/htdat/woocommerce-for-vietnam
+ * Plugin Name: Woo Viet
+ * Plugin URI: https://github.com/htdat/woo-viet
  * Description: This plugin provides features and integrations specifically for Vietnam.
  * Author: htdat
  * Author URI: https://profiles.wordpress.org/htdat
- * Text Domain: woocommerce-for-vietnam
+ * Text Domain: woo-viet
  * Domain Path: /languages
  * Version: 1.0
  * License:     GPLv2+
@@ -84,8 +84,8 @@ class WooViet {
 	public function notice_if_not_woocommerce() {
 		$class = 'notice notice-error';
 
-		$message = __( 'WooCommerce for Vietnam is not running because WooCommerce is not active. Please activate both plugins',
-			'woocommerce-for-vietnam' );
+		$message = __( 'Woo Viet is not running because WooCommerce is not active. Please activate both plugins',
+			'woo-viet' );
 
 		printf( '<div class="%1$s"><p><strong>%2$s</strong></p></div>', $class, $message );
 	}
@@ -165,7 +165,7 @@ class WooViet {
 	 * @return array
 	 */
 	static function get_settings() {
-		return get_option( 'woocommerce-for-vietnam', self::$default_settings );
+		return get_option( 'woo-viet', self::$default_settings );
 	}
 
 }

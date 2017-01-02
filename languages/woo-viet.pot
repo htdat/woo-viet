@@ -14,9 +14,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/"
 
-#: woocommerce-for-vietnam.php:87
+#: woo-viet.php:87
 msgid ""
-"WooCommerce for Vietnam is not running because WooCommerce is not active. "
+"Woo Viet is not running because WooCommerce is not active. "
 "Please activate both plugins"
 msgstr ""
 
@@ -328,7 +328,7 @@ msgid ""
 msgstr ""
 
 #. Name of the plugin
-msgid "WooCommerce for Vietnam"
+msgid "Woo Viet"
 msgstr ""
 
 #. Description of the plugin
@@ -337,7 +337,7 @@ msgid ""
 msgstr ""
 
 #. URI of the plugin
-msgid "https://github.com/htdat/woocommerce-for-vietnam"
+msgid "https://github.com/htdat/woo-viet"
 msgstr ""
 
 #. Author of the plugin
