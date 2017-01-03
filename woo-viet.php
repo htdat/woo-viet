@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Woo Viet
+ * Plugin Name: Woo Viet - WooCommerce for Vietnam
  * Plugin URI: https://github.com/htdat/woo-viet
  * Description: This plugin provides features and integrations specifically for Vietnam.
  * Author: htdat

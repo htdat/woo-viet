@@ -11,9 +11,9 @@ Add features to WooCommerce stores having anything related to Vietnam: currency,
 
 == Description ==
 
-**Woo Viet brings the features that help to run WooCommerce stores and customize them for Vietnam much easier.**
+**"Woo Viet - WooCommerce for Vietnam" brings the features that help to run WooCommerce stores and customize them for Vietnam much easier.**
 
-**Woo Viet đem đến các chức năng để  site WooCommerce có thể dễ dàng tuỳ biến cho thị trường Việt Nam.**
+**"Woo Viet - WooCommerce for Vietnam" đem đến các chức năng để  site WooCommerce có thể dễ dàng tuỳ biến cho thị trường Việt Nam.**
 
 
 = CHỨC NĂNG - FEATURES =
@@ -21,7 +21,7 @@ Add features to WooCommerce stores having anything related to Vietnam: currency,
 **(Tiếng Việt)**
 
 * Đổi ký hiệu ngôn ngữ của VND từ mặc định `đ` sang bất cứ thừ gì khác, ví dụ: `VND`, `VNĐ`, `đồng`, v.v.
-* Thêm tỉnh thành cho Việt Nam khi khách hiền điền địa chỉ nhận hàng hoặc nhận hoá đơn. Chức năng này không có ở trong WooCommerce mặc định.
+* Thêm tỉnh thành cho Việt Nam khi khách hàng điền địa chỉ nhận hàng hoặc nhận hoá đơn. Chức năng này không có ở trong WooCommerce mặc định.
 * Đổi các số `000` trong giá cả thành `K` (hoặc bất cứ từ nào khác). Ví dụ: `50000` (VND) thành `50K` (VND), hay `50 nghìn` (VND).
 * Hỗ trợ `VND` cho [cổng thanh toán PayPal Standard](https://docs.woocommerce.com/document/paypal-standard/). Chuyển đổi các giá `VND` sang bất kỳ loại tiền tệ nào mà PayPal hỗ trợ trước khi chuyển người dùng sang PayPal.
 
