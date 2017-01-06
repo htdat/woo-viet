@@ -59,7 +59,7 @@ class WooViet_Admin_Page {
 	public function register_submenu_page() {
 		add_submenu_page(
 			'woocommerce',
-			'Woo Viet Settings',
+			__( 'Woo Viet Settings', 'woo-viet' ),
 			'Woo Viet',
 			'manage_options',
 			'woo-viet',
