@@ -46,10 +46,10 @@ class WooViet_Provinces {
 	 * @return array
 	 */
 	public function edit_vn_locale( $array ) {
-		$array['VN']['state']['label']    = __( 'Province', 'woocommerce' );
+		$array['VN']['state']['label']    = __( 'Province', 'woo-viet' );
 		$array['VN']['state']['required'] = true;
 
-		$array['VN']['city']['label']      = __( 'District', 'woocommerce' );
+		$array['VN']['city']['label']      = __( 'District', 'woo-viet' );
 		$array['VN']['postcode']['hidden'] = true;
 
 		return $array;
