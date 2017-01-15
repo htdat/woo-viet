@@ -24,7 +24,7 @@ Xem phiên bản tiếng Việt tại đây https://vi.wordpress.org/plugins/woo
 
 = ROAD MAP =
 
-In the future, this plugin will be added more and more features for the Vietnam market:
+In the future, this plugin will add more and more features for the Vietnam market:
 
 * Integrate all districts to Vietnam provinces.
 * Integrate at least one solution for collecting money by phone cards.
