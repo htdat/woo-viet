@@ -1,12 +1,14 @@
 # Woo Viet - WooCommerce for Vietnam
 
-Contributors: htdat
-Tags: WooCommerce Vietnam, vietnam, vietnamese, vietnam provinces, paypal for vietnam dong, vnd, vietnam dong, vietnam currency, vietnam customization
-Requires at least: 4.3
-Tested up to: 4.7
-Stable tag: 1.2
-License: GPLv2 or later
-License URI: https://www.gnu.org/licenses/gpl-2.0.html
+| Name | Value |
+|:---|:---|
+| Contributors | htdat |
+|Tags| WooCommerce Vietnam, vietnam, vietnamese, vietnam provinces, paypal for vietnam dong, vnd, vietnam dong, vietnam currency, vietnam customization |
+| Requires at least | 4.3 |
+| Tested up to | 4.7 |
+| Stable tag | 1.2 |
+| License | GPLv2 or later |
+| License URI | https://www.gnu.org/licenses/gpl-2.0.html |
 
 Add features to WooCommerce stores having anything related to Vietnam: currency, shipping address, PayPal and more.
 
