@@ -116,7 +116,7 @@ class WooViet {
 	 * @since 1.0
 	 */
 	public function i18n() {
-		load_plugin_textdomain( 'freshfunbits', false, basename( dirname( __FILE__ ) ) . '/languages/' );
+		load_plugin_textdomain( 'woo-viet', false, basename( dirname( __FILE__ ) ) . '/languages/' );
 	}
 
 	/**
