@@ -7,7 +7,7 @@
  * Author URI: https://profiles.wordpress.org/htdat
  * Text Domain: woo-viet
  * Domain Path: /languages
- * Version: 1.2
+ * Version: 1.2-dev
  * License:     GPLv2+
  */
 
@@ -37,6 +37,10 @@ class WooViet {
 	 */
 	static $default_settings = array(
 		'add_province'           =>
+			array(
+				'enabled' => 'yes',
+			),
+		'add_city'           =>
 			array(
 				'enabled' => 'yes',
 			),
@@ -133,6 +137,12 @@ class WooViet {
 		if ( 'yes' == $settings['add_province']['enabled'] ) {
 			include( WOO_VIET_DIR . 'inc/class-wooviet-provinces.php' );
 			$this->Provinces = new WooViet_Provinces();
+
+			// Enable "Add cities for Vietnam" if the province option is selected.
+			if ( 'yes' == $settings['add_city']['enabled'] ) {
+				include( WOO_VIET_DIR . 'inc/class-wooviet-cities.php' );
+				new WooViet_Cities();
+			}
 		}
 
 		include( WOO_VIET_DIR . 'inc/class-wooviet-currency.php' );
@@ -165,7 +175,9 @@ class WooViet {
 	 * @return array
 	 */
 	static function get_settings() {
-		return get_option( 'woo-viet', self::$default_settings );
+		$settings = get_option( 'woo-viet', self::$default_settings );
+		$settings = wp_parse_args( $settings, self::$default_settings );
+		return $settings;
 	}
 
 }
