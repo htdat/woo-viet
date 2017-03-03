@@ -98,7 +98,18 @@ class WooViet_Admin_Page {
                             <label for="add_province"><?php _e( 'Enabled', 'woo-viet' ) ?></label>
                         </td>
                     </tr>
-
+                    <tr>
+                        <th scope="row"><?php _e( 'Add districts for Vietnam', 'woo-viet' ) ?><br />
+                            <i><?php _e( 'Require "Add provinces for Vietnam" active', 'woo-viet' ) ?></i>
+                        </th>
+                        <td>
+                            <input name="settings[add_city][enabled]" type="hidden" value="no">
+                            <input name="settings[add_city][enabled]" type="checkbox" id="add_city" value="yes"
+			                    <?php if ( 'yes' == $settings['add_city']['enabled'] )
+				                    echo 'checked="checked"' ?>>
+                            <label for="add_city"><?php _e( 'Enabled', 'woo-viet' ) ?></label>
+                        </td>
+                    </tr>
                     <tr>
                         <th scope="row"><?php _e( 'Change VND currency symbol', 'woo-viet' ) ?></th>
                         <td>

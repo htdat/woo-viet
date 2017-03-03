@@ -40,6 +40,10 @@ class WooViet {
 			array(
 				'enabled' => 'yes',
 			),
+		'add_city'           =>
+			array(
+				'enabled' => 'yes',
+			),
 		'change_currency_symbol' =>
 			array(
 				'enabled' => 'yes',
@@ -112,7 +116,7 @@ class WooViet {
 	 * @since 1.0
 	 */
 	public function i18n() {
-		load_plugin_textdomain( 'freshfunbits', false, basename( dirname( __FILE__ ) ) . '/languages/' );
+		load_plugin_textdomain( 'woo-viet', false, basename( dirname( __FILE__ ) ) . '/languages/' );
 	}
 
 	/**
@@ -133,6 +137,12 @@ class WooViet {
 		if ( 'yes' == $settings['add_province']['enabled'] ) {
 			include( WOO_VIET_DIR . 'inc/class-wooviet-provinces.php' );
 			$this->Provinces = new WooViet_Provinces();
+
+			// Enable "Add cities for Vietnam" if the province option is selected.
+			if ( 'yes' == $settings['add_city']['enabled'] ) {
+				include( WOO_VIET_DIR . 'inc/class-wooviet-cities.php' );
+				new WooViet_Cities();
+			}
 		}
 
 		include( WOO_VIET_DIR . 'inc/class-wooviet-currency.php' );
@@ -165,7 +175,9 @@ class WooViet {
 	 * @return array
 	 */
 	static function get_settings() {
-		return get_option( 'woo-viet', self::$default_settings );
+		$settings = get_option( 'woo-viet', self::$default_settings );
+		$settings = wp_parse_args( $settings, self::$default_settings );
+		return $settings;
 	}
 
 }
