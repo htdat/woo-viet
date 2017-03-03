@@ -99,7 +99,7 @@ class WooViet_Admin_Page {
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row"><?php _e( 'Add cities for Vietnam', 'woo-viet' ) ?><br />
+                        <th scope="row"><?php _e( 'Add districts for Vietnam', 'woo-viet' ) ?><br />
                             <i><?php _e( 'Require "Add provinces for Vietnam" active', 'woo-viet' ) ?></i>
                         </th>
                         <td>

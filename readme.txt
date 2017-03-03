@@ -2,7 +2,7 @@
 Contributors: htdat
 Tags: WooCommerce Vietnam, vietnam, vietnamese, vietnam provinces, paypal for vietnam dong, vnd, vietnam dong, vietnam currency, vietnam customization
 Requires at least: 4.3
-Tested up to: 4.7
+Tested up to: 4.7.2
 Stable tag: 1.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -19,6 +19,7 @@ Xem phiên bản tiếng Việt tại đây https://vi.wordpress.org/plugins/woo
 
 * Change the VND currency symbol `đ` to anything, e.g: `VND`, `VNĐ`, `đồng`, etc.
 * Add provinces for Vietnam when visitors select Vietnam as a country of the shipping (billing) address. This is not available in WooCommerce by default.
+* Add districts to Vietnam provinces.
 * Convert `000` of prices to `K` (or anything). E.g: `50000` (VND) will be `50K` (VND), or `50 thousand` (VND).
 * Support `VND` for [the PayPal Standard gateway](https://docs.woocommerce.com/document/paypal-standard/). Convert `VND` prices to any PayPal supported currency before sending visitors to the PayPal pages.
 
@@ -26,7 +27,7 @@ Xem phiên bản tiếng Việt tại đây https://vi.wordpress.org/plugins/woo
 
 In the future, this plugin will add more and more features for the Vietnam market:
 
-* Integrate all districts to Vietnam provinces.
+* Integrate all districts to Vietnam provinces. (available since 1.2)
 * Integrate at least one solution for collecting money by phone cards.
 * Integrate the Vietnam payment gateways like 1Pay, OnePay, BaoKim, Ngan Luong, etc.
 * Integrate the Vietnam shipping solutions like ShipChung, Giaohangnhanh, ViettelPost, etc.
@@ -69,6 +70,9 @@ Follow these steps to install and use the plugin:
 
 == Changelog ==
 
+= 1.2 - 2017.03.03 =
+* Integrate all districts to Vietnam provinces. Credits: [WC City Select by 8manos](https://github.com/8manos/wc-city-select) and [the Vietnam district data by 10h30](https://github.com/htdat/woo-viet/issues/4#issuecomment-277449462)
+
 = 1.1 =
 * Replace all “WooCommerce for Vietnam” to “Woo Viet”
 * Replace all “woocomerce-for-vietnam” to “woo-viet”
@@ -77,3 +81,8 @@ Follow these steps to install and use the plugin:
 = 1.0 =
 * First release.
 * Upload to WordPress.org
+
+== Upgrade Notice ==
+
+= 1.2 =
+The new version 1.2 comes with the feature "Add districts to Vietnam provinces".
