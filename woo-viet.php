@@ -119,10 +119,23 @@ class WooViet {
 		load_plugin_textdomain( 'woo-viet', false, basename( dirname( __FILE__ ) ) . '/languages/' );
 	}
 
+
+	public function add_gateway_class( $methods ) {
+		$methods[] = 'WooViet_OnePay_Domestic';
+		return $methods;
+
+	}
+
 	/**
 	 * The main method to load the components
 	 */
 	public function main() {
+
+		// @todo: ver 1.3 check this
+		add_filter( 'woocommerce_payment_gateways', array( $this, 'add_gateway_class' ) );
+
+		include( 'inc/class-wooviet-onepay-domestic.php');
+
 
 		if ( is_admin() ) {
 			// Add the admin setting page
