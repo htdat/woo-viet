@@ -19,11 +19,10 @@ class WooViet_OnePay_Domestic extends WC_Payment_Gateway {
 	 * Constructor for the gateway.
 	 */
 	public function __construct() {
-		$this->id                 = 'wooviet_onepay_domestic';
+		$this->id                 = strtolower(__CLASS__);
 		$this->has_fields         = false;
 		$this->order_button_text  = __( 'Proceed to OnePay', 'woo-viet' );
 		$this->method_title       = __( 'OnePay Domestic Gateway (by Woo Viet)', 'woo-viet' );
-		// @todo - check the method description
 		$this->method_description =  __( 'OnePay supports all major bank ATMs in Vietnam.', 'woo-viet' );
 		$this->supports           = array(
 			'products',
@@ -39,9 +38,11 @@ class WooViet_OnePay_Domestic extends WC_Payment_Gateway {
 		$this->access_code          = $this->get_option( 'access_code' );
 		$this->secure_secret          = $this->get_option( 'secure_secret' );
 
-		// @todo: the sandbox option
-
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
+
+		add_action('woocommerce_thankyou_' . $this->id, array($this, 'handle_onepay_return_url'));
+
+		add_action('woocommerce_api_' . strtolower(__CLASS__), array($this, 'handle_onepay_ipn' ) );
 	}
 	/**
 	 * Initialise Gateway Settings Form Fields.
@@ -75,7 +76,7 @@ class WooViet_OnePay_Domestic extends WC_Payment_Gateway {
 				0,
 				32 ), // Limit 32 characters
 			'vpc_Amount' => $order->get_total() * 100, // Multiplying 100 is a requirement from OnePay
-			'vpc_ReturnURL' => $this->get_onepay_return_url(),
+			'vpc_ReturnURL' => $this->get_return_url($order),
 			'vpc_Version' => '2',
 			'vpc_Command' => 'pay',
 			'vpc_Locale' => ( 'vi' == get_locale() ) ? 'vn' : 'en',
@@ -100,13 +101,12 @@ class WooViet_OnePay_Domestic extends WC_Payment_Gateway {
 
 
 	}
-	// @todo: need to check this and WC_Payment_Gateway::get_return_url($order = NULL)
+	// @todo: need to check this and WC_Payment_Gateway::get_return_url($order = NULL). This might be used for IPN only
 	public function get_onepay_return_url(){
 		return WC()->api_request_url( __CLASS__ );
 	}
 
 	/**
-	 * Get the PayPal request URL for an order.
 	 * @param  array $args
 	 * @return string
 	 */
@@ -132,8 +132,134 @@ class WooViet_OnePay_Domestic extends WC_Payment_Gateway {
 		return strtoupper(hash_hmac('SHA256', $stringHashData, pack('H*', $this->secure_secret )));
 	}
 
-	public function process_return_url (){
-		// http://localhost/woo-viet/wc-api/WooViet_OnePay_Domestic/?vpc_AdditionData=686868&vpc_Amount=40000000&vpc_Command=pay&vpc_CurrencyCode=VND&vpc_Locale=en&vpc_MerchTxnRef=%23133_20170418024557&vpc_Merchant=ONEPAY&vpc_OrderInfo=%23133+-+http%3A%2F%2Flocalhost%2Fwoo-viet&vpc_TransactionNo=1576998&vpc_TxnResponseCode=0&vpc_Version=2&vpc_SecureHash=25C4443CFF95F6D5BCE4AD86DAA6756960688BD8868CBE898989125050504361
+
+	public function check_vpc_SecureHash ($args, $vpc_SecureHash) {
+		// Generate the "vpc_SecureHash" value from $args
+		$vpc_SecureHash_from_args = $this->create_vpc_SecureHash($args);
+
+		if ($vpc_SecureHash_from_args == $vpc_SecureHash ) {
+			return true;
+		} else {
+			return false;
+		}
 	}
+
+	public function handle_onepay_return_url(){
+		if (isset($_GET['vpc_SecureHash'])) {
+
+			$this->process_onepay_response_data( $_GET );
+
+			// @todo NEXT check this part
+			// Redirect to the return URL without the OnePay parameters
+			// wp_redirect($this->get_return_url( $order ));
+		}
+	}
+
+	public function process_onepay_response_data ($args ) {
+		$vpc_SecureHash = $args['vpc_SecureHash'];
+
+		// Remove the parameter "vpc_SecureHash" for validating SecureHash
+		unset($args['vpc_SecureHash']);
+
+		$check_vpc_SecureHash = $this->check_vpc_SecureHash($args, $vpc_SecureHash);
+
+		if ( $check_vpc_SecureHash ) {
+			/**
+			 * $vpc_MerchTxnRef looks like this "139_20170418101843" or {order_id}_{date_time}
+			 * @see $this->get_pay_url();
+			 */
+			$vpc_MerchTxnRef = $args['vpc_MerchTxnRef'];
+
+			// Get the order_id part only
+			$order_id = substr($vpc_MerchTxnRef,0,strrpos($vpc_MerchTxnRef,'_'));
+
+			$order = wc_get_order($order_id);
+
+			$vpc_TxnResponseCode = $args['vpc_TxnResponseCode'];
+
+			// The payment was made successfully
+			if ("0" == $vpc_TxnResponseCode ) {
+				$order->payment_complete();
+			}
+
+			// Add the order note for the reference
+			$order_note = sprintf(
+				__('OnePay Domestic Gateway Info | Code: %1$s | Message: %2$s | MerchantTxnRef: %3$s', 'woo-viet'),
+				$vpc_TxnResponseCode,
+				$this->OnePay_getResponseDescription($vpc_TxnResponseCode),
+				$vpc_MerchTxnRef
+			);
+			$order->add_order_note($order_note);
+
+			// return $order;
+
+		}
+	}
+
+	public function handle_onepay_ipn() {
+		if (isset($_POST['vpc_SecureHash'])) {
+
+			$this->process_onepay_response_data( $_POST );
+
+			// Write the response
+		}
+	}
+
+	public function OnePay_getResponseDescription($responseCode) {
+
+		switch ($responseCode) {
+			case "0" :
+				$result = "Giao dịch thành công - Approved";
+				break;
+			case "1" :
+				$result = "Ngân hàng từ chối giao dịch - Bank Declined";
+				break;
+			case "3" :
+				$result = "Mã đơn vị không tồn tại - Merchant not exist";
+				break;
+			case "4" :
+				$result = "Không đúng access code - Invalid access code";
+				break;
+			case "5" :
+				$result = "Số tiền không hợp lệ - Invalid amount";
+				break;
+			case "6" :
+				$result = "Mã tiền tệ không tồn tại - Invalid currency code";
+				break;
+			case "7" :
+				$result = "Lỗi không xác định - Unspecified Failure ";
+				break;
+			case "8" :
+				$result = "Số thẻ không đúng - Invalid card Number";
+				break;
+			case "9" :
+				$result = "Tên chủ thẻ không đúng - Invalid card name";
+				break;
+			case "10" :
+				$result = "Thẻ hết hạn/Thẻ bị khóa - Expired Card";
+				break;
+			case "11" :
+				$result = "Thẻ chưa đăng ký sử dụng dịch vụ - Card Not Registed Service(internet banking)";
+				break;
+			case "12" :
+				$result = "Ngày phát hành/Hết hạn không đúng - Invalid card date";
+				break;
+			case "13" :
+				$result = "Vượt quá hạn mức thanh toán - Exist Amount";
+				break;
+			case "21" :
+				$result = "Số tiền không đủ để thanh toán - Insufficient fund";
+				break;
+			case "99" :
+				$result = "Người sủ dụng hủy giao dịch - User cancel";
+				break;
+			default :
+				$result = "Giao dịch thất bại - Failured";
+		}
+		return $result;
+	}
+
+
+
 
 }
