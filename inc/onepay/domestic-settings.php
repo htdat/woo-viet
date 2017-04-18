@@ -15,6 +15,13 @@ return array(
 		'label'   => __( 'OnePay Domestic Gateway (by Woo Viet)', 'woo-viet' ),
 		'default' => 'yes'
 	),
+	'testmode' => array(
+		'title'       => __( 'OnePay Sandbox', 'woocommerce' ),
+		'type'        => 'checkbox',
+		'label'       => __( 'Enable OnePay sandbox (testing)', 'woocommerce' ),
+		'default'     => 'no',
+		'description' => sprintf( __( 'OnePay sandbox can be used to test payments. See <a href="%s">the testing info</a>.', 'woocommerce' ), 'https://mtf.onepay.vn/developer/?page=modul_noidia' ),
+	),
 	'title' => array(
 		'title'       => __( 'Title', 'woo-viet' ),
 		'type'        => 'text',
@@ -27,7 +34,7 @@ return array(
 		'type'        => 'text',
 		'desc_tip'    => true,
 		'description' => __( 'This controls the description which the user sees during checkout.', 'woo-viet' ),
-		'default'     => __( 'With OnePay Bank, you can make payment by using any local Vietnam ATM card.', 'woo-viet' )
+		'default'     => __( 'With OnePay, you can make payment by using any local Vietnam ATM card.', 'woo-viet' )
 	),
 	'api_details' => array(
 		'title'       => __( 'API Credentials', 'woo-viet' ),
@@ -42,7 +49,7 @@ return array(
 		'desc_tip'    => true,
 		'placeholder' => __( 'Required. Provided by OnePay.', 'woo-viet' )
 	),
-	'access code' => array(
+	'access_code' => array(
 		'title'       => __( 'Access Code', 'woocommerce' ),
 		'type'        => 'text',
 		'description' => __( 'Get your Access Code from from OnePay.', 'woo-viet' ),
