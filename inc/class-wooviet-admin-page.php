@@ -89,6 +89,24 @@ class WooViet_Admin_Page {
                 <table class="form-table">
                     <tbody>
                     <tr>
+                        <th scope="row"><?php _e( 'Add the OnePay Domestic Gateway', 'woo-viet' ) ?></th>
+                        <td>
+                            <input name="settings[add_onepay_domestic][enabled]" type="hidden" value="no">
+                            <input name="settings[add_onepay_domestic][enabled]" type="checkbox" id="add_onepay_domestic" value="yes"
+			                    <?php if ( 'yes' == $settings['add_onepay_domestic']['enabled'] )
+				                    echo 'checked="checked"' ?>>
+                            <label for="add_onepay_domestic"><?php _e( 'Enabled', 'woo-viet' ) ?></label>
+                            <br/>
+                            <br/>
+                            <label for="">
+                                <?php
+                            echo sprintf( __('Please configure this gateway under <a href="%s">WooCommerce -> Settings -> Checkout</a>', 'woo-viet'), admin_url( 'admin.php?page=wc-settings&tab=checkout') );
+                            ?>
+                            </label>
+                        </td>
+                    </tr>
+
+                    <tr>
                         <th scope="row"><?php _e( 'Add provinces for Vietnam', 'woo-viet' ) ?></th>
                         <td>
                             <input name="settings[add_province][enabled]" type="hidden" value="no">

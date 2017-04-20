@@ -60,7 +60,11 @@ class WooViet {
 				'currency' => 'USD',
 				'rate'     => '22770',
 			),
-	);
+		'add_onepay_domestic'           =>
+			array(
+				'enabled' => 'yes',
+			),
+		);
 	/**
 	 * The properties to manage all classes under the "inc/" folder
 	 * Example:
@@ -131,14 +135,6 @@ class WooViet {
 	 */
 	public function main() {
 
-		// @todo: ver 1.3 check this
-		add_filter( 'woocommerce_payment_gateways', array( $this, 'add_gateway_class' ) );
-
-		include( 'inc/class-wooviet-onepay-domestic.php');
-		$WooViet_OnePay_Domestic_Hook = new WooViet_OnePay_Domestic();
-		add_action('wooviet_handle_onepay_querydr', array($WooViet_OnePay_Domestic_Hook, 'handle_onepay_querydr'), 10, 1);
-
-
 		if ( is_admin() ) {
 			// Add the admin setting page
 			include( WOO_VIET_DIR . 'inc/class-wooviet-admin-page.php' );
@@ -147,6 +143,16 @@ class WooViet {
 		}
 
 		$settings = self::get_settings();
+		// Check if "Add the OnePay Domestic Gateway" is enabled
+		if ( 'yes' == $settings['add_onepay_domestic']['enabled'] ) {
+			// @todo: ver 1.3 check this
+			add_filter( 'woocommerce_payment_gateways', array( $this, 'add_gateway_class' ) );
+
+			include( 'inc/class-wooviet-onepay-domestic.php');
+			$WooViet_OnePay_Domestic_Hook = new WooViet_OnePay_Domestic();
+			add_action('wooviet_handle_onepay_querydr', array($WooViet_OnePay_Domestic_Hook, 'handle_onepay_querydr'), 10, 1);
+
+		}
 
 		// Check if "Add provinces for Vietnam	" is enabled.
 		if ( 'yes' == $settings['add_province']['enabled'] ) {
