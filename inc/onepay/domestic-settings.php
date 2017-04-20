@@ -4,7 +4,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-// @todo - ver 1.3 - check all texts
 /**
  * Settings for 1Pay Gateway.
  */
@@ -21,6 +20,7 @@ return array(
 		'label'       => __( 'Enable OnePay sandbox (testing)', 'woocommerce' ),
 		'default'     => 'no',
 		'description' => sprintf( __( 'OnePay sandbox can be used to test payments. See <a href="%s">the testing info</a>.', 'woocommerce' ), 'https://mtf.onepay.vn/developer/?page=modul_noidia' ),
+		//@todo: add the logo https://mtf.onepay.vn/developer/?page=logo
 	),
 	'title' => array(
 		'title'       => __( 'Title', 'woo-viet' ),
@@ -31,7 +31,7 @@ return array(
 	),
 	'description' => array(
 		'title'       => __( 'Description', 'woo-viet' ),
-		'type'        => 'text',
+		'type'        => 'textarea',
 		'desc_tip'    => true,
 		'description' => __( 'This controls the description which the user sees during checkout.', 'woo-viet' ),
 		'default'     => __( 'With OnePay, you can make payment by using any local Vietnam ATM card.', 'woo-viet' )
@@ -65,14 +65,28 @@ return array(
 		'desc_tip'    => true,
 		'placeholder' => __( 'Required. Provided by OnePay.', 'woo-viet' )
 	),
-	/*
-	// @todo: Add more help info later
-
-	'help_title' => array(
-		'title'       => __( 'More info about 1Pay', 'woo-viet' ),
-		'type'        => 'title',
-		'description' => __( 'You can see more info at this link.', 'woo-viet' )
+	'user' => array(
+		'title'       => __( 'User for queryDR. Test value: op01', 'woocommerce' ),
+		'type'        => 'text',
+		'description' => __( 'Get your user info from from OnePay.', 'woo-viet' ),
+		'default'     => '',
+		'desc_tip'    => true,
+		'placeholder' => __( 'Required. Provided by OnePay', 'woo-viet' )
 	),
-	*/
+	'password' => array(
+		'title'       => __( 'Password for queryDR. Test value: op123456', 'woocommerce' ),
+		'type'        => 'text',
+		'description' => __( 'Get your password info from from OnePay.', 'woo-viet' ),
+		'default'     => '',
+		'desc_tip'    => true,
+		'placeholder' => __( 'Required. Provided by OnePay.', 'woo-viet' )
+	),
+	'more_info' => array(
+		'title'       => __( 'Instant Payment Notification (IPN)', 'woo-viet' ),
+		'type'        => 'title',
+		'description' =>
+			sprintf('URL: <code>%s</code>', WooViet_OnePay_Domestic::get_onepay_ipn_url() ) . '<p/>' .
+			sprintf( __( '%sContact OnePay%s to configure this URL on its site. <strong>This is required  based on its guidelines.</strong>', 'woo-viet' ), '<a href="http://onepay.com.vn/home/en/contact-us.html">', '</a>' ),
+	),
 
 );

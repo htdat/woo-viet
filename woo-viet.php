@@ -135,6 +135,8 @@ class WooViet {
 		add_filter( 'woocommerce_payment_gateways', array( $this, 'add_gateway_class' ) );
 
 		include( 'inc/class-wooviet-onepay-domestic.php');
+		$WooViet_OnePay_Domestic_Hook = new WooViet_OnePay_Domestic();
+		add_action('wooviet_handle_onepay_querydr', array($WooViet_OnePay_Domestic_Hook, 'handle_onepay_querydr'), 10, 1);
 
 
 		if ( is_admin() ) {
