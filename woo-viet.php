@@ -7,7 +7,7 @@
  * Author URI: https://profiles.wordpress.org/htdat
  * Text Domain: woo-viet
  * Domain Path: /languages
- * Version: 1.2
+ * Version: 1.3-dev
  * License:     GPLv2+
  */
 
@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 define( 'WOO_VIET_DIR', plugin_dir_path( __FILE__ ) );
-// define( 'WOO_VIET_URL', plugins_url( '/', __FILE__ ) );
+define( 'WOO_VIET_URL', plugins_url( '/', __FILE__ ) );
 
 /**
  * Start the instance
@@ -40,7 +40,7 @@ class WooViet {
 			array(
 				'enabled' => 'yes',
 			),
-		'add_city'           =>
+		'add_city'               =>
 			array(
 				'enabled' => 'yes',
 			),
@@ -59,6 +59,10 @@ class WooViet {
 				'enabled'  => 'yes',
 				'currency' => 'USD',
 				'rate'     => '22770',
+			),
+		'add_onepay_domestic'    =>
+			array(
+				'enabled' => 'yes',
 			),
 	);
 	/**
@@ -133,6 +137,26 @@ class WooViet {
 
 		$settings = self::get_settings();
 
+		// Check if "Add the OnePay Domestic Gateway" is enabled
+		if ( 'yes' == $settings['add_onepay_domestic']['enabled']
+		     AND 'VND' == get_woocommerce_currency()
+		) {
+			include( 'inc/class-wooviet-onepay-domestic.php' );
+
+			add_filter( 'woocommerce_payment_gateways', array( $this, 'add_gateway_class' ) );
+
+			// Add the action to check the cron job for handling queryDR
+			// It's not possible to add in the class "WooViet_OnePay_Domestic_Hook" because it's NOT always loadded
+			if ( defined( 'DOING_CRON' ) and DOING_CRON ) {
+				$this->WooViet_OnePay_Domestic_Hook = new WooViet_OnePay_Domestic();
+				add_action( 'wooviet_handle_onepay_querydr', array(
+					$this->WooViet_OnePay_Domestic_Hook,
+					'handle_onepay_querydr'
+				), 10, 1 );
+			}
+
+		}
+
 		// Check if "Add provinces for Vietnam	" is enabled.
 		if ( 'yes' == $settings['add_province']['enabled'] ) {
 			include( WOO_VIET_DIR . 'inc/class-wooviet-provinces.php' );
@@ -177,7 +201,23 @@ class WooViet {
 	static function get_settings() {
 		$settings = get_option( 'woo-viet', self::$default_settings );
 		$settings = wp_parse_args( $settings, self::$default_settings );
+
 		return $settings;
+	}
+
+	/**
+	 * Add the gateways to WooCommerce
+	 *
+	 * @param array $methods
+	 *
+	 * @since 1.3
+	 * @return array
+	 */
+	public function add_gateway_class( $methods ) {
+		$methods[] = 'WooViet_OnePay_Domestic';
+
+		return $methods;
+
 	}
 
 }
