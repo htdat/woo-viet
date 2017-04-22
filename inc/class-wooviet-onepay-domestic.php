@@ -203,7 +203,7 @@ class WooViet_OnePay_Domestic extends WC_Payment_Gateway {
 
 		if (isset($_POST['vpc_SecureHash'])) {
 
-			$this->process_onepay_response_data( $_POST );
+			$this->process_onepay_response_data( $_POST, 'ipn' );
 
 		}
 	}
@@ -237,7 +237,7 @@ class WooViet_OnePay_Domestic extends WC_Payment_Gateway {
 		parse_str( wp_remote_retrieve_body( $http_response ), $args_response );
 
 		// Process the data
-		$this->process_onepay_response_data($args_response);
+		$this->process_onepay_response_data($args_response, 'querydr');
 
 	}
 
@@ -246,7 +246,7 @@ class WooViet_OnePay_Domestic extends WC_Payment_Gateway {
 	 * @param string $args the response data from OnePay
 	 * @param string $type
 	 */
-	public function process_onepay_response_data ($args, $type = '' ) {
+	public function process_onepay_response_data ($args, $type ) {
 		$types_accepted = array(
 			'return',
 			'ipn',
