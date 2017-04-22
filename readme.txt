@@ -1,9 +1,9 @@
 === Woo Viet - WooCommerce for Vietnam ===
 Contributors: htdat
-Tags: WooCommerce Vietnam, vietnam, vietnamese, vietnam provinces, paypal for vietnam dong, vnd, vietnam dong, vietnam currency, vietnam customization
+Tags: OnePay WooCommerce, OnePay Vietnam, WooCommerce Vietnam, vietnam, vietnamese, vietnam provinces, paypal for vietnam dong, vnd, vietnam dong, vietnam currency, vietnam customization
 Requires at least: 4.3
-Tested up to: 4.7.2
-Stable tag: 1.2
+Tested up to: 4.7.4
+Stable tag: 1.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,6 +15,9 @@ Add features to WooCommerce stores having anything related to Vietnam: currency,
 
 Xem phiên bản tiếng Việt tại đây https://vi.wordpress.org/plugins/woo-viet/
 
+**NEW FEATURE**:
+Add [the OnePay domestic (local ATM cards) gateway](http://onepay.com.vn/).
+
 = FEATURES =
 
 * Change the VND currency symbol `đ` to anything, e.g: `VND`, `VNĐ`, `đồng`, etc.
@@ -22,6 +25,7 @@ Xem phiên bản tiếng Việt tại đây https://vi.wordpress.org/plugins/woo
 * Add districts to Vietnam provinces.
 * Convert `000` of prices to `K` (or anything). E.g: `50000` (VND) will be `50K` (VND), or `50 thousand` (VND).
 * Support `VND` for [the PayPal Standard gateway](https://docs.woocommerce.com/document/paypal-standard/). Convert `VND` prices to any PayPal supported currency before sending visitors to the PayPal pages.
+* Add [the OnePay domestic (local ATM cards) gateway](http://onepay.com.vn/).
 
 = ROAD MAP =
 
@@ -70,6 +74,9 @@ Follow these steps to install and use the plugin:
 
 == Changelog ==
 
+= 1.3 - 2017.04.22 =
+* Add [the OnePay domestic (local ATM cards) gateway](http://onepay.com.vn/).
+
 = 1.2 - 2017.03.03 =
 * Integrate all districts to Vietnam provinces. Credits: [WC City Select by 8manos](https://github.com/8manos/wc-city-select) and [the Vietnam district data by 10h30](https://github.com/htdat/woo-viet/issues/4#issuecomment-277449462)
 
@@ -83,6 +90,9 @@ Follow these steps to install and use the plugin:
 * Upload to WordPress.org
 
 == Upgrade Notice ==
+
+= 1.3 =
+The new version 1.2 comes with the feature "Add the OnePay domestic (local ATM cards) gateway]"
 
 = 1.2 =
 The new version 1.2 comes with the feature "Add districts to Vietnam provinces".

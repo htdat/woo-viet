@@ -7,7 +7,7 @@
  * Author URI: https://profiles.wordpress.org/htdat
  * Text Domain: woo-viet
  * Domain Path: /languages
- * Version: 1.3-dev
+ * Version: 1.3
  * License:     GPLv2+
  */
 
