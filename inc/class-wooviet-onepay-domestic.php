@@ -49,8 +49,6 @@ class WooViet_OnePay_Domestic extends WC_Payment_Gateway {
 
 		add_action( 'woocommerce_api_' . strtolower( __CLASS__ ), array( $this, 'handle_onepay_ipn' ) );
 
-		// @todo: check whether or not this can be lodded in the cron job
-		add_action( 'wooviet_handle_onepay_querydr', array( $this, 'handle_onepay_querydr' ), 10, 1 );
 	}
 
 	/**
@@ -140,7 +138,7 @@ class WooViet_OnePay_Domestic extends WC_Payment_Gateway {
 		wp_schedule_single_event(
 			time() + 20 * 60,
 			'wooviet_handle_onepay_querydr',
-			array( $vpc_MerchTxnRef ) // @todo check this
+			array( $vpc_MerchTxnRef )
 		);
 
 	}
