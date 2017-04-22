@@ -145,11 +145,13 @@ class WooViet {
 
 			// Add the action to check the cron job for handling queryDR
 			// It's not possible to add in the class "WooViet_OnePay_Domestic_Hook" because it's NOT always loadded
-			$this->WooViet_OnePay_Domestic_Hook = new WooViet_OnePay_Domestic();
-			add_action( 'wooviet_handle_onepay_querydr', array(
-				$this->WooViet_OnePay_Domestic_Hook,
-				'handle_onepay_querydr'
-			), 10, 1 );
+			if ( defined( 'DOING_CRON' ) and DOING_CRON ) {
+				$this->WooViet_OnePay_Domestic_Hook = new WooViet_OnePay_Domestic();
+				add_action( 'wooviet_handle_onepay_querydr', array(
+					$this->WooViet_OnePay_Domestic_Hook,
+					'handle_onepay_querydr'
+				), 10, 1 );
+			}
 
 		}
 
