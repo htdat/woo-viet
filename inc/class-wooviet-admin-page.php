@@ -92,16 +92,17 @@ class WooViet_Admin_Page {
                         <th scope="row"><?php _e( 'Add the OnePay Domestic Gateway', 'woo-viet' ) ?></th>
                         <td>
                             <input name="settings[add_onepay_domestic][enabled]" type="hidden" value="no">
-                            <input name="settings[add_onepay_domestic][enabled]" type="checkbox" id="add_onepay_domestic" value="yes"
-			                    <?php if ( 'yes' == $settings['add_onepay_domestic']['enabled'] )
-				                    echo 'checked="checked"' ?>>
+                            <input name="settings[add_onepay_domestic][enabled]" type="checkbox"
+                                   id="add_onepay_domestic" value="yes"
+								<?php if ( 'yes' == $settings['add_onepay_domestic']['enabled'] )
+									echo 'checked="checked"' ?>>
                             <label for="add_onepay_domestic"><?php _e( 'Enabled', 'woo-viet' ) ?></label>
                             <br/>
                             <br/>
                             <label for="">
-                                <?php
-                            echo sprintf( __('Please configure this gateway under <a href="%s">WooCommerce -> Settings -> Checkout</a>', 'woo-viet'), admin_url( 'admin.php?page=wc-settings&tab=checkout') );
-                            ?>
+								<?php
+								echo sprintf( __( 'Please configure this gateway under <a href="%s">WooCommerce -> Settings -> Checkout</a>', 'woo-viet' ), admin_url( 'admin.php?page=wc-settings&tab=checkout' ) );
+								?>
                             </label>
                         </td>
                     </tr>
@@ -117,14 +118,14 @@ class WooViet_Admin_Page {
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row"><?php _e( 'Add districts for Vietnam', 'woo-viet' ) ?><br />
+                        <th scope="row"><?php _e( 'Add districts for Vietnam', 'woo-viet' ) ?><br/>
                             <i><?php _e( 'Require "Add provinces for Vietnam" active', 'woo-viet' ) ?></i>
                         </th>
                         <td>
                             <input name="settings[add_city][enabled]" type="hidden" value="no">
                             <input name="settings[add_city][enabled]" type="checkbox" id="add_city" value="yes"
-			                    <?php if ( 'yes' == $settings['add_city']['enabled'] )
-				                    echo 'checked="checked"' ?>>
+								<?php if ( 'yes' == $settings['add_city']['enabled'] )
+									echo 'checked="checked"' ?>>
                             <label for="add_city"><?php _e( 'Enabled', 'woo-viet' ) ?></label>
                         </td>
                     </tr>

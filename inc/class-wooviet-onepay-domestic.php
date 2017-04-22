@@ -2,6 +2,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
 /**
  * The class to handle the domestic OnePay gateway https://mtf.onepay.vn/developer/?page=modul_noidia
  *
@@ -10,17 +11,16 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @since    1.3
  *
  */
-
 class WooViet_OnePay_Domestic extends WC_Payment_Gateway {
 	/**
 	 * Constructor for the gateway.
 	 */
 	public function __construct() {
-		$this->id                 = strtolower(__CLASS__);
+		$this->id                 = strtolower( __CLASS__ );
 		$this->has_fields         = false;
 		$this->order_button_text  = __( 'Proceed to OnePay', 'woo-viet' );
 		$this->method_title       = __( 'OnePay Domestic Gateway (by Woo Viet)', 'woo-viet' );
-		$this->method_description =  __( 'OnePay supports all major bank ATMs in Vietnam.', 'woo-viet' );
+		$this->method_description = __( 'OnePay supports all major bank ATMs in Vietnam.', 'woo-viet' );
 		$this->supports           = array(
 			'products',
 		);
@@ -30,25 +30,29 @@ class WooViet_OnePay_Domestic extends WC_Payment_Gateway {
 		$this->init_settings();
 
 		// Define user set variables.
-		$this->title          = $this->get_option( 'title' );
-		$this->description    = $this->get_option( 'description' );
-		$this->testmode       = 'yes' === $this->get_option( 'testmode', 'no' );
-		$this->merchant_id          = $this->get_option( 'merchant_id' );
-		$this->access_code          = $this->get_option( 'access_code' );
-		$this->secure_secret          = $this->get_option( 'secure_secret' );
+		$this->title         = $this->get_option( 'title' );
+		$this->description   = $this->get_option( 'description' );
+		$this->testmode      = 'yes' === $this->get_option( 'testmode', 'no' );
+		$this->merchant_id   = $this->get_option( 'merchant_id' );
+		$this->access_code   = $this->get_option( 'access_code' );
+		$this->secure_secret = $this->get_option( 'secure_secret' );
 		$this->user          = $this->get_option( 'user' );
-		$this->password          = $this->get_option( 'password' );
+		$this->password      = $this->get_option( 'password' );
 
 		// Process the admin options
-		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
+		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array(
+			$this,
+			'process_admin_options'
+		) );
 
-		add_action('woocommerce_thankyou_' . $this->id, array($this, 'handle_onepay_return_url'));
+		add_action( 'woocommerce_thankyou_' . $this->id, array( $this, 'handle_onepay_return_url' ) );
 
-		add_action('woocommerce_api_' . strtolower(__CLASS__), array($this, 'handle_onepay_ipn' ) );
+		add_action( 'woocommerce_api_' . strtolower( __CLASS__ ), array( $this, 'handle_onepay_ipn' ) );
 
 		// @todo: check whether or not this can be lodded in the cron job
-		add_action('wooviet_handle_onepay_querydr', array($this, 'handle_onepay_querydr'), 10, 1);
+		add_action( 'wooviet_handle_onepay_querydr', array( $this, 'handle_onepay_querydr' ), 10, 1 );
 	}
+
 	/**
 	 * Initialise Gateway Settings Form Fields.
 	 */
@@ -57,17 +61,72 @@ class WooViet_OnePay_Domestic extends WC_Payment_Gateway {
 	}
 
 	/**
+	 * Get the IPN URL for OnePay
+	 * Format: http://my-site.com/wc-api/WooViet_OnePay_Domestic/
+	 */
+	static function get_onepay_ipn_url() {
+		return WC()->api_request_url( __CLASS__ );
+	}
+
+	/**
 	 * Process the payment
+	 *
 	 * @param int $order_id
 	 *
 	 * @return array
 	 */
 	public function process_payment( $order_id ) {
-		$order          = wc_get_order( $order_id );
+		$order = wc_get_order( $order_id );
+
 		return array(
 			'result'   => 'success',
 			'redirect' => $this->get_pay_url( $order )
 		);
+	}
+
+	/**
+	 * Get the OnePay pay URL for an order
+	 * AND set the queryDR cron for this transaction
+	 *
+	 * @param  WC_Order $order
+	 *
+	 * @return string
+	 */
+	public function get_pay_url( $order ) {
+		$args = array(
+			'Title'           => __( 'OnePay Payment Title', 'woo-viet' ),
+			'vpc_Merchant'    => $this->merchant_id,
+			'vpc_AccessCode'  => $this->access_code,
+			'vpc_MerchTxnRef' => sprintf( '%1$s_%2$s', $order->id, date( 'YmdHis' ) ),
+			'vpc_OrderInfo'   => substr(
+				sprintf( 'Order #%1$s - %2$s', $order->id, get_home_url() ),
+				0,
+				32 ), // Limit 32 characters
+			'vpc_Amount'      => $order->get_total() * 100, // Multiplying 100 is a requirement from OnePay
+			'vpc_ReturnURL'   => $this->get_return_url( $order ),
+			'vpc_Version'     => '2',
+			'vpc_Command'     => 'pay',
+			'vpc_Locale'      => ( 'vi' == get_locale() ) ? 'vn' : 'en',
+			'vpc_Currency'    => 'VND',
+			'vpc_TicketNo'    => $_SERVER['REMOTE_ADDR'],
+		);
+
+		// Set the queryDR cron for this transaction
+		$this->set_onepay_querydr_cron( $args['vpc_MerchTxnRef'] );
+
+		// Get the secure hash
+		$vpc_SecureHash = $this->create_vpc_SecureHash( $args );
+
+		// Add the secure hash to the args
+		$args['vpc_SecureHash'] = $vpc_SecureHash;
+		$http_args              = http_build_query( $args, '', '&' );
+
+		if ( $this->testmode ) {
+			return 'https://mtf.onepay.vn/onecomm-pay/vpc.op?' . $http_args;
+		} else {
+			return 'https://onepay.vn/onecomm-pay/vpc.op?' . $http_args;
+		}
+
 	}
 
 	/**
@@ -85,83 +144,131 @@ class WooViet_OnePay_Domestic extends WC_Payment_Gateway {
 		);
 
 	}
-	/**
-	 * Get the OnePay pay URL for an order
-	 * AND set the queryDR cron for this transaction
-	 *
-	 * @param  WC_Order $order
-	 * @return string
-	 */
-	public function get_pay_url ( $order ) {
-		$args = array(
-			'Title' =>  __('OnePay Payment Title', 'woo-viet'),
-			'vpc_Merchant' => $this->merchant_id,
-			'vpc_AccessCode' => $this->access_code,
-			'vpc_MerchTxnRef' => sprintf('%1$s_%2$s', $order->id, date ( 'YmdHis' )),
-			'vpc_OrderInfo' => substr(
-				sprintf('Order #%1$s - %2$s', $order->id, get_home_url()),
-				0,
-				32 ), // Limit 32 characters
-			'vpc_Amount' => $order->get_total() * 100, // Multiplying 100 is a requirement from OnePay
-			'vpc_ReturnURL' => $this->get_return_url($order),
-			'vpc_Version' => '2',
-			'vpc_Command' => 'pay',
-			'vpc_Locale' => ( 'vi' == get_locale() ) ? 'vn' : 'en',
-			'vpc_Currency' => 'VND',
-			'vpc_TicketNo' => $_SERVER['REMOTE_ADDR'],
-		);
-
-		// Set the queryDR cron for this transaction
-		$this->set_onepay_querydr_cron($args['vpc_MerchTxnRef']);
-
-		// Get the secure hash
-		$vpc_SecureHash = $this->create_vpc_SecureHash( $args );
-
-		// Add the secure hash to the args
-		$args['vpc_SecureHash'] = $vpc_SecureHash;
-		$http_args = http_build_query( $args, '', '&' );
-
-		if ( $this->testmode ) {
-			return 'https://mtf.onepay.vn/onecomm-pay/vpc.op?' . $http_args;
-		} else {
-			return 'https://onepay.vn/onecomm-pay/vpc.op?' . $http_args;
-		}
-
-	}
-
-	/**
-	 * Get the IPN URL for OnePay
-	 * Format: http://my-site.com/wc-api/WooViet_OnePay_Domestic/
-	 */
-	static function get_onepay_ipn_url(){
-		return WC()->api_request_url( __CLASS__ );
-	}
 
 	/**
 	 * Create the vpc_SecureHash value.
 	 * @see https://mtf.onepay.vn/developer/?page=modul_noidia_php
 	 *
 	 * @param  array $args
+	 *
 	 * @return string
 	 */
-	public function create_vpc_SecureHash ( $args ){
+	public function create_vpc_SecureHash( $args ) {
 		$stringHashData = "";
 
 		// arrange array data a-z before make a hash
-		ksort ($args );
+		ksort( $args );
 
-		foreach($args as $key => $value) {
+		foreach ( $args as $key => $value ) {
 
-			if (strlen($value) > 0) {
-				if ((strlen($value) > 0) && ((substr($key, 0,4)=="vpc_") || (substr($key,0,5) =="user_"))) {
+			if ( strlen( $value ) > 0 ) {
+				if ( ( strlen( $value ) > 0 ) && ( ( substr( $key, 0, 4 ) == "vpc_" ) || ( substr( $key, 0, 5 ) == "user_" ) ) ) {
 					$stringHashData .= $key . "=" . $value . "&";
 				}
 			}
 		}
 		//Remove the last character "&"
-		$stringHashData = rtrim($stringHashData, "&");
+		$stringHashData = rtrim( $stringHashData, "&" );
 
-		return strtoupper(hash_hmac('SHA256', $stringHashData, pack('H*', $this->secure_secret )));
+		return strtoupper( hash_hmac( 'SHA256', $stringHashData, pack( 'H*', $this->secure_secret ) ) );
+	}
+
+	/**
+	 * Handle the return URL - GET request from OnePay
+	 */
+	public function handle_onepay_return_url() {
+
+		if ( isset( $_GET['vpc_SecureHash'] ) ) {
+
+			$this->process_onepay_response_data( $_GET, 'return' );
+
+		}
+	}
+
+	/**
+	 * Handle the repsonse data from OnePay
+	 *
+	 * @param string $args the response data from OnePay
+	 * @param string $type
+	 */
+	public function process_onepay_response_data( $args, $type ) {
+		$types_accepted = array(
+			'return',
+			'ipn',
+			'querydr',
+		);
+
+		// Do nothing if the type is wrong
+		if ( ! in_array( $type, $types_accepted ) ) {
+			return;
+		}
+
+		$is_secure         = false;
+		$is_querydr_exists = false;
+
+		if ( 'return' == $type OR 'ipn' == $type ) {
+			$vpc_SecureHash = $args['vpc_SecureHash'];
+
+			// Remove the parameter "vpc_SecureHash" for validating SecureHash
+			unset( $args['vpc_SecureHash'] );
+
+			$is_secure = $this->check_vpc_SecureHash( $args, $vpc_SecureHash );
+
+		} elseif ( 'querydr' == $type ) {
+			$is_querydr_exists = ( 'Y' == $args['vpc_DRExists'] );
+
+		}
+
+		// Process the data
+		if ( $is_secure OR $is_querydr_exists ) {
+			/**
+			 * $vpc_MerchTxnRef looks like this "139_20170418101843" or {order_id}_{date_time}
+			 * @see $this->get_pay_url();
+			 */
+			$vpc_MerchTxnRef     = $args['vpc_MerchTxnRef'];
+			$vpc_TxnResponseCode = $args['vpc_TxnResponseCode'];
+
+			// Get the order_id part only
+			$order_id = substr( $vpc_MerchTxnRef, 0, strrpos( $vpc_MerchTxnRef, '_' ) );
+
+			$order = wc_get_order( $order_id );
+
+			// Add the order note for the reference
+			$order_note = sprintf(
+				__( 'OnePay Domestic Gateway Info | Code: %1$s | Message: %2$s | MerchantTxnRef: %3$s | Type: %4$s', 'woo-viet' ),
+				$vpc_TxnResponseCode,
+				$this->OnePay_getResponseDescription( $vpc_TxnResponseCode ),
+				$vpc_MerchTxnRef,
+				$type
+			);
+			$order->add_order_note( $order_note );
+
+			// If the payment is successful, update the order
+			if ( "0" == $vpc_TxnResponseCode ) {
+				$order->payment_complete();
+			}
+
+			switch ( $type ) {
+
+				case 'return':
+					wp_redirect( $this->get_return_url( $order ) );
+					break;
+
+				case 'ipn':
+					exit( 'responsecode=1&desc=confirm-success' );
+					break;
+
+				case 'querydr':
+					// Do nothing
+					break;
+			}
+
+		} else {
+			if ( 'ipn' == $type ) {
+				exit( 'responsecode=0&desc=confirm-success' );
+			}
+
+		}
 	}
 
 	/**
@@ -174,153 +281,14 @@ class WooViet_OnePay_Domestic extends WC_Payment_Gateway {
 	 *
 	 * @return bool
 	 */
-	public function check_vpc_SecureHash ($args, $vpc_SecureHash) {
+	public function check_vpc_SecureHash( $args, $vpc_SecureHash ) {
 		// Generate the "vpc_SecureHash" value from $args
-		$vpc_SecureHash_from_args = $this->create_vpc_SecureHash($args);
+		$vpc_SecureHash_from_args = $this->create_vpc_SecureHash( $args );
 
-		if ($vpc_SecureHash_from_args == $vpc_SecureHash ) {
+		if ( $vpc_SecureHash_from_args == $vpc_SecureHash ) {
 			return true;
 		} else {
 			return false;
-		}
-	}
-	/**
-	 * Handle the return URL - GET request from OnePay
-	 */
-	public function handle_onepay_return_url(){
-
-		if (isset($_GET['vpc_SecureHash'])) {
-
-			$this->process_onepay_response_data( $_GET, 'return' );
-
-		}
-	}
-
-	/**
-	 * Handle the IPN POST request from OnePay
-	 */
-	public function handle_onepay_ipn() {
-
-		if (isset($_REQUEST['vpc_SecureHash'])) {
-
-			$this->process_onepay_response_data( $_REQUEST, 'ipn' );
-
-		}
-	}
-
-	/**
-	 * Handle the queryDR request
-	 * @param string $vpc_MerchTxnRef
-	 */
-	public function handle_onepay_querydr( $vpc_MerchTxnRef ) {
-		// Build the queryDR link
-		$args = array(
-			'vpc_Command' => 'queryDR',
-			'vpc_Version' => '1',
-			'vpc_MerchTxnRef' => $vpc_MerchTxnRef,
-			'vpc_Merchant' => $this->merchant_id,
-			'vpc_AccessCode' => $this->access_code,
-			'vpc_User' => $this->user,
-			'vpc_Password' => $this->password,
-		);
-
-		$http_args = http_build_query( $args, '', '&' );
-
-		if ( $this->testmode ) {
-			$http_link = 'https://mtf.onepay.vn/onecomm-pay/Vpcdps.op?' . $http_args;
-		} else {
-			$http_link = 'https://onepay.vn/onecomm-pay/Vpcdps.op?' . $http_args;
-		}
-
-		// Connect to OnePay to get the queryDR info
-		$http_response = wp_remote_get( $http_link );
-		parse_str( wp_remote_retrieve_body( $http_response ), $args_response );
-
-		// Process the data
-		$this->process_onepay_response_data($args_response, 'querydr');
-
-	}
-
-	/**
-	 * Handle the repsonse data from OnePay
-	 * @param string $args the response data from OnePay
-	 * @param string $type
-	 */
-	public function process_onepay_response_data ($args, $type ) {
-		$types_accepted = array(
-			'return',
-			'ipn',
-			'querydr',
-		);
-
-		// Do nothing if the type is wrong
-		if ( ! in_array($type, $types_accepted) ) {
-			return;
-		}
-
-		$is_secure = false;
-		$is_querydr_exists = false;
-
-		if ('return' == $type OR 'ipn' == $type ) {
-			$vpc_SecureHash = $args['vpc_SecureHash'];
-
-			// Remove the parameter "vpc_SecureHash" for validating SecureHash
-			unset($args['vpc_SecureHash']);
-
-			$is_secure = $this->check_vpc_SecureHash($args, $vpc_SecureHash);
-
-		} elseif ('querydr' == $type ) {
-			$is_querydr_exists = ( 'Y' == $args['vpc_DRExists'] );
-
-		}
-
-		// Process the data
-		if ( $is_secure  OR $is_querydr_exists ) {
-			/**
-			 * $vpc_MerchTxnRef looks like this "139_20170418101843" or {order_id}_{date_time}
-			 * @see $this->get_pay_url();
-			 */
-			$vpc_MerchTxnRef = $args['vpc_MerchTxnRef'];
-			$vpc_TxnResponseCode = $args['vpc_TxnResponseCode'];
-
-			// Get the order_id part only
-			$order_id = substr($vpc_MerchTxnRef,0,strrpos($vpc_MerchTxnRef,'_'));
-
-			$order = wc_get_order($order_id);
-
-			// Add the order note for the reference
-			$order_note = sprintf(
-				__('OnePay Domestic Gateway Info | Code: %1$s | Message: %2$s | MerchantTxnRef: %3$s | Type: %4$s', 'woo-viet'),
-				$vpc_TxnResponseCode,
-				$this->OnePay_getResponseDescription($vpc_TxnResponseCode),
-				$vpc_MerchTxnRef,
-				$type
-			);
-			$order->add_order_note($order_note);
-
-			// If the payment is successful, update the order
-			if ("0" == $vpc_TxnResponseCode )
-				$order->payment_complete();
-
-			switch ( $type ) {
-
-				case 'return':
-					wp_redirect($this->get_return_url( $order ));
-					break;
-
-				case 'ipn':
-					exit( 'responsecode=1&desc=confirm-success');
-					break;
-
-				case 'querydr':
-					// Do nothing
-					break;
-			}
-
-		} else {
-			if ( 'ipn' == $type )
-				exit('responsecode=0&desc=confirm-success');
-
 		}
 	}
 
@@ -332,9 +300,9 @@ class WooViet_OnePay_Domestic extends WC_Payment_Gateway {
 	 *
 	 * @return string
 	 */
-	public function OnePay_getResponseDescription($responseCode) {
+	public function OnePay_getResponseDescription( $responseCode ) {
 
-		switch ($responseCode) {
+		switch ( $responseCode ) {
 			case "0" :
 				$result = "Giao dịch thành công - Approved";
 				break;
@@ -383,7 +351,54 @@ class WooViet_OnePay_Domestic extends WC_Payment_Gateway {
 			default :
 				$result = "Giao dịch thất bại - Failured";
 		}
+
 		return $result;
+	}
+
+	/**
+	 * Handle the IPN POST request from OnePay
+	 */
+	public function handle_onepay_ipn() {
+
+		if ( isset( $_REQUEST['vpc_SecureHash'] ) ) {
+
+			$this->process_onepay_response_data( $_REQUEST, 'ipn' );
+
+		}
+	}
+
+	/**
+	 * Handle the queryDR request
+	 *
+	 * @param string $vpc_MerchTxnRef
+	 */
+	public function handle_onepay_querydr( $vpc_MerchTxnRef ) {
+		// Build the queryDR link
+		$args = array(
+			'vpc_Command'     => 'queryDR',
+			'vpc_Version'     => '1',
+			'vpc_MerchTxnRef' => $vpc_MerchTxnRef,
+			'vpc_Merchant'    => $this->merchant_id,
+			'vpc_AccessCode'  => $this->access_code,
+			'vpc_User'        => $this->user,
+			'vpc_Password'    => $this->password,
+		);
+
+		$http_args = http_build_query( $args, '', '&' );
+
+		if ( $this->testmode ) {
+			$http_link = 'https://mtf.onepay.vn/onecomm-pay/Vpcdps.op?' . $http_args;
+		} else {
+			$http_link = 'https://onepay.vn/onecomm-pay/Vpcdps.op?' . $http_args;
+		}
+
+		// Connect to OnePay to get the queryDR info
+		$http_response = wp_remote_get( $http_link );
+		parse_str( wp_remote_retrieve_body( $http_response ), $args_response );
+
+		// Process the data
+		$this->process_onepay_response_data( $args_response, 'querydr' );
+
 	}
 
 }
