@@ -31,7 +31,8 @@ class WooViet_OnePay_Domestic extends WC_Payment_Gateway {
 
 		// Define user set variables.
 		$this->title         = $this->get_option( 'title' );
-		$this->description   = $this->get_option( 'description' );
+		$this->description   = $this->get_option( 'description' ) . sprintf( '<br/><div align="center"><img src="%s"></div>', WOO_VIET_URL . 'assets/onepay_domestic.png' );
+
 		$this->testmode      = 'yes' === $this->get_option( 'testmode', 'no' );
 		$this->merchant_id   = $this->get_option( 'merchant_id' );
 		$this->access_code   = $this->get_option( 'access_code' );

@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 define( 'WOO_VIET_DIR', plugin_dir_path( __FILE__ ) );
-// define( 'WOO_VIET_URL', plugins_url( '/', __FILE__ ) );
+define( 'WOO_VIET_URL', plugins_url( '/', __FILE__ ) );
 
 /**
  * Start the instance
