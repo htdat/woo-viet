@@ -201,9 +201,9 @@ class WooViet_OnePay_Domestic extends WC_Payment_Gateway {
 	 */
 	public function handle_onepay_ipn() {
 
-		if (isset($_POST['vpc_SecureHash'])) {
+		if (isset($_REQUEST['vpc_SecureHash'])) {
 
-			$this->process_onepay_response_data( $_POST, 'ipn' );
+			$this->process_onepay_response_data( $_REQUEST, 'ipn' );
 
 		}
 	}
@@ -309,7 +309,7 @@ class WooViet_OnePay_Domestic extends WC_Payment_Gateway {
 					break;
 
 				case 'ipn':
-					wp_die('responsecode=1&desc=confirm-success');
+					exit( 'responsecode=1&desc=confirm-success');
 					break;
 
 				case 'querydr':
@@ -319,7 +319,8 @@ class WooViet_OnePay_Domestic extends WC_Payment_Gateway {
 
 		} else {
 			if ( 'ipn' == $type )
-				wp_die('responsecode=0&desc=confirm-success');
+				exit('responsecode=0&desc=confirm-success');
+
 		}
 	}
 
