@@ -6,6 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /**
  * Settings for 1Pay Gateway.
+ * @since 1.3 
  */
 return array(
 	'enabled'       => array(
@@ -52,7 +53,7 @@ return array(
 	'access_code'   => array(
 		'title'       => __( 'Access Code', 'woocommerce' ),
 		'type'        => 'text',
-		'description' => __( 'Get your Access Code from from OnePay.', 'woo-viet' ),
+		'description' => __( 'Get your Access Code from OnePay.', 'woo-viet' ),
 		'default'     => '',
 		'desc_tip'    => true,
 		'placeholder' => __( 'Required. Provided by OnePay.', 'woo-viet' )
@@ -60,7 +61,7 @@ return array(
 	'secure_secret' => array(
 		'title'       => __( 'Secure Secret', 'woocommerce' ),
 		'type'        => 'text',
-		'description' => __( 'Get your Secure Secret from from OnePay.', 'woo-viet' ),
+		'description' => __( 'Get your Secure Secret from OnePay.', 'woo-viet' ),
 		'default'     => '',
 		'desc_tip'    => true,
 		'placeholder' => __( 'Required. Provided by OnePay.', 'woo-viet' )
@@ -68,7 +69,7 @@ return array(
 	'user'          => array(
 		'title'       => __( 'User for queryDR. Test value: op01', 'woocommerce' ),
 		'type'        => 'text',
-		'description' => __( 'Get your user info from from OnePay.', 'woo-viet' ),
+		'description' => __( 'Get your user info from OnePay.', 'woo-viet' ),
 		'default'     => '',
 		'desc_tip'    => true,
 		'placeholder' => __( 'Required. Provided by OnePay', 'woo-viet' )
@@ -76,7 +77,7 @@ return array(
 	'password'      => array(
 		'title'       => __( 'Password for queryDR. Test value: op123456', 'woocommerce' ),
 		'type'        => 'text',
-		'description' => __( 'Get your password info from from OnePay.', 'woo-viet' ),
+		'description' => __( 'Get your password info from OnePay.', 'woo-viet' ),
 		'default'     => '',
 		'desc_tip'    => true,
 		'placeholder' => __( 'Required. Provided by OnePay.', 'woo-viet' )
