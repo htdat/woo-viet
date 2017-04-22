@@ -12,7 +12,7 @@ return array(
 		'title'   => __( 'Enable/Disable', 'woo-viet' ),
 		'type'    => 'checkbox',
 		'label'   => __( 'OnePay Domestic Gateway (by Woo Viet)', 'woo-viet' ),
-		'default' => 'yes'
+		'default' => 'no'
 	),
 	'testmode' => array(
 		'title'       => __( 'OnePay Sandbox', 'woocommerce' ),
