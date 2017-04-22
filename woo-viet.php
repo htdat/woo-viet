@@ -138,7 +138,9 @@ class WooViet {
 		$settings = self::get_settings();
 
 		// Check if "Add the OnePay Domestic Gateway" is enabled
-		if ( 'yes' == $settings['add_onepay_domestic']['enabled'] ) {
+		if ( 'yes' == $settings['add_onepay_domestic']['enabled']
+		     AND 'VND' == get_woocommerce_currency()
+		) {
 			include( 'inc/class-wooviet-onepay-domestic.php' );
 
 			add_filter( 'woocommerce_payment_gateways', array( $this, 'add_gateway_class' ) );

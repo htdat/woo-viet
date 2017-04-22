@@ -101,7 +101,16 @@ class WooViet_Admin_Page {
                             <br/>
                             <label for="">
 								<?php
-								echo sprintf( __( 'Please configure this gateway under <a href="%s">WooCommerce -> Settings -> Checkout</a>', 'woo-viet' ), admin_url( 'admin.php?page=wc-settings&tab=checkout' ) );
+								echo sprintf( __( 'Your store currency is <code>%s</code>. ', 'woo-viet' ), get_woocommerce_currency() );
+								// Handle whether or not the store current is VND
+								if ( 'VND' == get_woocommerce_currency() ) {
+									_e( 'OnePay can work on your site.', 'woo-viet' );
+									echo '<br/>';
+									echo sprintf( __( 'Please configure this gateway under <a href="%s">WooCommerce -> Settings -> Checkout</a>.', 'woo-viet' ), admin_url( 'admin.php?page=wc-settings&tab=checkout' ) );
+								} else {
+									_e( '<span style="color: red" ">This gateway is not active on your site. Because OnePay supports VND only.</span>', 'woo-viet' );
+								}
+
 								?>
                             </label>
                         </td>
