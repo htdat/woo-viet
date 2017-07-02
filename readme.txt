@@ -25,7 +25,7 @@ Add [the OnePay domestic (local ATM cards) gateway](http://onepay.com.vn/).
 * Add districts to Vietnam provinces.
 * Convert `000` of prices to `K` (or anything). E.g: `50000` (VND) will be `50K` (VND), or `50 thousand` (VND).
 * Support `VND` for [the PayPal Standard gateway](https://docs.woocommerce.com/document/paypal-standard/). Convert `VND` prices to any PayPal supported currency before sending visitors to the PayPal pages.
-* Add [the OnePay domestic (local ATM cards) gateway](http://onepay.com.vn/).
+* Add [the OnePay domestic (local ATM cards) gateway](http://onepay.com.vn/). Implement all methods in [the official documents](https://mtf.onepay.vn/developer/?page=modul_noidia_php): QueryDR, IPN, and Return URL.
 
 = ROAD MAP =
 
