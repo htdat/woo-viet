@@ -13,7 +13,7 @@ Add features to WooCommerce stores having anything related to Vietnam: currency,
 
 **"Woo Viet - WooCommerce for Vietnam" brings the features that help to run WooCommerce stores and customize them for Vietnam much easier.**
 
-Xem phiên bản tiếng Việt tại đây https://vi.wordpress.org/plugins/woo-viet/
+Xem phiên bản tiếng Việt tại đây [https://vi.wordpress.org/plugins/woo-viet/](https://vi.wordpress.org/plugins/woo-viet/)
 
 **NEW FEATURE**:
 Add [the OnePay domestic (local ATM cards) gateway](http://onepay.com.vn/).
