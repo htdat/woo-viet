@@ -89,5 +89,15 @@ return array(
 			sprintf( 'URL: <code>%s</code>', WooViet_OnePay_Domestic::get_onepay_ipn_url() ) . '<p/>' .
 			sprintf( __( '%sContact OnePay%s to configure this URL on its site. <strong>This is required  based on its guidelines.</strong>', 'woo-viet' ), '<a href="http://onepay.com.vn/home/en/contact-us.html">', '</a>' ),
 	),
+	/**
+	 * @since 1.3.1
+	 */
+	'debug' => array(
+		'title'       => __( 'Debug log', 'woo-viet' ),
+		'type'        => 'checkbox',
+		'label'       => __( 'Enable logging', 'woo-viet' ),
+		'default'     => 'no',
+		'description' => sprintf( __( 'Log events, such as IPN requests, inside %s', 'woo-viet' ), '<code>' . WC_Log_Handler_File::get_log_file_path( 'WooViet_OnePay_Domestic' ) . '</code>' ),
+	),
 
 );
