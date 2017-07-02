@@ -105,9 +105,9 @@ class WooViet_OnePay_Domestic extends WC_Payment_Gateway {
 			'Title'           => __( 'OnePay Payment Title', 'woo-viet' ),
 			'vpc_Merchant'    => $this->merchant_id,
 			'vpc_AccessCode'  => $this->access_code,
-			'vpc_MerchTxnRef' => sprintf( '%1$s_%2$s', $order->id, date( 'YmdHis' ) ),
+			'vpc_MerchTxnRef' => sprintf( '%1$s_%2$s', $order->get_id(), date( 'YmdHis' ) ),
 			'vpc_OrderInfo'   => substr(
-				sprintf( 'Order #%1$s - %2$s', $order->id, get_home_url() ),
+				sprintf( 'Order #%1$s - %2$s', $order->get_id(), get_home_url() ),
 				0,
 				32 ), // Limit 32 characters
 			'vpc_Amount'      => $order->get_total() * 100, // Multiplying 100 is a requirement from OnePay
