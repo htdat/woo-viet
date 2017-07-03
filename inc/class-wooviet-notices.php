@@ -15,7 +15,7 @@ class WooViet_Notices {
 
 	var $settings = '';
 
-	var $default_settings = array(
+	static $default_settings = array(
 		'installation_time'               => 0,
 		'displaying_survey_after_4_weeks' => 'not_yet',
 	);
@@ -87,7 +87,7 @@ class WooViet_Notices {
 		$line1 = __( 'Please help us to improve Woo Viet.', 'woo-viet' );
 		$line2 = __( 'Rate us!', 'woo-viet' );
 		$line3 = __( 'Or run a short survery:', 'woo-viet' );
-		$line4 = '<a href="http://vn.com" target="_blank">tiếng Việt</a> - <a href="http://en.com" target="_blank">English</a>';
+		$line4 = '<a href="https://goo.gl/forms/QIMkNrRIxgERBBcm2" target="_blank">tiếng Việt</a> - <a href="https://goo.gl/forms/N4GxvBtaIg6iryx43" target="_blank">English</a>';
 		$line5 = __( 'Dismiss this notice', 'woo-viet' );
 		$link  = admin_url( 'admin.php?page=woo-viet&wooviet_dismiss=displaying_survey_after_4_weeks' );
 
