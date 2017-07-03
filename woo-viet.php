@@ -92,7 +92,7 @@ class WooViet {
 	public function notice_if_not_woocommerce() {
 		$class = 'notice notice-error';
 
-		$message = __( 'Woo Viet is not running because WooCommerce is not active. Please activate both plugins',
+		$message = __( 'Woo Viet is not running because WooCommerce is not active. Please activate both plugins.',
 			'woo-viet' );
 
 		printf( '<div class="%1$s"><p><strong>%2$s</strong></p></div>', $class, $message );
