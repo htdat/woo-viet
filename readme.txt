@@ -71,6 +71,7 @@ Follow these steps to install and use the plugin:
 2. Prices are changed to "K", and the symbol is now "VND".
 3. List provinces and districts when selecting Vietnam.
 4. Let clients know about the currency conversion before switching to the PayPal pages.
+5. OnePay domestic (local ATM cards) gateway.
 
 == Changelog ==
 
