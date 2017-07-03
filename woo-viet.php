@@ -133,6 +133,10 @@ class WooViet {
 			include( WOO_VIET_DIR . 'inc/class-wooviet-admin-page.php' );
 			$this->Admin_Page = new WooViet_Admin_Page();
 
+			// Add the notices class
+			include( WOO_VIET_DIR . 'inc/class-wooviet-notices.php' );
+			new WooViet_Notices();
+
 		}
 
 		$settings = self::get_settings();
