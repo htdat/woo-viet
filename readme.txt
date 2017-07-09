@@ -75,7 +75,7 @@ Follow these steps to install and use the plugin:
 
 == Changelog ==
 
-= 1.3.1 - 2017.07.092 =
+= 1.3.1 - 2017.07.09 =
 * Improve the OnePay domestic gateway.
 * Add the plugin icon and banner.
 * Add the questionnaire after 4 weeks of installation.
