@@ -7,7 +7,7 @@
  * Author URI: https://profiles.wordpress.org/htdat
  * Text Domain: woo-viet
  * Domain Path: /languages
- * Version: 1.3
+ * Version: 1.3.1
  * License:     GPLv2+
  */
 
@@ -92,7 +92,7 @@ class WooViet {
 	public function notice_if_not_woocommerce() {
 		$class = 'notice notice-error';
 
-		$message = __( 'Woo Viet is not running because WooCommerce is not active. Please activate both plugins',
+		$message = __( 'Woo Viet is not running because WooCommerce is not active. Please activate both plugins.',
 			'woo-viet' );
 
 		printf( '<div class="%1$s"><p><strong>%2$s</strong></p></div>', $class, $message );
@@ -132,6 +132,10 @@ class WooViet {
 			// Add the admin setting page
 			include( WOO_VIET_DIR . 'inc/class-wooviet-admin-page.php' );
 			$this->Admin_Page = new WooViet_Admin_Page();
+
+			// Add the notices class
+			include( WOO_VIET_DIR . 'inc/class-wooviet-notices.php' );
+			new WooViet_Notices();
 
 		}
 

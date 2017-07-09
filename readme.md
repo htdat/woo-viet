@@ -74,6 +74,11 @@ Follow these steps to install and use the plugin:
 
 ## Changelog
 
+### 1.3.1 - 2017.07.09
+* Improve the OnePay domestic gateway.
+* Add the plugin icon and banner.
+* Add the questionnaire after 4 weeks of installation.
+
 ### 1.3 - 2017.04.22
 * Add [the OnePay domestic (local ATM cards) gateway](http://onepay.com.vn/)
 

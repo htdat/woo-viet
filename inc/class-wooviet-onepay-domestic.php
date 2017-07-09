@@ -12,6 +12,12 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  */
 class WooViet_OnePay_Domestic extends WC_Payment_Gateway {
+	/** @var bool Whether or not logging is enabled */
+	public static $log_enabled = false;
+
+	/** @var WC_Logger Logger instance */
+	public static $log = false;
+
 	/**
 	 * Constructor for the gateway.
 	 */
@@ -39,6 +45,9 @@ class WooViet_OnePay_Domestic extends WC_Payment_Gateway {
 		$this->secure_secret = $this->get_option( 'secure_secret' );
 		$this->user          = $this->get_option( 'user' );
 		$this->password      = $this->get_option( 'password' );
+		$this->debug          = 'yes' === $this->get_option( 'debug', 'no' );
+
+		self::$log_enabled    = $this->debug;
 
 		// Process the admin options
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array(
@@ -96,9 +105,9 @@ class WooViet_OnePay_Domestic extends WC_Payment_Gateway {
 			'Title'           => __( 'OnePay Payment Title', 'woo-viet' ),
 			'vpc_Merchant'    => $this->merchant_id,
 			'vpc_AccessCode'  => $this->access_code,
-			'vpc_MerchTxnRef' => sprintf( '%1$s_%2$s', $order->id, date( 'YmdHis' ) ),
+			'vpc_MerchTxnRef' => sprintf( '%1$s_%2$s', $order->get_id(), date( 'YmdHis' ) ),
 			'vpc_OrderInfo'   => substr(
-				sprintf( 'Order #%1$s - %2$s', $order->id, get_home_url() ),
+				sprintf( 'Order #%1$s - %2$s', $order->get_id(), get_home_url() ),
 				0,
 				32 ), // Limit 32 characters
 			'vpc_Amount'      => $order->get_total() * 100, // Multiplying 100 is a requirement from OnePay
@@ -119,6 +128,10 @@ class WooViet_OnePay_Domestic extends WC_Payment_Gateway {
 		// Add the secure hash to the args
 		$args['vpc_SecureHash'] = $vpc_SecureHash;
 		$http_args              = http_build_query( $args, '', '&' );
+
+		// Log data
+		$message_log = sprintf('get_pay_url - Order ID: %1$s - http_args: %2$s', $order->get_id(), print_r($args, true) );
+		self::log( $message_log);
 
 		if ( $this->testmode ) {
 			return 'https://mtf.onepay.vn/onecomm-pay/vpc.op?' . $http_args;
@@ -246,7 +259,11 @@ class WooViet_OnePay_Domestic extends WC_Payment_Gateway {
 			if ( "0" == $vpc_TxnResponseCode ) {
 				$order->payment_complete();
 			}
+			// Log data
+			$message_log = sprintf('process_onepay_response_data - Order ID: %1$s - Order Note: %2$s - http_args: %3$s', $order_id, $order_note, print_r($args, true) );
+			self::log( $message_log);
 
+			// Return the info
 			switch ( $type ) {
 
 				case 'return':
@@ -391,6 +408,10 @@ class WooViet_OnePay_Domestic extends WC_Payment_Gateway {
 			$http_link = 'https://onepay.vn/onecomm-pay/Vpcdps.op?' . $http_args;
 		}
 
+		// Log data
+		$message_log = sprintf('handle_onepay_querydr - http_link: %1$s - http_args: %2$s', $http_link, print_r($args, true) );
+		self::log( $message_log);
+
 		// Connect to OnePay to get the queryDR info
 		$http_response = wp_remote_get( $http_link );
 		parse_str( wp_remote_retrieve_body( $http_response ), $args_response );
@@ -398,6 +419,23 @@ class WooViet_OnePay_Domestic extends WC_Payment_Gateway {
 		// Process the data
 		$this->process_onepay_response_data( $args_response, 'querydr' );
 
+	}
+
+	/**
+	 * Logging method. - Copied from the WC_Gateway_Paypal Class
+	 *
+	 * @since 1.3.1
+	 * @param string $message Log message.
+	 * @param string $level   Optional. Default 'info'.
+	 *     emergency|alert|critical|error|warning|notice|info|debug
+	 */
+	public static function log( $message, $level = 'info' ) {
+		if ( self::$log_enabled ) {
+			if ( empty( self::$log ) ) {
+				self::$log = wc_get_logger();
+			}
+			self::$log->log( $level, $message, array( 'source' => __CLASS__ ) );
+		}
 	}
 
 }
