@@ -1,5 +1,5 @@
 === Woo Viet - WooCommerce for Vietnam ===
-Contributors: htdat
+Contributors: htdat, thup90
 Tags: OnePay WooCommerce, OnePay Vietnam, WooCommerce Vietnam, vietnam, vietnamese, vietnam provinces, paypal for vietnam dong, vnd, vietnam dong, vietnam currency, vietnam customization
 Requires at least: 4.3
 Tested up to: 4.8
