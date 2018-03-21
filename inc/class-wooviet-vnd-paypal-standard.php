@@ -43,6 +43,9 @@ class WooViet_VND_PayPal_Standard {
 
 		// Add the exchange rate info for this gateway in the checkout page before proceeding in the PayPal pages
 		add_filter( 'option_woocommerce_paypal_settings', array( $this, 'add_exchange_rate_info' ), 11 );
+
+		// Match currency of Paypal with local order
+		add_action( 'valid-paypal-standard-ipn-request', array( $this, 'match_currency_order' ), 10 );
 	}
 
 	/**
@@ -107,4 +110,12 @@ class WooViet_VND_PayPal_Standard {
 		return $value;
 	}
 
+	/*	
+	* Match response currency from Paypal with the order
+	*/
+	public function match_currency_order($posted) {
+		if($posted['mc_currency']) {
+			$posted['mc_currency'] = $order->get_currency();
+		}		
+	}
 }
