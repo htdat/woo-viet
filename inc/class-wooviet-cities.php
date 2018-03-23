@@ -30,9 +30,6 @@ class WooViet_Cities {
 
 	}
 
-
-	}
-
 	/**
 	 * Add Vietnam Cities
 	 *
