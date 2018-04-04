@@ -5,6 +5,9 @@ if (! defined( 'ABSPATH' )) {
 
 class WooViet_Shipping_Method extends WC_Shipping_Method {
 
+    public static $customer_city;
+    public $zone_selected;
+
     public function __construct( $instance_id = 0 ) {
         $this->id                    = 'wooviet_shipping';
         $this->instance_id           = absint( $instance_id );
@@ -17,8 +20,6 @@ class WooViet_Shipping_Method extends WC_Shipping_Method {
         $this->title = 'WooViet Shipping City';
         
         $this->init();
-
-        add_action( 'wp_ajax_get_customer_city_choose', array($this, 'get_customer_city_choose_function') );
 
     }
 
@@ -33,23 +34,19 @@ class WooViet_Shipping_Method extends WC_Shipping_Method {
         $this->city = $this->get_option( 'city' );
         $this->city_cost = $this->get_option( 'city_cost' );
         $this->state_cost = $this->get_option( 'state_cost' );
+        /*$this->city_select = array(
+            'city_title',
+            'city_cost',
+            'city_zone'
+        );*/
         // Actions
         add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
     }
 
-    public function get_customer_city_choose_function(){
-
-        if( isset( $_POST['customer_city'] ) ) {
-            $customer_city = $_POST['customer_city'];
-        }
-
-        //Don't forget to always exit in the ajax function.
-        exit();
-    }
 
     public function init_form_fields() {
         global $wpdb;
-        $zone_selected = array();
+        $this->zone_selected = array();
 
         // Query get location zone and method ID
         $location_zone = $wpdb->get_results( 
@@ -84,14 +81,14 @@ class WooViet_Shipping_Method extends WC_Shipping_Method {
                 'Thị xã Tân Châu' => 'Thị xã Tân Châu'
             ),
             'BA-RIA-VUNG-TAU' => array(
-                'Huyện Châu Đức' => 'Huyện Châu Đức',
-                'Huyện Côn Đảo' => 'Huyện Côn Đảo',
-                'Huyện Đất Đỏ' => 'Huyện Đất Đỏ',
-                'Huyện Long Điền' => 'Huyện Long Điền',
-                'Huyện Tân Thành' => 'Huyện Tân Thành',
-                'Huyện Xuyên Mộc' => 'Huyện Xuyên Mộc',
-                'Thành phố Bà Rịa' => 'Thành phố Bà Rịa',
-                'Thành phố Vũng Tàu' => 'Thành phố Vũng Tàu'
+                'Huyện Châu Đức',
+                'Huyện Côn Đảo',
+                'Huyện Đất Đỏ',
+                'Huyện Long Điền',
+                'Huyện Tân Thành',
+                'Huyện Xuyên Mộc',
+                'Thành phố Bà Rịa',
+                'Thành phố Vũng Tàu'
             ),
         );
 
@@ -109,7 +106,7 @@ class WooViet_Shipping_Method extends WC_Shipping_Method {
                         }                       
                     }
 
-                    $zone_selected = array_merge( $zone_selected, $zone_selected_temp[$i] );
+                    $this->zone_selected = array_merge( $this->zone_selected, $zone_selected_temp[$i] );
                 }
             }
         }
@@ -126,7 +123,7 @@ class WooViet_Shipping_Method extends WC_Shipping_Method {
                 'title'         => __( 'City', 'woo-viet' ),
                 'type'          => 'select',
                 'class'         => 'wc-enhanced-select',
-                'options'       => $zone_selected,
+                'options'       => $this->zone_selected,
             ),
             'city_cost' => array(
                 'title'         => __( 'City Cost', 'woo-viet' ),
@@ -137,19 +134,31 @@ class WooViet_Shipping_Method extends WC_Shipping_Method {
                 'desc_tip'      => true,
             ),
             'state_cost' => array(
-                'title'         => __( 'Cost', 'woo-viet' ),
+                'title'         => __( 'State Cost', 'woo-viet' ),
                 'type'          => 'price',
                 'placeholder'   => '0',
-                'description'   => __( 'Optional cost for shipping to state.', 'woo-viet' ),
+                'description'   => __( 'Optional cost for shipping to state if customer choose any city.', 'woo-viet' ),
                 'default'       => '',
                 'desc_tip'      => true,
             ),
-            /*'services'  => array(
-                'type'            => 'services',
-                'class'           => 'rates_tab_field',
+            /*'city_select1'  => array(
+                'type'            => 'city_select',
+                'class'           => 'city_select',
             ),*/
         );
                 
+    }
+
+    public function get_customer_city_choose(){
+
+        if( isset( $_POST['customer_city'] ) ) {
+            self::$customer_city = $_POST['customer_city'];
+        }
+
+        print_r(self::$customer_city);
+        
+        //Don't forget to always exit in the ajax function.
+        exit();
     }
 
     /**
@@ -163,10 +172,10 @@ class WooViet_Shipping_Method extends WC_Shipping_Method {
      */
 
     public function calculate_shipping( $package = array() ) {
-        if( $this->district == 'Huyện Châu Thành' ) {
-            $this->cost = $this->get_option( 'cost' );
+        if( $this->city == self::$customer_city ) {
+            $this->cost = $this->city_cost;
         } else {
-            $this->cost = 25;
+            $this->cost = $this->state_cost;
         }
 
         $this->add_rate( array(
@@ -179,11 +188,50 @@ class WooViet_Shipping_Method extends WC_Shipping_Method {
     /**
      * generate_services_html function.
      */
-    /*public function generate_services_html() {
+    /*public function generate_city_select_html() {
         ob_start();
-        include( 'html-wf-services.php' );
-        return ob_get_clean();
+        ?>
+        <tr valign="top" id="service_options" class="rates_tab_field" >
+            <td class="forminp" colspan="2" style="padding-left:0px">
+            <strong><?php _e( 'City zone', 'woo-viet' ); ?></strong><br/>
+                <table class="widefat" style="width:100%">
+                    <thead>
+                        <th><?php _e( 'Title', 'woo-viet' ); ?></th>
+                        <th><?php _e('City zone','woo-viet');?></th>
+                        <th><?php _e('Price','woo-viet');?></th>
+                        
+                    </thead>
+                    <tbody>
+                        
+                        <tr>
+                            <td>
+                                <input class="input-text regular-input " type="text" name="woocommerce_wooviet_shipping_city_select1_city_title" id="woocommerce_wooviet_shipping_city_title" placeholder="" value="<?php echo $this->get_option( 'city_title' ) ?>">
+                            </td>
+
+                            <td>
+                                <select name="woocommerce_wooviet_shipping_city" id="" class="select wc-enhanced-select  enhanced">
+                                    <?php foreach ($this->zone_selected as $value) : ?>
+                                        <option value="<?php echo $value ?>" <?php ( $this->get_option( 'city' ) == $value ) ? 'selected' : '' ?>><?php echo $value; ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </td>
+                            
+                            <td>
+                                <input class="input-text regular-input " type="text" name="woocommerce_wooviet_shipping_city_cost" id="woocommerce_wooviet_shipping_city_cost" placeholder="" value="<?php echo $this->get_option( 'city_cost' ) ?>">
+                            </td>
+                            
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+
+
+
+        <?php return ob_get_clean();
     }*/
+
+    
 
 }
 

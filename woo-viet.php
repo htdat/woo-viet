@@ -84,9 +84,14 @@ class WooViet {
 	 */
 	public function __construct() {
 		add_action( 'init', array( $this, 'init' ) );
+
+		add_action( 'wp_enqueue_scripts', array( $this, 'wooviet_enqueue_scripts' ) );
 		add_action( 'woocommerce_shipping_init', array( $this, 'wooviet_shipping_init' ) );
 		add_filter( 'woocommerce_shipping_methods', array( $this, 'wooviet_shipping_method' ) );
-		add_action( 'wp_enqueue_scripts', array( $this, 'wooviet_enqueue_scripts' ) );
+
+		add_action( 'wp_ajax_get_customer_city_choose', array( 'WooViet_Shipping_Method', 'get_customer_city_choose' ) );
+        add_action( 'wp_ajax_nopriv_get_customer_city_choose', array( 'WooViet_Shipping_Method', 'get_customer_city_choose' ) );
+		
 	}
 
 	/**
