@@ -91,6 +91,8 @@ class WooViet {
 
 		add_action( 'wp_ajax_get_customer_city_choose', array( 'WooViet_Shipping_Method', 'get_customer_city_choose' ) );
         add_action( 'wp_ajax_nopriv_get_customer_city_choose', array( 'WooViet_Shipping_Method', 'get_customer_city_choose' ) );
+
+        //add_action('woocommerce_checkout_update_order_review', array( 'WooViet_Shipping_Method', 'action_woocommerce_checkout_update_order_review' ) );
 		
 	}
 
