@@ -13,8 +13,10 @@
 				},
 			})
 			.done(function(response) {
+				$('body').trigger('update_checkout');
 				console.log(response);
 			});
+			
 		}
 	})
 })(jQuery)

@@ -46,6 +46,40 @@ class WooViet_VND_PayPal_Standard {
 
 		// Match currency of Paypal with local order
 		add_action( 'valid-paypal-standard-ipn-request', array( $this, 'match_currency_order' ), 10 );
+
+		// Match PPEC with local order
+		add_action( 'woocommerce_paypal_express_checkout_valid_ipn_request', array( $this, 'ppec_match_currency_order' ), 10 );
+
+		add_filter( 'woocommerce_paypal_express_checkout_request_body', array( $this, 'ppec_convert_prices' ) );
+	}
+
+	/*	
+	* Match response currency from PPEC with the order
+	*/
+	public function ppec_match_currency_order($posted_data) {
+		if($posted_data['mc_currency']) {
+			$posted_data['mc_currency'] = 'VND';
+		}		
+	}
+
+	public function ppec_convert_prices( $params ) {
+		if( $params['PAYMENTREQUEST_0_CURRENCYCODE'] == 'VND' ) {
+			$params['PAYMENTREQUEST_0_CURRENCYCODE'] = $this->paypal_currency;
+
+			// if( $params['AMT'] > 0 ) {
+			// 	$params['AMT'] = round( $params['AMT'] / $this->exchange_rate_to_vnd, 2 );
+			// }
+
+			// if( $params['ITEMAMT'] > 0 ) {
+			// 	$params['ITEMAMT'] = round( $params['ITEMAMT'] / $this->exchange_rate_to_vnd, 2 );
+			// }
+
+			// if( $params['L_PAYMENTREQUEST_0_AMT0'] != 0 ) {
+			// 	$params['L_PAYMENTREQUEST_0_AMT0'] = 10;
+			// }
+		}
+
+		return $params;
 	}
 
 	/**
