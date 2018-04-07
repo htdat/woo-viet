@@ -5,7 +5,6 @@ if (! defined( 'ABSPATH' )) {
 
 class WooViet_Shipping_Method extends WC_Shipping_Method {
 
-    public static $customer_city;
     public $zone_selected;
 
     public function __construct( $instance_id = 0 ) {
@@ -22,6 +21,8 @@ class WooViet_Shipping_Method extends WC_Shipping_Method {
         $this->init();
         //add_filter( 'woocommerce_package_rates', array( $this, 'update_shipping_costs_based_on_cart_session_custom_data' ) );
 
+
+
     }
     
     public function init() {
@@ -34,7 +35,7 @@ class WooViet_Shipping_Method extends WC_Shipping_Method {
         $this->title = $this->get_option( 'title' );
         $this->city = $this->get_option( 'city' );
         $this->city_cost = $this->get_option( 'city_cost' );
-        $this->state_cost = $this->get_option( 'state_cost' );
+        //$this->state_cost = $this->get_option( 'state_cost' );
         /*$this->city_select = array(
             'city_title',
             'city_cost',
@@ -47,6 +48,8 @@ class WooViet_Shipping_Method extends WC_Shipping_Method {
 
     public function init_form_fields() {
         global $wpdb;
+        global $cities;
+        include( WOO_VIET_DIR . 'resource/VN.php' );
         $this->zone_selected = array();
 
         // Query get location zone and method ID
@@ -67,32 +70,6 @@ class WooViet_Shipping_Method extends WC_Shipping_Method {
             $instance_id[] = $location_zone[$i]['instance_id'];                   
         }
 
-        $vn_state = array(
-            'AN-GIANG'        => array(
-                'Huyện An Phú' => 'Huyện An Phú',
-                'Huyện Châu Phú' => 'Huyện Châu Phú',
-                'Huyện Châu Thành' => 'Huyện Châu Thành',
-                'Huyện Chợ Mới' => 'Huyện Chợ Mới',
-                'Huyện Phú Tân' => 'Huyện Phú Tân',
-                'Huyện Thoại Sơn' => 'Huyện Thoại Sơn',
-                'Huyện Tịnh Biên' => 'Huyện Tịnh Biên',
-                'Huyện Tri Tôn' => 'Huyện Tri Tôn',
-                'Thành phố Châu Đốc' => 'Thành phố Châu Đốc',
-                'Thành phố Long Xuyên' => 'Thành phố Long Xuyên',
-                'Thị xã Tân Châu' => 'Thị xã Tân Châu'
-            ),
-            'BA-RIA-VUNG-TAU' => array(
-                'Huyện Châu Đức',
-                'Huyện Côn Đảo',
-                'Huyện Đất Đỏ',
-                'Huyện Long Điền',
-                'Huyện Tân Thành',
-                'Huyện Xuyên Mộc',
-                'Thành phố Bà Rịa',
-                'Thành phố Vũng Tàu'
-            ),
-        );
-
         // Get current method ID
         if( isset( $_REQUEST['instance_id'] ) ) {
             $current_instance_id = $_REQUEST['instance_id'];
@@ -100,7 +77,7 @@ class WooViet_Shipping_Method extends WC_Shipping_Method {
 
                 // Match current location ID
                 if ( $current_instance_id == $instance_id[$i] ) {
-                    foreach ($vn_state as $key => $value) {
+                    foreach ($cities['VN'] as $key => $value) {
 
                         if( $location_code[$i] == $key) {
                             $zone_selected_temp[$i] = $value;
@@ -134,14 +111,14 @@ class WooViet_Shipping_Method extends WC_Shipping_Method {
                 'default'       => '',
                 'desc_tip'      => true,
             ),
-            'state_cost' => array(
+            /*'state_cost' => array(
                 'title'         => __( 'State Cost', 'woo-viet' ),
                 'type'          => 'price',
                 'placeholder'   => '0',
                 'description'   => __( 'Optional cost for shipping to state if customer choose any city.', 'woo-viet' ),
                 'default'       => '',
                 'desc_tip'      => true,
-            ),
+            ),*/
             /*'city_select1'  => array(
                 'type'            => 'city_select',
                 'class'           => 'city_select',
@@ -153,12 +130,10 @@ class WooViet_Shipping_Method extends WC_Shipping_Method {
     public function get_customer_city_choose(){
 
         if( isset( $_POST['customer_city'] ) ) {
-            global $woocommerce;
-            session_start();
-
-            $_SESSION['city'] = $_POST['customer_city'];
-            //self::$customer_city = $_POST['customer_city'];
+            $customer_city= $_POST['customer_city'];
         }
+        session_start();
+        $_SESSION['city'] = $customer_city;
 
         print_r($_SESSION['city']);
         
@@ -180,18 +155,20 @@ class WooViet_Shipping_Method extends WC_Shipping_Method {
         @session_start();
         if( $this->city == $_SESSION['city'] ) {
             $this->cost = $this->city_cost;
-            $_SESSION['val'] = $this->city_cost;
-        } else {
-            $this->cost = $this->state_cost;
-            $_SESSION['val'] = $this->state_cost;
         }
-
-        $this->add_rate( array(
-          'id'   => $this->id,
-          'label' => $this->title,
-          'cost'   => $this->cost,
-        ) );
+        
+            $this->add_rate( array(
+              'id'   => $this->id,
+              'label' => $this->title,
+              'cost'   => $this->cost,
+            ) );   
     }
+
+    /*public function action_woocommerce_checkout_update_order_review($array, $int) {
+        WC()->cart->calculate_shipping();
+        return;
+    }*/
+    
 
     /**
      * generate_services_html function.
