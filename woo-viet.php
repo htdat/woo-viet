@@ -84,6 +84,16 @@ class WooViet {
 	 */
 	public function __construct() {
 		add_action( 'init', array( $this, 'init' ) );
+
+		add_action( 'wp_enqueue_scripts', array( $this, 'wooviet_enqueue_scripts' ) );
+		add_action( 'woocommerce_shipping_init', array( $this, 'wooviet_shipping_init' ) );
+		add_filter( 'woocommerce_shipping_methods', array( $this, 'wooviet_shipping_method' ) );
+
+		add_action( 'wp_ajax_get_customer_city_choose', array( 'WooViet_Shipping_Method', 'get_customer_city_choose' ) );
+        add_action( 'wp_ajax_nopriv_get_customer_city_choose', array( 'WooViet_Shipping_Method', 'get_customer_city_choose' ) );
+
+        //add_action('woocommerce_checkout_update_order_review', array( 'WooViet_Shipping_Method', 'action_woocommerce_checkout_update_order_review' ) );
+		
 	}
 
 	/**
@@ -222,6 +232,26 @@ class WooViet {
 
 		return $methods;
 
+	}
+
+
+	public function wooviet_shipping_init() {
+		include( WOO_VIET_DIR . 'inc/class-wooviet-shipping-city.php' );
+	}
+
+	/*
+	* 
+	*
+	*/
+	public function wooviet_shipping_method( $shipping_methods ) {
+	    $shipping_methods['wooviet_shipping'] = 'WooViet_Shipping_Method';
+	    return $shipping_methods;
+	}
+
+	public function wooviet_enqueue_scripts() {
+		wp_enqueue_script( 'wooviet-script', WOO_VIET_URL . 'assets/wooviet-script.js', array( 'jquery' ), '1.0.0', true );
+
+		wp_localize_script( 'wooviet-script', 'woovietAjax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 	}
 
 }
