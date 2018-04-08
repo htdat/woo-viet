@@ -25,6 +25,9 @@ class WooViet_Cities {
 
 		add_filter( 'wc_city_select_cities', array( $this, 'add_cities' ) );
 
+		// Change priority country -> city -> district -> address for Viet Nam
+		add_filter( 'woocommerce_default_address_fields', array( $this, 'custom_fields_priority') );
+
 	}
 
 	/**
@@ -883,5 +886,22 @@ class WooViet_Cities {
 
 		return $cities;
 
+	}
+
+	/**
+	* Set priority for state and city
+	*
+	* Topic https://wordpress.org/support/topic/thay-doi-thu-tu-field-tinh-huyen/
+	* 
+	* @author 	Longkt
+	* @since 	1.4
+	*
+	*/
+	function custom_fields_priority( $fields ) {
+		$fields['state']['priority'] = 50;
+		$fields['city']['priority'] = 60;
+		$fields['address_1']['priority'] = 70;
+		$fields['address_2']['priority'] = 80;
+		return $fields;
 	}
 }
