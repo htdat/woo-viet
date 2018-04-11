@@ -1,0 +1,48 @@
+.woocommerce-billing-fields__field-wrapper.active {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#billing_first_name_field {
+    order: 1;
+}
+
+#billing_last_name_field {
+    order: 2;
+}
+
+#billing_company_field {
+    order: 3;
+}
+
+#billing_country_field {
+    order: 4;
+}
+
+#billing_state_field {
+    order: 5;
+}
+
+#billing_city_field {
+    order: 6;
+}
+
+#billing_address_1_field {
+    order: 7;
+}
+
+#billing_address_2_field {
+    order: 8;
+}
+
+#billing_postcode_field {
+    order: 9;
+}
+
+#billing_phone_field {
+    order: 10;
+}
+
+#billing_email_field {
+    order: 11;
+}

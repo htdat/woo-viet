@@ -84,6 +84,9 @@ class WooViet {
 	 */
 	public function __construct() {
 		add_action( 'init', array( $this, 'init' ) );
+
+		// Enqueue scritps
+		add_action( 'wp_enqueue_scripts', array( $this, 'load_scripts' ) );
 	}
 
 	/**
@@ -222,6 +225,20 @@ class WooViet {
 
 		return $methods;
 
+	}
+
+	/**
+	* Enqueue scripts
+	*
+	* @author 	Longkt
+	* @since 	1.4
+	*/
+	public function load_scripts() {
+		// Enqueue style
+		wp_enqueue_style( 'wooviet-style', WOO_VIET_URL . 'assets/style.css' );
+
+		// Enqueue script
+		wp_enqueue_script( 'wooviet-script', WOO_VIET_URL . 'assets/script.js', array( 'jquery' ), '1.0', true );
 	}
 
 }
