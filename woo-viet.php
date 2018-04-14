@@ -64,6 +64,12 @@ class WooViet {
 			array(
 				'enabled' => 'yes',
 			),
+		'vnd_paypal_express_checkout' =>
+			array( 
+				'enabled' => 'yes',
+				'currency' => 'USD',
+				'rate'     => '22770',
+			),
 	);
 	/**
 	 * The properties to manage all classes under the "inc/" folder
@@ -76,6 +82,7 @@ class WooViet {
 	protected $Currency;
 	protected $VND_PayPal_Standard;
 	protected $Admin_Page;
+	protected $VND_PayPal_Express_Checkout;
 
 	/**
 	 * Setup class.
@@ -193,6 +200,15 @@ class WooViet {
 			$this->VND_PayPal_Standard = new WooViet_VND_PayPal_Standard(
 				$settings['vnd_paypal_standard']['rate'],
 				$settings['vnd_paypal_standard']['currency']
+			);
+		}
+
+		// Check if "Support VND for the PayPal Express Checkout gateway" is enabled
+		if ( 'yes' == $settings['vnd_paypal_express_checkout']['enabled'] ) {
+			include( WOO_VIET_DIR . 'inc/class-wooviet-vnd-paypal-express-checkout.php' );
+			$this->VND_PayPal_Express_Checkout = new WooViet_VND_PayPal_Express_Checkout(
+				$settings['vnd_paypal_express_checkout']['rate'],
+				$settings['vnd_paypal_express_checkout']['currency']
 			);
 		}
 
