@@ -84,9 +84,6 @@ class WooViet {
 	 */
 	public function __construct() {
 		add_action( 'init', array( $this, 'init' ) );
-
-		// Enqueue scritps
-		add_action( 'wp_enqueue_scripts', array( $this, 'load_scripts' ) );
 	}
 
 	/**
@@ -174,6 +171,9 @@ class WooViet {
 				include( WOO_VIET_DIR . 'inc/class-wooviet-cities.php' );
 				new WooViet_Cities();
 			}
+
+			// Enqueue province scripts
+			add_action( 'wp_enqueue_scripts', array( $this, 'load_province_scripts' ) );
 		}
 
 		include( WOO_VIET_DIR . 'inc/class-wooviet-currency.php' );
@@ -228,17 +228,17 @@ class WooViet {
 	}
 
 	/**
-	* Enqueue scripts
+	* Enqueue province scripts
 	*
 	* @author 	Longkt
 	* @since 	1.4
 	*/
-	public function load_scripts() {
-		// Enqueue style
-		wp_enqueue_style( 'wooviet-style', WOO_VIET_URL . 'assets/style.css' );
+	public function load_province_scripts() {
+		// Enqueue province style
+		wp_enqueue_style( 'wooviet-province-style', WOO_VIET_URL . 'assets/province.css' );
 
-		// Enqueue script
-		wp_enqueue_script( 'wooviet-script', WOO_VIET_URL . 'assets/script.js', array( 'jquery' ), '1.0', true );
+		// Enqueue province script
+		wp_enqueue_script( 'wooviet-province-script', WOO_VIET_URL . 'assets/province.js', array( 'jquery' ), '1.0', true );
 	}
 
 }
