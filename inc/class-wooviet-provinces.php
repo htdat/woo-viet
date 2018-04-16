@@ -6,8 +6,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * The class to handle Vietnam Provinces
  *
- * @todo Arrange the orders of fields displaying in the checkout page: Country - Province - District - Address
- *
  * @author   htdat
  * @since    1.0
  *
@@ -143,6 +141,7 @@ class WooViet_Provinces {
 	/**
 	* Enqueue provinces scripts
 	*
+	* Arrange the address field orders to the Vietnam standard in the checkout page: Country - Province - District - Address
 	* @author 	Longkt
 	* @since 	1.4
 	*/
