@@ -21,6 +21,9 @@ class WooViet_Provinces {
 		add_filter( 'woocommerce_states', array( $this, 'add_provinces' ) );
 		add_filter( 'woocommerce_get_country_locale', array( $this, 'edit_vn_locale' ) );
 		add_filter( 'woocommerce_localisation_address_formats', array( $this, 'edit_vn_address_formats' ) );
+
+		// Enqueue province scripts
+		add_action( 'wp_enqueue_scripts', array( $this, 'load_provinces_scripts' ) );
 	}
 
 	/**
@@ -135,5 +138,19 @@ class WooViet_Provinces {
 
 		return $states;
 
+	}
+
+	/**
+	* Enqueue provinces scripts
+	*
+	* @author 	Longkt
+	* @since 	1.4
+	*/
+	public function load_provinces_scripts() {
+		// Enqueue province style
+		wp_enqueue_style( 'woo-viet-provinces-style', WOO_VIET_URL . 'assets/provinces.css' );
+
+		// Enqueue province script
+		wp_enqueue_script( 'woo-viet-provinces-script', WOO_VIET_URL . 'assets/provinces.js', array( 'jquery' ), '1.0', true );
 	}
 }
