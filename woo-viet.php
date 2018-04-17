@@ -90,7 +90,7 @@ class WooViet {
 	 * Throw a notice if WooCommerce is NOT active
 	 */
 	public function notice_if_not_woocommerce() {
-		$class = 'notice notice-error';
+		$class = 'notice notice-warning';
 
 		$message = __( 'Woo Viet is not running because WooCommerce is not active. Please activate both plugins.',
 			'woo-viet' );
