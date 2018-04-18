@@ -40,6 +40,8 @@ class WooViet_VND_PayPal_Express_Checkout {
 		// Add exchange rate before send request to PayPal
 		add_filter( 'woocommerce_paypal_express_checkout_request_body', array( $this, 'ppec_convert_prices' ) );
 
+		// Load the method to add the exchange rate info for this gateway
+		$this->ppec_exchange_rate_info();
 	}
 
 	/**
@@ -62,6 +64,7 @@ class WooViet_VND_PayPal_Express_Checkout {
 	public function ppec_convert_prices( $params ) {
 
 			if( isset( $params['PAYMENTREQUEST_0_CURRENCYCODE'] ) ) {
+
 				$params['PAYMENTREQUEST_0_CURRENCYCODE'] = $this->ppec_currency;
 
 				if( isset( $params['PAYMENTREQUEST_0_AMT'] ) ) {
@@ -94,6 +97,56 @@ class WooViet_VND_PayPal_Express_Checkout {
 
 		return $params;
 
+	}
+
+	/**
+	 * Add the exchange rate info for this gateway in the checkout page before proceeding in the PayPal pages
+	 */
+	public function ppec_exchange_rate_info() {
+
+		// Check if "Checkout on cart page" is enabled.
+		if( 'yes' === wc_gateway_ppec()->settings->cart_checkout_enabled ) {
+			add_action( 'woocommerce_proceed_to_checkout', array( $this, 'add_ppec_exchange_rate_info' ), 30 );
+		}
+
+		// Check if "Checkout on Single Product" is enabled.
+		if( 'yes' === wc_gateway_ppec()->settings->checkout_on_single_product_enabled ) {
+			add_action( 'woocommerce_after_add_to_cart_form', array( $this, 'add_ppec_exchange_rate_info' ), 30 );
+		}
+
+		// Check if "Enable PayPal Credit" is enabled.
+		if( 'yes' === wc_gateway_ppec()->settings->credit_enabled ) {
+			add_filter( 'woocommerce_paypal_express_checkout_settings', array( $this, 'add_paypal_credit_exchange_rate_info' ), 11 );
+		}
+	}
+
+	/**
+	 * Display the exchange rate info in Cart and Single Product page
+	 */
+	public function add_ppec_exchange_rate_info() {
+		echo '<p class="ppec-exchange-rate-info">' . sprintf( __( 'The prices will be converted to %1$s in the PayPal Express Checkout pages with the exchange rate %2$s.', 'woo-viet' ),
+					"<span style='color:red'> $this->ppec_currency</span>",
+					"<span style='color:red'> $this->ppec_currency / VND = $this->ppec_exchange_rate</span>"
+				) . '</p>';
+	}
+
+	/**
+	 * Display the exchange rate info in Checkout page
+	 * 
+	 * @param $value
+	 * @return mixed
+	 */
+	public function add_paypal_credit_exchange_rate_info( $value ) {
+		if ( ! is_admin() ) {
+			$value['description']['default'] .= '<br />';
+			$value['description']['default'] .=
+				sprintf( __( 'The prices will be converted to %1$s in the PayPal Express Checkout pages with the exchange rate %2$s.', 'woo-viet' ),
+					"<span style='color:red'> $this->ppec_currency</span>",
+					"<span style='color:red'> $this->ppec_currency / VND = $this->ppec_exchange_rate</span>"
+				);
+		}
+
+		return $value;
 	}
 
 }
