@@ -228,7 +228,7 @@ class WooViet {
 	}
 
 	/**
-	 * Add "Settings" link when the plugin is active
+	 * Add "Settings" link in the Plugins list page when the plugin is active
 	 * 
 	 * @since 1.4
 	 * @author Longkt
