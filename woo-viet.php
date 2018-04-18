@@ -109,6 +109,9 @@ class WooViet {
 		if ( class_exists( 'WooCommerce' ) ) {
 			// Run this plugin normally if WooCommerce is active
 			$this->main();
+
+			// Add "Settings" link when the plugin is active
+			add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), array( $this, 'add_settings_link' ) ) ;
 		} else {
 			// Throw a notice if WooCommerce is NOT active
 			add_action( 'admin_notices', array( $this, 'notice_if_not_woocommerce' ) );
@@ -222,6 +225,19 @@ class WooViet {
 
 		return $methods;
 
+	}
+
+	/**
+	 * Add "Settings" link in the Plugins list page when the plugin is active
+	 * 
+	 * @since 1.4
+	 * @author Longkt
+	 */
+	public function add_settings_link( $links ) {
+		$settings = array( '<a href="' . admin_url( 'admin.php?page=woo-viet' ) . '">' . __( 'Settings', 'woo-viet' ) . '</a>' );
+		$links = array_reverse( array_merge( $links, $settings ) );
+
+		return $links;
 	}
 
 }
