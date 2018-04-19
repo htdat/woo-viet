@@ -258,6 +258,23 @@ class WooViet_OnePay_Domestic extends WC_Payment_Gateway {
 			// If the payment is successful, update the order
 			if ( "0" == $vpc_TxnResponseCode ) {
 				$order->payment_complete();
+			} 
+			// If the user cancel payment, cancel the order
+			elseif( "99" == $vpc_TxnResponseCode ) {
+				// Cancel the order
+				$order->cancel_order();
+
+				// Add a notice which is response from OnePay
+				wc_add_notice( $this->OnePay_getResponseDescription( $vpc_TxnResponseCode ), 'notice' );
+
+				// Redirect to Cart page
+				wp_redirect( $order->get_cancel_order_url_raw() );
+			} else {
+				// Add a notice which is response from OnePay
+				wc_add_notice( $this->OnePay_getResponseDescription( $vpc_TxnResponseCode ), 'notice' );
+
+				// Redirect to the order
+				wp_redirect( $this->get_return_url( $order ) );
 			}
 			// Log data
 			$message_log = sprintf('process_onepay_response_data - Order ID: %1$s - Order Note: %2$s - http_args: %3$s', $order_id, $order_note, print_r($args, true) );
@@ -267,7 +284,7 @@ class WooViet_OnePay_Domestic extends WC_Payment_Gateway {
 			switch ( $type ) {
 
 				case 'return':
-					wp_redirect( $this->get_return_url( $order ) );
+					//wp_redirect( $this->get_return_url( $order ) );
 					break;
 
 				case 'ipn':
