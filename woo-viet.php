@@ -64,6 +64,11 @@ class WooViet {
 			array(
 				'enabled' => 'yes',
 			),
+		'display-only-one-country' =>
+			array(
+				'enabled' => 'yes',
+				'country' => 'VN',
+			),
 	);
 	/**
 	 * The properties to manage all classes under the "inc/" folder
@@ -76,6 +81,7 @@ class WooViet {
 	protected $Currency;
 	protected $VND_PayPal_Standard;
 	protected $Admin_Page;
+	protected $Countries;
 
 	/**
 	 * Setup class.
@@ -197,6 +203,12 @@ class WooViet {
 				$settings['vnd_paypal_standard']['rate'],
 				$settings['vnd_paypal_standard']['currency']
 			);
+		}
+
+		// Check if "Display only one country in the Checkout page" is enabled
+		if ( 'yes' == $settings['display-only-one-country']['enabled'] ) {
+			include( WOO_VIET_DIR . 'inc/class-wooviet-countries.php' );
+			$this->Countries = new WooViet_Countries();
 		}
 
 	}

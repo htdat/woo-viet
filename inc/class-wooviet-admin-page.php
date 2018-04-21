@@ -239,6 +239,39 @@ class WooViet_Admin_Page {
 
                         </td>
                     </tr>
+                    <tr>
+                        <th scope="row"><?php echo __( 'Display only one country in the Checkout page', 'woo-viet' ) ?></th>
+                        <td>
+                            <input name="settings[display-only-one-country][enabled]" type="hidden" value="no">
+                            <input name="settings[display-only-one-country][enabled]" type="checkbox"
+                                   id="display_only_one_country" value="yes"
+								<?php if ( 'yes' == $settings['display-only-one-country']['enabled'] )
+									echo 'checked="checked"' ?>>
+                            <label for="display_only_one_country"><?php _e( 'Enabled', 'woo-viet' ) ?></label>
+
+                            <fieldset><br/>
+                                <select name="settings[display-only-one-country][country]"
+                                        id="display_only_one_country_name">
+									<?php
+						        	global $woocommerce;
+						        	$countries = $woocommerce->countries->get_allowed_countries();
+
+									foreach ( $countries as $country_code => $country ) {
+
+										if ( $country_code == $settings['display-only-one-country']['country'] ) {
+											printf( '<option selected="selected" value="%1$s">%2$s</option>', $country_code, $country );
+										} else {
+											printf( '<option value="%1$s">%2$s</option>', $country_code, $country );
+										}
+
+									}
+									?>
+                                </select>
+                                <label for="display_only_one_country_name"><?php _e( 'Select a country to display only one in Checkout page.', 'woo-viet' ) ?></label>
+                            </fieldset>
+
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
 
