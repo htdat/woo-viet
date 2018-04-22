@@ -275,7 +275,8 @@ class WooViet_OnePay_Domestic extends WC_Payment_Gateway {
 			// Log data
 			$message_log = sprintf('process_onepay_response_data - Order ID: %1$s - Order Note: %2$s - http_args: %3$s', $order_id, $order_note, print_r($args, true) );
 			self::log( $message_log);
-
+			
+			// Do the last actions based on $type 
 			switch ( $type ) {
 
 				case 'return': // Add info from OnePay and redirect to the appropriate URLs
