@@ -255,22 +255,53 @@ class WooViet_OnePay_Domestic extends WC_Payment_Gateway {
 			);
 			$order->add_order_note( $order_note );
 
-			// If the payment is successful, update the order
-			if ( "0" == $vpc_TxnResponseCode ) {
-				$order->payment_complete();
+			
+			// Do action for the order based on the response code from OnePay
+			// This is an intentional DRY switch - refer to #DRY_vpc_TxnResponseCode below
+			switch ( $vpc_TxnResponseCode ) {
+				case '0':
+					// If the payment is successful, update the order
+					$order->payment_complete();
+					break;
+				case '99':
+					// If the user cancels payment, cancel the order
+					$order->cancel_order();
+					break;
+				default:
+					// For other cases, do nothing. By default, the order status is still "Pending Payment"
+					break;
 			}
+
 			// Log data
 			$message_log = sprintf('process_onepay_response_data - Order ID: %1$s - Order Note: %2$s - http_args: %3$s', $order_id, $order_note, print_r($args, true) );
 			self::log( $message_log);
 
-			// Return the info
 			switch ( $type ) {
 
-				case 'return':
-					wp_redirect( $this->get_return_url( $order ) );
+				case 'return': // Add info from OnePay and redirect to the appropriate URLs
+
+					wc_add_notice( __( 'OnePay info: ', 'woo-viet') . $this->OnePay_getResponseDescription( $vpc_TxnResponseCode ), 'notice' );
+
+					// This is an intentional DRY switch - refer to #DRY_vpc_TxnResponseCode above
+					// I need to make sure that `ipn` case below and message_log can be executed as well. 
+					switch ( $vpc_TxnResponseCode ) {
+						case '0':
+							// If the payment is successful, redirect to the order page
+							wp_redirect( $this->get_return_url( $order ) );
+							break;
+						case '99':
+							// If the user cancels payment, redirect to the canceled cart page 
+							wp_redirect( $order->get_cancel_order_url_raw() );
+							break;
+						default:
+							// For other cases, redirect to the payment page
+							wp_redirect( $order->get_checkout_payment_url () );
+							break;
+					}
+
 					break;
 
-				case 'ipn':
+				case 'ipn': // Output the data to the page content 
 					exit( 'responsecode=1&desc=confirm-success' );
 					break;
 
