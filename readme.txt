@@ -1,9 +1,10 @@
 === Woo Viet - WooCommerce for Vietnam ===
-Contributors: htdat, thup90
+Contributors: htdat, thup90, longnguyen
 Tags: OnePay WooCommerce, OnePay Vietnam, WooCommerce Vietnam, vietnam, vietnamese, vietnam provinces, paypal for vietnam dong, vnd, vietnam dong, vietnam currency, vietnam customization
 Requires at least: 4.3
-Tested up to: 4.8
-Stable tag: 1.3.1
+Tested up to: 4.9.5
+Requires PHP: 5.6
+Stable tag: 1.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,17 +22,17 @@ Add [the OnePay domestic (local ATM cards) gateway](http://onepay.com.vn/).
 = FEATURES =
 
 * Change the VND currency symbol `đ` to anything, e.g: `VND`, `VNĐ`, `đồng`, etc.
-* Add provinces for Vietnam when visitors select Vietnam as a country of the shipping (billing) address. This is not available in WooCommerce by default.
+* Add provinces for Vietnam when visitors select Vietnam as a country of the shipping (billing) address. Arrange the address fields to the Vietnam standard: Country - Province - District - Address.
 * Add districts to Vietnam provinces.
 * Convert `000` of prices to `K` (or anything). E.g: `50000` (VND) will be `50K` (VND), or `50 thousand` (VND).
 * Support `VND` for [the PayPal Standard gateway](https://docs.woocommerce.com/document/paypal-standard/). Convert `VND` prices to any PayPal supported currency before sending visitors to the PayPal pages.
+* Support `VND` for [the PayPal Express Checkout gateway](https://docs.woocommerce.com/document/paypal-express-checkout/)
 * Add [the OnePay domestic (local ATM cards) gateway](http://onepay.com.vn/). Implement all methods in [the official documents](https://mtf.onepay.vn/developer/?page=modul_noidia_php): QueryDR, IPN, and Return URL.
 
 = ROAD MAP =
 
 In the future, this plugin will add more and more features for the Vietnam market:
 
-* Integrate all districts to Vietnam provinces. (available since 1.2)
 * Integrate at least one solution for collecting money by phone cards.
 * Integrate the Vietnam payment gateways like 1Pay, OnePay, BaoKim, Ngan Luong, etc.
 * Integrate the Vietnam shipping solutions like ShipChung, Giaohangnhanh, ViettelPost, etc.
@@ -75,30 +76,24 @@ Follow these steps to install and use the plugin:
 
 == Changelog ==
 
-= 1.3.1 - 2017.07.09 =
-* Improve the OnePay domestic gateway.
-* Add the plugin icon and banner.
-* Add the questionnaire after 4 weeks of installation.
+= 1.4 - 2018.04.24 =
 
-= 1.3 - 2017.04.22 =
-* Add [the OnePay domestic (local ATM cards) gateway](http://onepay.com.vn/).
+* Fix the on-hold order issue with PayPal Standard.
+* Fix the issue in OnePay Domestic gateway when users cancel payment.
+* Add enhancement: arrange the address fields to the Vietnam standard: Country - Province - District - Address.
+* Add supporting VND for [the PayPal Express Checkout gateway](https://docs.woocommerce.com/document/paypal-express-checkout/).
+* Add "Settings" link in the Plugins list page when the plugin is active.
 
-= 1.2 - 2017.03.03 =
-* Integrate all districts to Vietnam provinces. Credits: [WC City Select by 8manos](https://github.com/8manos/wc-city-select) and [the Vietnam district data by 10h30](https://github.com/htdat/woo-viet/issues/4#issuecomment-277449462)
-
-= 1.1 =
-* Replace all “WooCommerce for Vietnam” to “Woo Viet”
-* Replace all “woocomerce-for-vietnam” to “woo-viet”
-* Re-upload to WordPress.org
-
-= 1.0 =
-* First release.
-* Upload to WordPress.org
+See all change logs on [GitHub repo](https://github.com/htdat/woo-viet#changelog).
 
 == Upgrade Notice ==
 
+= 1.4 =
+
+Version 1.4 arranges the address fields to the Vietnam standard (Country - Province - District - Address), supports VND for PayPal Express Checkout, and fixes issues on PayPal Standard and OnePay Domestic gateways.
+
 = 1.3 =
-The new version 1.2 comes with the feature "Add the OnePay domestic (local ATM cards) gateway]"
+The new version 1.3 comes with the feature "Add the OnePay domestic (local ATM cards) gateway]"
 
 = 1.2 =
 The new version 1.2 comes with the feature "Add districts to Vietnam provinces".
