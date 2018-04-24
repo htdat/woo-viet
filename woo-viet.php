@@ -7,7 +7,11 @@
  * Author URI: https://profiles.wordpress.org/htdat
  * Text Domain: woo-viet
  * Domain Path: /languages
- * Version: 1.3.1
+ * Version: 1.4
+ *
+ * WC requires at least: 2.6
+ * WC tested up to: 2.3
+ *
  * License:     GPLv2+
  */
 
@@ -64,6 +68,12 @@ class WooViet {
 			array(
 				'enabled' => 'yes',
 			),
+		'vnd_paypal_express_checkout' =>
+			array( 
+				'enabled' => 'yes',
+				'currency' => 'USD',
+				'rate'     => '22770',
+			),
 	);
 	/**
 	 * The properties to manage all classes under the "inc/" folder
@@ -76,6 +86,7 @@ class WooViet {
 	protected $Currency;
 	protected $VND_PayPal_Standard;
 	protected $Admin_Page;
+	protected $VND_PayPal_Express_Checkout;
 
 	/**
 	 * Setup class.
@@ -90,7 +101,7 @@ class WooViet {
 	 * Throw a notice if WooCommerce is NOT active
 	 */
 	public function notice_if_not_woocommerce() {
-		$class = 'notice notice-error';
+		$class = 'notice notice-warning';
 
 		$message = __( 'Woo Viet is not running because WooCommerce is not active. Please activate both plugins.',
 			'woo-viet' );
@@ -109,6 +120,9 @@ class WooViet {
 		if ( class_exists( 'WooCommerce' ) ) {
 			// Run this plugin normally if WooCommerce is active
 			$this->main();
+
+			// Add "Settings" link when the plugin is active
+			add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), array( $this, 'add_settings_link' ) ) ;
 		} else {
 			// Throw a notice if WooCommerce is NOT active
 			add_action( 'admin_notices', array( $this, 'notice_if_not_woocommerce' ) );
@@ -196,6 +210,15 @@ class WooViet {
 			);
 		}
 
+		// Check if "Support VND for the PayPal Express Checkout gateway" is enabled
+		if ( 'yes' == $settings['vnd_paypal_express_checkout']['enabled'] ) {
+			include( WOO_VIET_DIR . 'inc/class-wooviet-vnd-paypal-express-checkout.php' );
+			$this->VND_PayPal_Express_Checkout = new WooViet_VND_PayPal_Express_Checkout(
+				$settings['vnd_paypal_express_checkout']['rate'],
+				$settings['vnd_paypal_express_checkout']['currency']
+			);
+		}
+
 	}
 
 	/**
@@ -222,6 +245,19 @@ class WooViet {
 
 		return $methods;
 
+	}
+
+	/**
+	 * Add "Settings" link in the Plugins list page when the plugin is active
+	 * 
+	 * @since 1.4
+	 * @author Longkt
+	 */
+	public function add_settings_link( $links ) {
+		$settings = array( '<a href="' . admin_url( 'admin.php?page=woo-viet' ) . '">' . __( 'Settings', 'woo-viet' ) . '</a>' );
+		$links = array_reverse( array_merge( $links, $settings ) );
+
+		return $links;
 	}
 
 }

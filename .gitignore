@@ -6,3 +6,7 @@ Thumbs.db
 
 # Temporary folders
 /_temp
+
+# PHPStorm 
+
+/.idea
