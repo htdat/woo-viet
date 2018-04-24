@@ -264,7 +264,7 @@ class WooViet_Admin_Page {
 									}
 									?>
                                 </select>
-                                <label for="vnd_paypal_express_checkout_currency"><?php _e( 'Select a PayPal Express Checkout supported currency (like USD, EUR, etc), which is used to convert VND prices', 'woo-viet' ) ?></label>
+                                <label for="vnd_paypal_express_checkout_currency"><?php _e( 'Select a PayPal supported currency (like USD, EUR, etc), which is used to convert VND prices', 'woo-viet' ) ?></label>
                                 <br/>
                                 <br/>
 

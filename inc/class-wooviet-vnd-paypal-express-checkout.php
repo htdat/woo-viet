@@ -20,12 +20,12 @@ class WooViet_VND_PayPal_Express_Checkout {
 	protected $ppec_exchange_rate;
 
 	/**
-	 * @var str
+	 * @var string
 	 */
 	protected $ppec_currency;
 
 	/**
-	 * @var str
+	 * @var string
 	 */
 	protected $ppec_description;
 
@@ -33,7 +33,7 @@ class WooViet_VND_PayPal_Express_Checkout {
 	 * WooViet_VND_PayPal_Express_Checkout constructor
 	 *
 	 * @param int $ppec_exchange_rate
-	 * @param str $ppec_currency
+	 * @param string $ppec_currency
 	 */
 	public function __construct( $ppec_exchange_rate = 22770, $ppec_currency = 'USD' ) {
 
@@ -112,7 +112,7 @@ class WooViet_VND_PayPal_Express_Checkout {
 	}
 
 	/**
-	 * Add the exchange rate info for this gateway in the checkout page before proceeding in the PayPal pages
+	 * Add the exchange rate info in the suitable locations before proceeding in the PayPal pages
 	 */
 	public function ppec_exchange_rate_info() {
 
