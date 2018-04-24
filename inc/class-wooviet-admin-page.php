@@ -239,6 +239,42 @@ class WooViet_Admin_Page {
 
                         </td>
                     </tr>
+                    <tr>
+                        <th scope="row"><?php printf( __( 'Support VND for <a href="%s">the PayPal Express Checkout gateway</a>', 'woo-viet' ), 'https://docs.woocommerce.com/document/paypal-express-checkout/' ) ?></th>
+                        <td>
+                            <input name="settings[vnd_paypal_express_checkout][enabled]" type="hidden" value="no">
+                            <input name="settings[vnd_paypal_express_checkout][enabled]" type="checkbox"
+                                   id="vnd_paypal_express_checkout" value="yes"
+								<?php if ( 'yes' == $settings['vnd_paypal_express_checkout']['enabled'] )
+									echo 'checked="checked"' ?>>
+                            <label for="vnd_paypal_express_checkout"><?php _e( 'Enabled', 'woo-viet' ) ?></label>
+
+                            <fieldset><br/>
+                                <select name="settings[vnd_paypal_express_checkout][currency]"
+                                        id="vnd_paypal_express_checkout_currency">
+									<?php
+									foreach ( $paypal_supported_currencies as $currency ) {
+
+										if ( strtoupper( $currency ) == $settings['vnd_paypal_express_checkout']['currency'] ) {
+											printf( '<option selected="selected" value="%1$s">%1$s</option>', $currency );
+										} else {
+											printf( '<option value="%1$s">%1$s</option>', $currency );
+										}
+
+									}
+									?>
+                                </select>
+                                <label for="vnd_paypal_express_checkout_currency"><?php _e( 'Select a PayPal supported currency (like USD, EUR, etc), which is used to convert VND prices', 'woo-viet' ) ?></label>
+                                <br/>
+                                <br/>
+
+                                <input name="settings[vnd_paypal_express_checkout][rate]" type="number" step="1" min="100"
+                                       id="vnd_paypal_express_checkout_rate" style="width: 70px;"
+                                       value="<?php echo $settings['vnd_paypal_express_checkout']['rate'] ?>"
+                                <label for="vnd_paypal_express_checkout_rate"><?php _e( 'Insert the exchange rate of this currency to VND', 'woo-viet' ) ?></label>
+                            </fieldset>
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
 
