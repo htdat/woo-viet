@@ -4,7 +4,7 @@ Tags: OnePay WooCommerce, OnePay Vietnam, WooCommerce Vietnam, vietnam, vietname
 Requires at least: 4.3
 Tested up to: 4.9.5
 Requires PHP: 5.6
-Stable tag: 1.4
+Stable tag: 1.4.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,9 +16,6 @@ Add features to WooCommerce stores having anything related to Vietnam: currency,
 
 Xem phiên bản tiếng Việt tại đây [https://vi.wordpress.org/plugins/woo-viet/](https://vi.wordpress.org/plugins/woo-viet/)
 
-**NEW FEATURE**:
-Add [the OnePay domestic (local ATM cards) gateway](http://onepay.com.vn/).
-
 = FEATURES =
 
 * Change the VND currency symbol `đ` to anything, e.g: `VND`, `VNĐ`, `đồng`, etc.
@@ -26,7 +23,7 @@ Add [the OnePay domestic (local ATM cards) gateway](http://onepay.com.vn/).
 * Add districts to Vietnam provinces.
 * Convert `000` of prices to `K` (or anything). E.g: `50000` (VND) will be `50K` (VND), or `50 thousand` (VND).
 * Support `VND` for [the PayPal Standard gateway](https://docs.woocommerce.com/document/paypal-standard/). Convert `VND` prices to any PayPal supported currency before sending visitors to the PayPal pages.
-* Support `VND` for [the PayPal Express Checkout gateway](https://docs.woocommerce.com/document/paypal-express-checkout/)
+* Support `VND` for [the PayPal Express Checkout gateway](https://docs.woocommerce.com/document/paypal-express-checkout/).
 * Add [the OnePay domestic (local ATM cards) gateway](http://onepay.com.vn/). Implement all methods in [the official documents](https://mtf.onepay.vn/developer/?page=modul_noidia_php): QueryDR, IPN, and Return URL.
 
 = ROAD MAP =
@@ -75,6 +72,14 @@ Follow these steps to install and use the plugin:
 5. OnePay domestic (local ATM cards) gateway.
 
 == Changelog ==
+
+= 1.4.2 - 2018.04.26 =
+
+* Fix the fatal error when WooCommerce PayPal Express Checkout Gateway is not active. 
+
+= 1.4.1 - 2018.04.26 =
+
+* Fix the SVN command, missing some files on WP.org repo. 
 
 = 1.4 - 2018.04.24 =
 

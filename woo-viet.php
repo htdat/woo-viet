@@ -7,7 +7,7 @@
  * Author URI: https://profiles.wordpress.org/htdat
  * Text Domain: woo-viet
  * Domain Path: /languages
- * Version: 1.4
+ * Version: 1.4.2
  *
  * WC requires at least: 2.6
  * WC tested up to: 2.3
@@ -211,8 +211,9 @@ class WooViet {
 		}
 
 		// Check if "Support VND for the PayPal Express Checkout gateway" is enabled
-		if ( 'yes' == $settings['vnd_paypal_express_checkout']['enabled'] ) {
-			include( WOO_VIET_DIR . 'inc/class-wooviet-vnd-paypal-express-checkout.php' );
+		if ( 'yes' == $settings['vnd_paypal_express_checkout']['enabled'] 
+			AND class_exists( 'WC_Gateway_PPEC_Plugin' )
+		) {			include( WOO_VIET_DIR . 'inc/class-wooviet-vnd-paypal-express-checkout.php' );
 			$this->VND_PayPal_Express_Checkout = new WooViet_VND_PayPal_Express_Checkout(
 				$settings['vnd_paypal_express_checkout']['rate'],
 				$settings['vnd_paypal_express_checkout']['currency']

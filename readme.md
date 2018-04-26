@@ -8,6 +8,14 @@ Xem phiên bản tiếng Việt tại đây https://vi.wordpress.org/plugins/woo
 
 ## Changelog
 
+### 1.4.2 - 2018.04.26 =
+
+* Fix the fatal error when WooCommerce PayPal Express Checkout Gateway is not active. 
+
+### 1.4.1 - 2018.04.26 =
+
+* Fix the SVN command, missing some files on WP.org repo. 
+
 ### 1.4 - 2018.04.24
 
 * Fix the on-hold order issue with PayPal Standard.
