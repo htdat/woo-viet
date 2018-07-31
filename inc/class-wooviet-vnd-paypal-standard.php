@@ -25,6 +25,8 @@ class WooViet_VND_PayPal_Standard {
 	 */
 	protected $paypal_currency = 'USD';
 
+	//@todo - declare two vars 
+
 	/**
 	 * WooViet_VND_PayPal_Standard constructor.
 	 *
@@ -44,8 +46,12 @@ class WooViet_VND_PayPal_Standard {
 		// Add the exchange rate info for this gateway in the checkout page before proceeding in the PayPal pages
 		add_filter( 'option_woocommerce_paypal_settings', array( $this, 'add_exchange_rate_info' ), 11 );
 
-		// Match currency of Paypal with local order
-		add_action( 'valid-paypal-standard-ipn-request', array( $this, 'match_currency_order' ), 10 );
+		// Match currency and amount between Paypal and WC Order
+		add_action( 'valid-paypal-standard-ipn-request', array( $this, 'match_order_currency_and_amount' ), 5 );
+
+		// Restore currency and amount for WC Order
+		add_action( 'valid-paypal-standard-ipn-request', array( $this, 'restore_order_currency_and_amount' ), 15 );
+		
 	}
 
 	/**
@@ -111,17 +117,78 @@ class WooViet_VND_PayPal_Standard {
 	}
 
 	/*	
-	* Match response currency from Paypal IPN with the order
+	* Match currency and amount from Paypal IPN with the order
 	* 
 	* Topic https://wordpress.org/support/topic/loi-order-bi-on-hold/
 	*
-	* @author 	Longkt
-	* @since 	1.4
+	* @author 	htdat
+	* @since 	1.4.3
 	*/
-	public function match_currency_order($posted) {
-		if($posted['mc_currency']) {
-			$posted['mc_currency'] = $order->get_currency();
-		}		
+	public function match_order_currency_and_amount($posted) {
+
+		$order = ! empty( $posted['custom'] ) ? $this->get_paypal_order( $posted['custom'] ) : false;
+
+		if ( $order ) {
+			$this->original_order_currency = $order->get_currency();
+			$this->original_order_total = $order->get_total();
+
+			$order->set_currency( $posted['mc_currency'] );
+			$order->set_total( $posted['mc_gross'] );
+
+			$order->save();
+		}
+
 	}
+
+	/*	
+	* Restore currency and amount of the order after the 'match_order_currency_and_amount' action
+	*
+	* @author 	htdat
+	* @since 	1.4.3
+	*/
+	public function restore_order_currency_and_amount($posted) {
+
+		$order = ! empty( $posted['custom'] ) ? $this->get_paypal_order( $posted['custom'] ) : false;
+
+		if ( $order ) {
+
+			$order->set_currency( $this->original_order_currency );
+			$order->set_total( $this->original_order_total );
+
+			$order->save();
+		}
+
+	}
+
+
+	/**
+	 * @see Grab this code from - can not call it directly https://github.com/woocommerce/woocommerce/blob/f5c2f89af6a9421af8edc2a4aa20d372e5be40f8/includes/gateways/paypal/includes/class-wc-gateway-paypal-response.php#L30 
+	 * 
+	 * @since 1.4.3 
+	 * @author htdat
+	 */
+	protected function get_paypal_order( $raw_custom ) {
+		// We have the data in the correct format, so get the order.
+		$custom = json_decode( $raw_custom );
+		if ( $custom && is_object( $custom ) ) {
+			$order_id  = $custom->order_id;
+			$order_key = $custom->order_key;
+		} else {
+			// Nothing was found.
+			WC_Gateway_Paypal::log( 'Order ID and key were not found in "custom".', 'error' );
+			return false;
+		}
+		$order = wc_get_order( $order_id );
+		if ( ! $order ) {
+			// We have an invalid $order_id, probably because invoice_prefix has changed.
+			$order_id = wc_get_order_id_by_order_key( $order_key );
+			$order    = wc_get_order( $order_id );
+		}
+		if ( ! $order || $order->get_order_key() !== $order_key ) {
+			WC_Gateway_Paypal::log( 'Order Keys do not match.', 'error' );
+			return false;
+		}
+		return $order;
+	}	
 
 }

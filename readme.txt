@@ -4,7 +4,7 @@ Tags: OnePay WooCommerce, OnePay Vietnam, WooCommerce Vietnam, vietnam, vietname
 Requires at least: 4.3
 Tested up to: 4.9.5
 Requires PHP: 5.6
-Stable tag: 1.4.2
+Stable tag: 1.4.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -72,22 +72,6 @@ Follow these steps to install and use the plugin:
 5. OnePay domestic (local ATM cards) gateway.
 
 == Changelog ==
-
-= 1.4.2 - 2018.04.26 =
-
-* Fix the fatal error when WooCommerce PayPal Express Checkout Gateway is not active. 
-
-= 1.4.1 - 2018.04.26 =
-
-* Fix the SVN command, missing some files on WP.org repo. 
-
-= 1.4 - 2018.04.24 =
-
-* Fix the on-hold order issue with PayPal Standard.
-* Fix the issue in OnePay Domestic gateway when users cancel payment.
-* Add enhancement: arrange the address fields to the Vietnam standard: Country - Province - District - Address.
-* Add supporting VND for [the PayPal Express Checkout gateway](https://docs.woocommerce.com/document/paypal-express-checkout/).
-* Add "Settings" link in the Plugins list page when the plugin is active.
 
 See all change logs on [GitHub repo](https://github.com/htdat/woo-viet#changelog).
 
