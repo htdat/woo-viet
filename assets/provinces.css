@@ -1,4 +1,4 @@
-.woocommerce-billing-fields__field-wrapper.active {
+.woocommerce-billing-fields__field-wrapper {
     display: flex;
     flex-wrap: wrap;
 }
