@@ -8,6 +8,10 @@ Xem phiên bản tiếng Việt tại đây https://vi.wordpress.org/plugins/woo
 
 ## Changelog
 
+### 1.4.4 - 2019.02.24
+
+* Fix the order of Provine - District field not working after updating WooCommerce 3.5.x #60 
+
 ### 1.4.3 - 2018.07.31
 
 * Fix fatal error when handling PayPal IPN #56
