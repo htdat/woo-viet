@@ -154,6 +154,7 @@ class WooViet {
 		}
 
 		$settings = self::get_settings();
+		$woocommerce_paypal_settings = get_option( 'woocommerce_paypal_settings' );
 
 		// Check if "Add the OnePay Domestic Gateway" is enabled
 		if ( 'yes' == $settings['add_onepay_domestic']['enabled']
@@ -201,8 +202,8 @@ class WooViet {
 		}
 
 
-		// Check if "Support VND for the PayPal Standard gateway" is enabled
-		if ( 'yes' == $settings['vnd_paypal_standard']['enabled'] ) {
+		// Check if "Support VND for the PayPal Standard gateway" is enabled and PayPal Standard gateway is enabled
+		if ( 'yes' == $settings['vnd_paypal_standard']['enabled'] && 'yes' == $woocommerce_paypal_settings['enabled'] ) {
 			include( WOO_VIET_DIR . 'inc/class-wooviet-vnd-paypal-standard.php' );
 			$this->VND_PayPal_Standard = new WooViet_VND_PayPal_Standard(
 				$settings['vnd_paypal_standard']['rate'],
