@@ -154,7 +154,6 @@ class WooViet {
 		}
 
 		$settings = self::get_settings();
-		$woocommerce_paypal_settings = get_option( 'woocommerce_paypal_settings' );
 
 		// Check if "Add the OnePay Domestic Gateway" is enabled
 		if ( 'yes' == $settings['add_onepay_domestic']['enabled']
@@ -201,7 +200,8 @@ class WooViet {
 			$this->Currency->convert_price_thousand_to_k( $settings['convert_price']['text'] );
 		}
 
-
+		$woocommerce_paypal_settings = get_option( 'woocommerce_paypal_settings' );
+		
 		// Check if "Support VND for the PayPal Standard gateway" is enabled and PayPal Standard gateway is enabled
 		if ( 'yes' == $settings['vnd_paypal_standard']['enabled'] && 'yes' == $woocommerce_paypal_settings['enabled'] ) {
 			include( WOO_VIET_DIR . 'inc/class-wooviet-vnd-paypal-standard.php' );
