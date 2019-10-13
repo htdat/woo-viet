@@ -126,6 +126,27 @@ class WooViet_VND_PayPal_Standard {
 	*/
 	public function match_order_currency_and_amount($posted) {
 
+		// @test-fix
+		// === Current way === 
+		// hook before valid_response() - remove this filter, replace the check with a class similar to WC_Gateway_Paypal_IPN_Handler but valid_response is re-written. 
+		//
+		// === A much better way === 
+		// hook before check_response, then do quite the same way above. 
+
+       remove_all_filters('valid-paypal-standard-ipn-request'); // maybe add priority 
+		
+		WC_Gateway_Paypal::log( 'before calling Woo_Viet_WC_Gateway_Paypal_IPN_Handler' );
+
+       require_once dirname( __FILE__ ) . '/paypal-standard/Woo_Viet_WC_Gateway_Paypal_IPN_Handler.php';
+
+		$handler = new Woo_Viet_WC_Gateway_Paypal_IPN_Handler( true, '' ); //needs to handle the correct variables
+
+		$handler->check_response(); 
+		
+		WC_Gateway_Paypal::log( 'after calling Woo_Viet_WC_Gateway_Paypal_IPN_Handler' );
+
+
+/*
 		$order = ! empty( $posted['custom'] ) ? $this->get_paypal_order( $posted['custom'] ) : false;
 
 		if ( $order ) {
@@ -137,7 +158,8 @@ class WooViet_VND_PayPal_Standard {
 
 			$order->save();
 		}
-
+*/		
+		// @test-fix-end
 	}
 
 	/*	
@@ -192,3 +214,4 @@ class WooViet_VND_PayPal_Standard {
 	}	
 
 }
+
