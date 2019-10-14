@@ -122,8 +122,9 @@ class WooViet_VND_PayPal_Standard {
      */
 	public function remove_currency_and_total_checks() {
 
-        // Remove this filter https://github.com/woocommerce/woocommerce/blob/3.7.1/includes/gateways/paypal/includes/class-wc-gateway-paypal-ipn-handler.php#L34
+        // Remove these filters https://github.com/woocommerce/woocommerce/blob/3.7.1/includes/gateways/paypal/includes/class-wc-gateway-paypal-ipn-handler.php#L34-L35
         remove_all_filters( 'woocommerce_api_wc_gateway_paypal', 10 );
+        remove_all_filters( 'valid-paypal-standard-ipn-request', 10 );
 
         // Get values for PayPal Standard settings
         // Ref: https://github.com/woocommerce/woocommerce/blob/3.7.1/includes/gateways/paypal/class-wc-gateway-paypal.php#L58-L61
