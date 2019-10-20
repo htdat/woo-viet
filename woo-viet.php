@@ -199,11 +199,15 @@ class WooViet {
 		if ( 'yes' == $settings['convert_price']['enabled'] ) {
 			$this->Currency->convert_price_thousand_to_k( $settings['convert_price']['text'] );
 		}
-
-		$woocommerce_paypal_settings = get_option( 'woocommerce_paypal_settings' );
 		
+		$is_paypay_standard_active = false; 
+		$woocommerce_paypal_settings = get_option( 'woocommerce_paypal_settings', false );
+		if ( $woocommerce_paypal_settings && 'yes' == $woocommerce_paypal_settings['enabled'] ) {
+			$is_paypay_standard_active = true;
+		}
+			
 		// Check if "Support VND for the PayPal Standard gateway" is enabled and PayPal Standard gateway is enabled
-		if ( 'yes' == $settings['vnd_paypal_standard']['enabled'] && 'yes' == $woocommerce_paypal_settings['enabled'] ) {
+		if ( 'yes' == $settings['vnd_paypal_standard']['enabled'] && $is_paypay_standard_active ) {
 			include( WOO_VIET_DIR . 'inc/class-wooviet-vnd-paypal-standard.php' );
 			$this->VND_PayPal_Standard = new WooViet_VND_PayPal_Standard(
 				$settings['vnd_paypal_standard']['rate'],
