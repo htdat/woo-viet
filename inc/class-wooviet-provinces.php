@@ -139,12 +139,12 @@ class WooViet_Provinces {
 	}
 
 	/**
-	* Enqueue provinces scripts
-	*
-	* Arrange the address field orders to the Vietnam standard in the checkout page: Country - Province - District - Address
-	* @author 	Longkt
-	* @since 	1.4
-	*/
+	 * Enqueue provinces scripts
+	 *
+	 * Arrange the address field orders to the Vietnam standard in the checkout page: Country - Province - District - Address
+	 * @author    Longkt
+	 * @since    1.4
+	 */
 	public function load_provinces_scripts() {
 		// Enqueue province style
 		wp_enqueue_style( 'woo-viet-provinces-style', WOO_VIET_URL . 'assets/provinces.css' );

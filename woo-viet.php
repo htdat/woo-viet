@@ -40,37 +40,37 @@ class WooViet {
 	 * @var array The default settings for the whole plugin
 	 */
 	static $default_settings = array(
-		'add_province'           =>
+		'add_province'                =>
 			array(
 				'enabled' => 'yes',
 			),
-		'add_city'               =>
+		'add_city'                    =>
 			array(
 				'enabled' => 'yes',
 			),
-		'change_currency_symbol' =>
+		'change_currency_symbol'      =>
 			array(
 				'enabled' => 'yes',
 				'text'    => 'VND',
 			),
-		'convert_price'          =>
+		'convert_price'               =>
 			array(
 				'enabled' => 'yes',
 				'text'    => 'K',
 			),
-		'vnd_paypal_standard'    =>
+		'vnd_paypal_standard'         =>
 			array(
 				'enabled'  => 'yes',
 				'currency' => 'USD',
 				'rate'     => '22770',
 			),
-		'add_onepay_domestic'    =>
+		'add_onepay_domestic'         =>
 			array(
 				'enabled' => 'yes',
 			),
 		'vnd_paypal_express_checkout' =>
-			array( 
-				'enabled' => 'yes',
+			array(
+				'enabled'  => 'yes',
 				'currency' => 'USD',
 				'rate'     => '22770',
 			),
@@ -122,7 +122,7 @@ class WooViet {
 			$this->main();
 
 			// Add "Settings" link when the plugin is active
-			add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), array( $this, 'add_settings_link' ) ) ;
+			add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'add_settings_link' ) );
 		} else {
 			// Throw a notice if WooCommerce is NOT active
 			add_action( 'admin_notices', array( $this, 'notice_if_not_woocommerce' ) );
@@ -211,9 +211,10 @@ class WooViet {
 		}
 
 		// Check if "Support VND for the PayPal Express Checkout gateway" is enabled
-		if ( 'yes' == $settings['vnd_paypal_express_checkout']['enabled'] 
-			AND class_exists( 'WC_Gateway_PPEC_Plugin' )
-		) {			include( WOO_VIET_DIR . 'inc/class-wooviet-vnd-paypal-express-checkout.php' );
+		if ( 'yes' == $settings['vnd_paypal_express_checkout']['enabled']
+		     AND class_exists( 'WC_Gateway_PPEC_Plugin' )
+		) {
+			include( WOO_VIET_DIR . 'inc/class-wooviet-vnd-paypal-express-checkout.php' );
 			$this->VND_PayPal_Express_Checkout = new WooViet_VND_PayPal_Express_Checkout(
 				$settings['vnd_paypal_express_checkout']['rate'],
 				$settings['vnd_paypal_express_checkout']['currency']
@@ -250,13 +251,13 @@ class WooViet {
 
 	/**
 	 * Add "Settings" link in the Plugins list page when the plugin is active
-	 * 
+	 *
 	 * @since 1.4
 	 * @author Longkt
 	 */
 	public function add_settings_link( $links ) {
 		$settings = array( '<a href="' . admin_url( 'admin.php?page=woo-viet' ) . '">' . __( 'Settings', 'woo-viet' ) . '</a>' );
-		$links = array_reverse( array_merge( $links, $settings ) );
+		$links    = array_reverse( array_merge( $links, $settings ) );
 
 		return $links;
 	}

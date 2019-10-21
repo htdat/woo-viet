@@ -268,7 +268,8 @@ class WooViet_Admin_Page {
                                 <br/>
                                 <br/>
 
-                                <input name="settings[vnd_paypal_express_checkout][rate]" type="number" step="1" min="100"
+                                <input name="settings[vnd_paypal_express_checkout][rate]" type="number" step="1"
+                                       min="100"
                                        id="vnd_paypal_express_checkout_rate" style="width: 70px;"
                                        value="<?php echo $settings['vnd_paypal_express_checkout']['rate'] ?>"
                                 <label for="vnd_paypal_express_checkout_rate"><?php _e( 'Insert the exchange rate of this currency to VND', 'woo-viet' ) ?></label>

@@ -36,8 +36,8 @@ class WooViet_OnePay_Domestic extends WC_Payment_Gateway {
 		$this->init_settings();
 
 		// Define user set variables.
-		$this->title         = $this->get_option( 'title' );
-		$this->description   = $this->get_option( 'description' ) . sprintf( '<br/><div align="center"><img src="%s"></div>', WOO_VIET_URL . 'assets/onepay_domestic.png' );
+		$this->title       = $this->get_option( 'title' );
+		$this->description = $this->get_option( 'description' ) . sprintf( '<br/><div align="center"><img src="%s"></div>', WOO_VIET_URL . 'assets/onepay_domestic.png' );
 
 		$this->testmode      = 'yes' === $this->get_option( 'testmode', 'no' );
 		$this->merchant_id   = $this->get_option( 'merchant_id' );
@@ -45,9 +45,9 @@ class WooViet_OnePay_Domestic extends WC_Payment_Gateway {
 		$this->secure_secret = $this->get_option( 'secure_secret' );
 		$this->user          = $this->get_option( 'user' );
 		$this->password      = $this->get_option( 'password' );
-		$this->debug          = 'yes' === $this->get_option( 'debug', 'no' );
+		$this->debug         = 'yes' === $this->get_option( 'debug', 'no' );
 
-		self::$log_enabled    = $this->debug;
+		self::$log_enabled = $this->debug;
 
 		// Process the admin options
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array(
@@ -130,8 +130,8 @@ class WooViet_OnePay_Domestic extends WC_Payment_Gateway {
 		$http_args              = http_build_query( $args, '', '&' );
 
 		// Log data
-		$message_log = sprintf('get_pay_url - Order ID: %1$s - http_args: %2$s', $order->get_id(), print_r($args, true) );
-		self::log( $message_log);
+		$message_log = sprintf( 'get_pay_url - Order ID: %1$s - http_args: %2$s', $order->get_id(), print_r( $args, true ) );
+		self::log( $message_log );
 
 		if ( $this->testmode ) {
 			return 'https://mtf.onepay.vn/onecomm-pay/vpc.op?' . $http_args;
@@ -255,7 +255,7 @@ class WooViet_OnePay_Domestic extends WC_Payment_Gateway {
 			);
 			$order->add_order_note( $order_note );
 
-			
+
 			// Do action for the order based on the response code from OnePay
 			// This is an intentional DRY switch - refer to #DRY_vpc_TxnResponseCode below
 			switch ( $vpc_TxnResponseCode ) {
@@ -273,15 +273,15 @@ class WooViet_OnePay_Domestic extends WC_Payment_Gateway {
 			}
 
 			// Log data
-			$message_log = sprintf('process_onepay_response_data - Order ID: %1$s - Order Note: %2$s - http_args: %3$s', $order_id, $order_note, print_r($args, true) );
-			self::log( $message_log);
-			
+			$message_log = sprintf( 'process_onepay_response_data - Order ID: %1$s - Order Note: %2$s - http_args: %3$s', $order_id, $order_note, print_r( $args, true ) );
+			self::log( $message_log );
+
 			// Do the last actions based on $type 
 			switch ( $type ) {
 
 				case 'return': // Add info from OnePay and redirect to the appropriate URLs
 
-					wc_add_notice( __( 'OnePay info: ', 'woo-viet') . $this->OnePay_getResponseDescription( $vpc_TxnResponseCode ), 'notice' );
+					wc_add_notice( __( 'OnePay info: ', 'woo-viet' ) . $this->OnePay_getResponseDescription( $vpc_TxnResponseCode ), 'notice' );
 
 					// This is an intentional DRY switch - refer to #DRY_vpc_TxnResponseCode above
 					// I need to make sure that `ipn` case below and message_log can be executed as well. 
@@ -296,7 +296,7 @@ class WooViet_OnePay_Domestic extends WC_Payment_Gateway {
 							break;
 						default:
 							// For other cases, redirect to the payment page
-							wp_redirect( $order->get_checkout_payment_url () );
+							wp_redirect( $order->get_checkout_payment_url() );
 							break;
 					}
 
@@ -441,8 +441,8 @@ class WooViet_OnePay_Domestic extends WC_Payment_Gateway {
 		}
 
 		// Log data
-		$message_log = sprintf('handle_onepay_querydr - http_link: %1$s - http_args: %2$s', $http_link, print_r($args, true) );
-		self::log( $message_log);
+		$message_log = sprintf( 'handle_onepay_querydr - http_link: %1$s - http_args: %2$s', $http_link, print_r( $args, true ) );
+		self::log( $message_log );
 
 		// Connect to OnePay to get the queryDR info
 		$http_response = wp_remote_get( $http_link );
@@ -457,8 +457,9 @@ class WooViet_OnePay_Domestic extends WC_Payment_Gateway {
 	 * Logging method. - Copied from the WC_Gateway_Paypal Class
 	 *
 	 * @since 1.3.1
+	 *
 	 * @param string $message Log message.
-	 * @param string $level   Optional. Default 'info'.
+	 * @param string $level Optional. Default 'info'.
 	 *     emergency|alert|critical|error|warning|notice|info|debug
 	 */
 	public static function log( $message, $level = 'info' ) {
