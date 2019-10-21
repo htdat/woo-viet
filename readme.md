@@ -8,6 +8,11 @@ Xem phiên bản tiếng Việt tại đây https://vi.wordpress.org/plugins/woo
 
 ## Changelog
 
+### 1.4.5 - 2019.10.22
+
+* Fix VND for PP Standard: wrong currency and gross (total) price in email confirmation #65
+* Update provinces and cities #68. Thanks @daohoangson! 
+
 ### 1.4.4 - 2019.02.24
 
 * Fix the order of Provine - District field not working after updating WooCommerce 3.5.x #60 
