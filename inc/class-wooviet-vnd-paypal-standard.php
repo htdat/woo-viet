@@ -45,7 +45,7 @@ class WooViet_VND_PayPal_Standard {
 		add_filter( 'option_woocommerce_paypal_settings', array( $this, 'add_exchange_rate_info' ), 11 );
 
 
-        // Remove checks on currency and gross (total) values
+		// Remove checks on currency and gross (total) values
 		add_action( 'woocommerce_api_wc_gateway_paypal', array( $this, 'remove_currency_and_total_checks' ), 5 );
 
 
@@ -114,30 +114,30 @@ class WooViet_VND_PayPal_Standard {
 	}
 
 
-    /**
-     * Remove currency and total (gross) amount check in class WC_Gateway_Paypal_IPN_Handler
-     *
-     * @since 1.4.5
-     * @author htdat
-     */
+	/**
+	 * Remove currency and total (gross) amount check in class WC_Gateway_Paypal_IPN_Handler
+	 *
+	 * @since 1.4.5
+	 * @author htdat
+	 */
 	public function remove_currency_and_total_checks() {
 
-        // Remove these filters https://github.com/woocommerce/woocommerce/blob/3.7.1/includes/gateways/paypal/includes/class-wc-gateway-paypal-ipn-handler.php#L34-L35
-        remove_all_filters( 'woocommerce_api_wc_gateway_paypal', 10 );
-        remove_all_filters( 'valid-paypal-standard-ipn-request', 10 );
+		// Remove these filters https://github.com/woocommerce/woocommerce/blob/3.7.1/includes/gateways/paypal/includes/class-wc-gateway-paypal-ipn-handler.php#L34-L35
+		remove_all_filters( 'woocommerce_api_wc_gateway_paypal', 10 );
+		remove_all_filters( 'valid-paypal-standard-ipn-request', 10 );
 
-        // Get values for PayPal Standard settings
-        // Ref: https://github.com/woocommerce/woocommerce/blob/3.7.1/includes/gateways/paypal/class-wc-gateway-paypal.php#L58-L61
-        $paypal_options = get_option( 'woocommerce_paypal_settings' );
-        $testmode = 'yes' === $paypal_options['testmode'];
-        $receiver_email = is_null( $paypal_options['receiver_email'] ) ? $paypal_options['email'] : $paypal_options['receiver_email'];
+		// Get values for PayPal Standard settings
+		// Ref: https://github.com/woocommerce/woocommerce/blob/3.7.1/includes/gateways/paypal/class-wc-gateway-paypal.php#L58-L61
+		$paypal_options = get_option( 'woocommerce_paypal_settings' );
+		$testmode       = 'yes' === $paypal_options['testmode'];
+		$receiver_email = is_null( $paypal_options['receiver_email'] ) ? $paypal_options['email'] : $paypal_options['receiver_email'];
 
-        // Replace it by a child class of WC_Gateway_Paypal_IPN_Handler,
-        // which overrides/removes validate_currency() and validate_amount()
-        require_once dirname(__FILE__) . '/paypal-standard/class-woo-viet-wc-gateway-paypal-ipn-handler.php.php';
-        $handler = new Woo_Viet_WC_Gateway_Paypal_IPN_Handler( $testmode, $receiver_email ); //@todo needs to handle the correct variables
-        $handler->check_response();
+		// Replace it by a child class of WC_Gateway_Paypal_IPN_Handler,
+		// which overrides/removes validate_currency() and validate_amount()
+		require_once dirname( __FILE__ ) . '/paypal-standard/class-woo-viet-wc-gateway-paypal-ipn-handler.php.php';
+		$handler = new Woo_Viet_WC_Gateway_Paypal_IPN_Handler( $testmode, $receiver_email ); //@todo needs to handle the correct variables
+		$handler->check_response();
 
-    }
+	}
 
 }

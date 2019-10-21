@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /**
  * Settings for 1Pay Gateway.
- * @since 1.3 
+ * @since 1.3
  */
 return array(
 	'enabled'       => array(
@@ -92,7 +92,7 @@ return array(
 	/**
 	 * @since 1.3.1
 	 */
-	'debug' => array(
+	'debug'         => array(
 		'title'       => __( 'Debug log', 'woo-viet' ),
 		'type'        => 'checkbox',
 		'label'       => __( 'Enable logging', 'woo-viet' ),
