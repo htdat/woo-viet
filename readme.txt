@@ -2,7 +2,7 @@
 Contributors: htdat, thup90, longnguyen
 Tags: OnePay WooCommerce, OnePay Vietnam, WooCommerce Vietnam, vietnam, vietnamese, vietnam provinces, paypal for vietnam dong, vnd, vietnam dong, vietnam currency, vietnam customization
 Requires at least: 4.3
-Tested up to: 5.2.3
+Tested up to: 5.2.4
 Requires PHP: 5.6
 Stable tag: 1.4.5
 License: GPLv2 or later
