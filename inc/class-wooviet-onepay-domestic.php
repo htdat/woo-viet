@@ -117,6 +117,7 @@ class WooViet_OnePay_Domestic extends WC_Payment_Gateway {
 			'vpc_Locale'      => ( 'vi' == get_locale() ) ? 'vn' : 'en',
 			'vpc_Currency'    => 'VND',
 			'vpc_TicketNo'    => $_SERVER['REMOTE_ADDR'],
+			'AgainLink'       => mb_strimwidth( wc_get_checkout_url(), 0, 64 ),
 		);
 
 		// Set the queryDR cron for this transaction
@@ -134,7 +135,9 @@ class WooViet_OnePay_Domestic extends WC_Payment_Gateway {
 		self::log( $message_log );
 
 		if ( $this->testmode ) {
-			return 'https://mtf.onepay.vn/onecomm-pay/vpc.op?' . $http_args;
+			// return 'https://mtf.onepay.vn/onecomm-pay/vpc.op?' . $http_args;
+			// testing for int'l
+			return 'https://mtf.onepay.vn/vpcpay/vpcpay.op?' . $http_args;
 		} else {
 			return 'https://onepay.vn/onecomm-pay/vpc.op?' . $http_args;
 		}
@@ -435,7 +438,9 @@ class WooViet_OnePay_Domestic extends WC_Payment_Gateway {
 		$http_args = http_build_query( $args, '', '&' );
 
 		if ( $this->testmode ) {
-			$http_link = 'https://mtf.onepay.vn/onecomm-pay/Vpcdps.op?' . $http_args;
+			// $http_link = 'https://mtf.onepay.vn/onecomm-pay/Vpcdps.op?' . $http_args;
+			// Testing for int'l
+			$http_link = 'https://mtf.onepay.vn/vpcpay/Vpcdps.op?' . $http_args;
 		} else {
 			$http_link = 'https://onepay.vn/onecomm-pay/Vpcdps.op?' . $http_args;
 		}
