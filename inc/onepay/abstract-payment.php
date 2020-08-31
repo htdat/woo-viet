@@ -250,8 +250,8 @@ abstract class WooViet_OnePay_Abstract extends WC_Payment_Gateway {
 			$order = wc_get_order( $order_id );
 
 			// Add the order note for the reference
-			$order_note = sprintf(
-				__( 'OnePay Domestic Gateway Info | Code: %1$s | Message: %2$s | MerchantTxnRef: %3$s | Type: %4$s', 'woo-viet' ),
+			$order_note = get_called_class() . sprintf(
+				__( ' Gateway Info | Code: %1$s | Message: %2$s | MerchantTxnRef: %3$s | Type: %4$s', 'woo-viet' ),
 				$vpc_TxnResponseCode,
 				$this->OnePay_getResponseDescription( $vpc_TxnResponseCode ),
 				$vpc_MerchTxnRef,
