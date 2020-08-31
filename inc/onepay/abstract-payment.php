@@ -51,7 +51,10 @@ abstract class WooViet_OnePay_Abstract extends WC_Payment_Gateway {
 
 		// Define user set variables.
 		$this->title       = $this->get_option( 'title' );
-		$this->description = $this->get_option( 'description' ) . sprintf( '<br/><div align="center"><img src="%s"></div>', WOO_VIET_URL . 'assets/onepay_domestic.png' );
+		$this->description = $this->get_option( 'description' )
+		                     . sprintf( '<br/><div align="center" class="onepay-logo" id="%1$s"><img src="%2$s"></div>',
+								$this->id . '_logo',
+								apply_filters( $this->id . '_logo', WOO_VIET_URL . "assets/$this->id.png" ) );
 
 		$this->testmode      = 'yes' === $this->get_option( 'testmode', 'no' );
 		$this->merchant_id   = $this->get_option( 'merchant_id' );
