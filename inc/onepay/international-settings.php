@@ -5,14 +5,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Settings for OnePay Domestic Gateway.
- * @since 1.3
+ * Settings for OnePay International Gateway.
+ * @since 1.5.0
  */
 return array(
 	'enabled'       => array(
 		'title'   => __( 'Enable/Disable', 'woo-viet' ),
 		'type'    => 'checkbox',
-		'label'   => __( 'OnePay Domestic Gateway (by Woo Viet)', 'woo-viet' ),
+		'label'   => __( 'OnePay International Gateway (by Woo Viet)', 'woo-viet' ),
 		'default' => 'no'
 	),
 	'testmode'      => array(
@@ -27,7 +27,7 @@ return array(
 		'title'       => __( 'Title', 'woo-viet' ),
 		'type'        => 'text',
 		'description' => __( 'This controls the title which the user sees during checkout.', 'woo-viet' ),
-		'default'     => __( 'OnePay Domestic Gateway', 'woo-viet' ),
+		'default'     => __( 'OnePay International Gateway', 'woo-viet' ),
 		'desc_tip'    => true,
 	),
 	'description'   => array(
@@ -86,7 +86,7 @@ return array(
 		'title'       => __( 'Instant Payment Notification (IPN)', 'woo-viet' ),
 		'type'        => 'title',
 		'description' =>
-			sprintf( 'URL: <code>%s</code>', WooViet_OnePay_Domestic::get_onepay_ipn_url() ) . '<p/>' .
+			sprintf( 'URL: <code>%s</code>', WooViet_OnePay_International::get_onepay_ipn_url() ) . '<p/>' .
 			sprintf( __( '%sContact OnePay%s to configure this URL on its site. <strong>This is required  based on its guidelines.</strong>', 'woo-viet' ), '<a href="http://onepay.com.vn/home/en/contact-us.html">', '</a>' ),
 	),
 	/**
@@ -97,7 +97,7 @@ return array(
 		'type'        => 'checkbox',
 		'label'       => __( 'Enable logging', 'woo-viet' ),
 		'default'     => 'no',
-		'description' => sprintf( __( 'Log events, such as IPN requests, inside %s', 'woo-viet' ), '<code>' . WC_Log_Handler_File::get_log_file_path( 'WooViet_OnePay_Domestic' ) . '</code>' ),
+		'description' => sprintf( __( 'Log events, such as IPN requests, inside %s', 'woo-viet' ), '<code>' . WC_Log_Handler_File::get_log_file_path( 'WooViet_OnePay_International' ) . '</code>' ),
 	),
 
 );
