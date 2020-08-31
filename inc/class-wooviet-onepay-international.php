@@ -14,10 +14,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once('onepay/abstract-payment.php');
 class WooViet_OnePay_International extends WooViet_OnePay_Abstract {
+
 	public function configure_payment() {
 		$this->method_title       = __( 'OnePay International Gateway (by Woo Viet)', 'woo-viet' );
 		$this->method_description = __( 'OnePay supports all major international cards Visa, Master, JCB, Amex, etc.', 'woo-viet' );
 	}
+
+	public function get_onepay_payment_link( $testmode ) {
+		return $testmode ? 'https://mtf.onepay.vn/vpcpay/vpcpay.op' : 'https://onepay.vn/vpcpay/vpcpay.op';
+	}
+
+	public function get_onepay_querydr_link( $testmode ) {
+		return $testmode ? 'https://mtf.onepay.vn/vpcpay/Vpcdps.op' : 'https://onepay.vn/vpcpay/Vpcdps.op';
+	}
+
 	/**
 	 * Initialise Gateway Settings Form Fields.
 	 */

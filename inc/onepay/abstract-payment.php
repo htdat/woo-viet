@@ -22,6 +22,17 @@ abstract class WooViet_OnePay_Abstract extends WC_Payment_Gateway {
 	 * Configure $method_title and $method_description
 	 */
 	abstract public function configure_payment();
+
+	/**
+	 * @param bool $testmode
+	 */
+	abstract public function get_onepay_payment_link( $testmode );
+
+	/**
+	 * @param bool $testmode
+	 */
+	abstract public function get_onepay_querydr_link( $testmode );
+
 	/**
 	 * Constructor for the gateway.
 	 */
@@ -63,11 +74,6 @@ abstract class WooViet_OnePay_Abstract extends WC_Payment_Gateway {
 		add_action( 'woocommerce_api_' . strtolower( get_called_class() ), array( $this, 'handle_onepay_ipn' ) );
 
 	}
-
-	/**
-	 * Initialise Gateway Settings Form Fields.
-	 */
-	// abstract public function init_form_fields()
 
 	/**
 	 * Get the IPN URL for OnePay
@@ -135,12 +141,7 @@ abstract class WooViet_OnePay_Abstract extends WC_Payment_Gateway {
 		$message_log = sprintf( 'get_pay_url - Order ID: %1$s - http_args: %2$s', $order->get_id(), print_r( $args, true ) );
 		self::log( $message_log );
 
-		// TODO - need to fix this issue for intl and domestic
-		if ( $this->testmode ) {
-			return 'https://mtf.onepay.vn/onecomm-pay/vpc.op?' . $http_args;
-		} else {
-			return 'https://onepay.vn/onecomm-pay/vpc.op?' . $http_args;
-		}
+		return $this->get_onepay_payment_link( $this->testmode ) . '?' . $http_args;
 
 	}
 
@@ -437,12 +438,7 @@ abstract class WooViet_OnePay_Abstract extends WC_Payment_Gateway {
 
 		$http_args = http_build_query( $args, '', '&' );
 
-		// TODO - need to fix this issue for intl and domestic
-		if ( $this->testmode ) {
-			$http_link = 'https://mtf.onepay.vn/onecomm-pay/Vpcdps.op?' . $http_args;
-		} else {
-			$http_link = 'https://onepay.vn/onecomm-pay/Vpcdps.op?' . $http_args;
-		}
+		$http_link = $this->get_onepay_querydr_link( $this->testmode ) . '?' . $http_args;
 
 		// Log data
 		$message_log = sprintf( 'handle_onepay_querydr - http_link: %1$s - http_args: %2$s', $http_link, print_r( $args, true ) );
