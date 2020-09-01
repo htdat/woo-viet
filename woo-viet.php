@@ -170,12 +170,30 @@ class WooViet {
 				return $methods;
 			} );
 
-			// Add the action to check the cron job for handling queryDR
-			// It's not possible to add in the class "WooViet_OnePay_Domestic_Hook" because it's NOT always loadded
+			/**
+			 * Add the action to check the cron job for handling queryDR
+			 * It's not possible to add in the "WooViet_OnePay_Domestic" class
+			 * because it's NOT always loaded in the 'woocommerce_payment_gateways' hook above
+			 */
 			if ( defined( 'DOING_CRON' ) and DOING_CRON ) {
-				$this->WooViet_OnePay_Domestic_Hook = new WooViet_OnePay_Domestic();
+				$wooviet_onepay_domestic = new WooViet_OnePay_Domestic();
+				/**
+				 * @since 1.5.0
+				 */
+				add_action( 'wooviet_onepay_domestic_handle_querydr', array(
+					$wooviet_onepay_domestic,
+					'handle_onepay_querydr'
+				), 10, 1 );
+				/**
+				 * Backward compatibility
+				 * Actually, this does help for the short time (exactly 20 minutes) @see WooViet_OnePay_Abstract::set_onepay_querydr_cron()
+				 * when upgrading to version 1.5.0
+				 * as the previous cron jobs set by the previous versions has not run yet.
+				 *
+				 * TODO: May consider removing this completely after 2 major versions. Target: 1.7
+				 */
 				add_action( 'wooviet_handle_onepay_querydr', array(
-					$this->WooViet_OnePay_Domestic_Hook,
+					$wooviet_onepay_domestic,
 					'handle_onepay_querydr'
 				), 10, 1 );
 			}
@@ -196,17 +214,19 @@ class WooViet {
 				return $methods;
 			} );
 
-			/// TODO check this code - it may not work properly and duplicate of Domestic
-			// Add the action to check the cron job for handling queryDR
-			// It's not possible to add in the class "WooViet_OnePay_Domestic_Hook" because it's NOT always loadded
+			/**
+			 * Add the action to check the cron job for handling queryDR
+			 * It's not possible to add in the "WooViet_OnePay_International" class
+			 * because it's NOT always loaded in the 'woocommerce_payment_gateways' hook above
+			 */
 			if ( defined( 'DOING_CRON' ) and DOING_CRON ) {
-				$this->WooViet_OnePay_International_Hook = new WooViet_OnePay_International();
-				add_action( 'wooviet_handle_onepay_querydr', array(
-					$this->WooViet_OnePay_International_Hook,
+
+				add_action( 'wooviet_onepay_international_handle_querydr', array(
+					new WooViet_OnePay_International(),
 					'handle_onepay_querydr'
 				), 10, 1 );
-			}
 
+			}
 		}
 
 		// Check if "Add provinces for Vietnam	" is enabled.
