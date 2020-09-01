@@ -225,17 +225,20 @@ abstract class WooViet_OnePay_Abstract extends WC_Payment_Gateway {
 		$is_secure         = false;
 		$is_querydr_exists = false;
 
-		if ( 'return' == $type OR 'ipn' == $type ) {
-			$vpc_SecureHash = $args['vpc_SecureHash'];
+		// Verify hash for 'return' and 'ipn'
+		// And check vpc_DRExists value for 'querydr'
+		switch ( $type ) {
+			case 'return':
+			case 'ipn':
+				$vpc_SecureHash = $args['vpc_SecureHash'];
 
-			// Remove the parameter "vpc_SecureHash" for validating SecureHash
-			unset( $args['vpc_SecureHash'] );
+				// Remove the parameter "vpc_SecureHash" for validating SecureHash
+				unset( $args['vpc_SecureHash'] );
 
-			$is_secure = $this->check_vpc_SecureHash( $args, $vpc_SecureHash );
-
-		} elseif ( 'querydr' == $type ) {
-			$is_querydr_exists = ( 'Y' == $args['vpc_DRExists'] );
-
+				$is_secure = $this->check_vpc_SecureHash( $args, $vpc_SecureHash );
+				break;
+			case 'querydr':
+				$is_querydr_exists = ( 'Y' == $args['vpc_DRExists'] );
 		}
 
 		// Process the data
@@ -262,6 +265,9 @@ abstract class WooViet_OnePay_Abstract extends WC_Payment_Gateway {
 			);
 			$order->add_order_note( $order_note );
 
+			// Log data
+			$message_log = sprintf( 'process_onepay_response_data - Order ID: %1$s - Order Note: %2$s - http_args: %3$s', $order_id, $order_note, print_r( $args, true ) );
+			self::log( $message_log );
 
 			// Do action for the order based on the response code from OnePay
 			// This is an intentional DRY switch - refer to #DRY_vpc_TxnResponseCode below
@@ -278,10 +284,6 @@ abstract class WooViet_OnePay_Abstract extends WC_Payment_Gateway {
 					// For other cases, do nothing. By default, the order status is still "Pending Payment"
 					break;
 			}
-
-			// Log data
-			$message_log = sprintf( 'process_onepay_response_data - Order ID: %1$s - Order Note: %2$s - http_args: %3$s', $order_id, $order_note, print_r( $args, true ) );
-			self::log( $message_log );
 
 			// Do the last actions based on $type
 			switch ( $type ) {
