@@ -272,7 +272,7 @@ abstract class WooViet_OnePay_Abstract extends WC_Payment_Gateway {
 					break;
 				case '99':
 					// If the user cancels payment, cancel the order
-					$order->cancel_order();
+					$order->update_status( 'cancelled' );
 					break;
 				default:
 					// For other cases, do nothing. By default, the order status is still "Pending Payment"
