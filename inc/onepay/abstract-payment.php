@@ -158,7 +158,7 @@ abstract class WooViet_OnePay_Abstract extends WC_Payment_Gateway {
 
 		wp_schedule_single_event(
 			time() + 20 * 60,
-			'wooviet_handle_onepay_querydr',
+			$this->id . '_handle_querydr', // wooviet_onepay_international_handle_querydr | wooviet_onepay_domestic_handle_querydr
 			array( $vpc_MerchTxnRef )
 		);
 
