@@ -111,13 +111,16 @@ abstract class WooViet_OnePay_Abstract extends WC_Payment_Gateway {
 	 * @return string
 	 */
 	public function get_pay_url( $order ) {
+		$home_url_without_scheme = str_replace( 'https://', '', get_home_url() );
+		$home_url_without_scheme = str_replace( 'http://', '', $home_url_without_scheme );
+
 		$args = array(
 			'Title'           => __( 'OnePay Payment Title', 'woo-viet' ),
 			'vpc_Merchant'    => $this->merchant_id,
 			'vpc_AccessCode'  => $this->access_code,
 			'vpc_MerchTxnRef' => sprintf( '%1$s_%2$s', $order->get_id(), date( 'YmdHis' ) ),
 			'vpc_OrderInfo'   => substr(
-				sprintf( 'Order #%1$s - %2$s', $order->get_id(), get_home_url() ),
+				sprintf( 'Order #%1$s - %2$s', $order->get_id(), $home_url_without_scheme ),
 				0,
 				32 ), // Limit 32 characters
 			'vpc_Amount'      => $order->get_total() * 100, // Multiplying 100 is a requirement from OnePay
@@ -251,7 +254,7 @@ abstract class WooViet_OnePay_Abstract extends WC_Payment_Gateway {
 			$vpc_TxnResponseCode = $args['vpc_TxnResponseCode'];
 
 			// Get the order_id part only
-			$order_id = substr( $vpc_MerchTxnRef, 0, strrpos( $vpc_MerchTxnRef, '_' ) );
+			$order_id = explode('_', $vpc_MerchTxnRef)[0];
 
 			$order = wc_get_order( $order_id );
 
