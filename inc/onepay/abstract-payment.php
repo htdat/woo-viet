@@ -39,7 +39,6 @@ abstract class WooViet_OnePay_Abstract extends WC_Payment_Gateway {
 	public function __construct() {
 		$this->id                 = strtolower( get_called_class() );
 		$this->has_fields         = false;
-		$this->order_button_text  = __( 'Proceed to OnePay', 'woo-viet' );
 		$this->configure_payment();
 		$this->supports           = array(
 			'products',
@@ -50,11 +49,12 @@ abstract class WooViet_OnePay_Abstract extends WC_Payment_Gateway {
 		$this->init_settings();
 
 		// Define user set variables.
-		$this->title       = $this->get_option( 'title' );
-		$this->description = $this->get_option( 'description' )
-		                     . sprintf( '<br/><div align="center" class="onepay-logo" id="%1$s"><img src="%2$s"></div>',
-								$this->id . '_logo',
-								apply_filters( $this->id . '_logo', WOO_VIET_URL . "assets/$this->id.png" ) );
+		$this->title             = $this->get_option( 'title' );
+		$this->description       = $this->get_option( 'description' )
+		                           . sprintf( '<br/><div align="center" class="onepay-logo" id="%1$s"><img src="%2$s"></div>',
+				$this->id . '_logo',
+				apply_filters( $this->id . '_logo', WOO_VIET_URL . "assets/$this->id.png" ) );
+		$this->order_button_text = $this->get_option( 'order_button_text' );
 
 		$this->testmode      = 'yes' === $this->get_option( 'testmode', 'no' );
 		$this->merchant_id   = $this->get_option( 'merchant_id' );

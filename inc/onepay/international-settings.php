@@ -21,7 +21,6 @@ return array(
 		'label'       => __( 'Enable OnePay sandbox (testing)', 'woocommerce' ),
 		'default'     => 'no',
 		'description' => sprintf( __( 'OnePay sandbox can be used to test payments. See <a href="%s">the testing info</a>.', 'woocommerce' ), 'https://mtf.onepay.vn/developer/?page=modul_quocte' ),
-		//@todo: add the logo https://mtf.onepay.vn/developer/?page=logo
 	),
 	'title'         => array(
 		'title'       => __( 'Title', 'woo-viet' ),
@@ -36,6 +35,13 @@ return array(
 		'desc_tip'    => true,
 		'description' => __( 'This controls the description which the user sees during checkout.', 'woo-viet' ),
 		'default'     => __( 'With OnePay, you can make payment by using any local international card such as Visa, Master, JCB, and Amex.', 'woo-viet' )
+	),
+	'order_button_text'   => array(
+		'title'       => __( 'Button text', 'woo-viet' ),
+		'type'        => 'text',
+		'desc_tip'    => true,
+		'description' => __( 'Button label in the checkout page.', 'woo-viet' ),
+		'default'     => __( "Pay with international cards", 'woo-viet' )
 	),
 	'api_details'   => array(
 		'title'       => __( 'API Credentials', 'woo-viet' ),
