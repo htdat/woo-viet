@@ -256,7 +256,10 @@ class WooViet {
 
 
 		// Check if "Support VND for the PayPal Standard gateway" is enabled
-		if ( 'yes' == $settings['vnd_paypal_standard']['enabled'] ) {
+		if ( 'yes' == $settings['vnd_paypal_standard']['enabled']
+		     AND class_exists( 'WC_Gateway_PPEC' )
+		     AND 'VND' == get_woocommerce_currency()
+		) {
 			include( WOO_VIET_DIR . 'inc/class-wooviet-vnd-paypal-standard.php' );
 			$this->VND_PayPal_Standard = new WooViet_VND_PayPal_Standard(
 				$settings['vnd_paypal_standard']['rate'],
@@ -267,6 +270,7 @@ class WooViet {
 		// Check if "Support VND for the PayPal Express Checkout gateway" is enabled
 		if ( 'yes' == $settings['vnd_paypal_express_checkout']['enabled']
 		     AND class_exists( 'WC_Gateway_PPEC_Plugin' )
+		     AND 'VND' == get_woocommerce_currency()
 		) {
 			include( WOO_VIET_DIR . 'inc/class-wooviet-vnd-paypal-express-checkout.php' );
 			$this->VND_PayPal_Express_Checkout = new WooViet_VND_PayPal_Express_Checkout(
