@@ -49,7 +49,7 @@ class WooViet_VND_PayPal_Express_Checkout {
 		add_action( 'woocommerce_paypal_express_checkout_valid_ipn_request', array(
 			$this,
 			'ppec_match_currency_order'
-		) );
+		), 20 );
 
 		// Add exchange rate before send request to PayPal
 		add_filter( 'woocommerce_paypal_express_checkout_request_body', array( $this, 'ppec_convert_prices' ) );
