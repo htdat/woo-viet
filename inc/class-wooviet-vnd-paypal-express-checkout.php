@@ -49,10 +49,19 @@ class WooViet_VND_PayPal_Express_Checkout {
 		add_action( 'woocommerce_paypal_express_checkout_valid_ipn_request', array(
 			$this,
 			'ppec_match_currency_order'
-		) );
+		), 20 );
 
 		// Add exchange rate before send request to PayPal
 		add_filter( 'woocommerce_paypal_express_checkout_request_body', array( $this, 'ppec_convert_prices' ) );
+
+		/**
+		 * Ensure that PayPal Checkout SDK will load with the correct currency
+		 * @see https://github.com/woocommerce/woocommerce-gateway-paypal-express-checkout/blob/f1f16de178cbf1d529deeaf574a52aca82a6e093/includes/class-wc-gateway-ppec-cart-handler.php#L553-L556
+		 */
+		add_filter ('woocommerce_paypal_express_checkout_sdk_script_args', function( $script_args ) {
+			$script_args[ 'currency' ] = $this->ppec_currency;
+			return $script_args;
+		});
 
 		// Load the method to add the exchange rate info for this gateway
 		$this->ppec_exchange_rate_info();
