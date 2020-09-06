@@ -314,6 +314,15 @@ class WooViet_Admin_Page {
                 </p>
 
             </form>
+            <div id="wooviet-admin-footer"
+                style="border: 1px dotted; padding: 5px;">
+	            <?php
+	            printf( __( 'Wanna get support or give feedback? Please <a href="%1$s">rate Woo Viet</a> or post questions <a href="%2$s">in the forum</a>!', 'woo-viet' ),
+                    'https://wordpress.org/support/plugin/woo-viet/reviews/?filter=5#new-post',
+                    'https://wordpress.org/support/plugin/woo-viet/'
+                )
+	            ?>
+            </div>
         </div><!-- #wrap ->
         <?php
 	}
