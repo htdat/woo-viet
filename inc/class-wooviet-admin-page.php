@@ -262,7 +262,7 @@ class WooViet_Admin_Page {
                                 <br/>
 
                                 <input name="settings[vnd_paypal_standard][rate]" type="number" step="1" min="100"
-                                       id="vnd_paypal_standard_rate" style="width: 70px;"
+                                       id="vnd_paypal_standard_rate" style="width: 70px; padding-right: 0;"
                                        value="<?php echo $settings['vnd_paypal_standard']['rate'] ?>"
                                 <label for="vnd_paypal_standard_rate"><?php _e( 'Insert the exchange rate of this currency to VND', 'woo-viet' ) ?></label>
                             </fieldset>
@@ -300,7 +300,7 @@ class WooViet_Admin_Page {
 
                                 <input name="settings[vnd_paypal_express_checkout][rate]" type="number" step="1"
                                        min="100"
-                                       id="vnd_paypal_express_checkout_rate" style="width: 70px;"
+                                       id="vnd_paypal_express_checkout_rate" style="width: 70px; padding-right: 0;"
                                        value="<?php echo $settings['vnd_paypal_express_checkout']['rate'] ?>"
                                 <label for="vnd_paypal_express_checkout_rate"><?php _e( 'Insert the exchange rate of this currency to VND', 'woo-viet' ) ?></label>
                             </fieldset>
