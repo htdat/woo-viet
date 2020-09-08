@@ -8,6 +8,13 @@ Xem phiên bản tiếng Việt tại đây https://vi.wordpress.org/plugins/woo
 
 ## Changelog
 
+### 1.5.0 - 2020.09.10
+
+* Add the OnePay international gateway #74 
+* Add Order Button texts in OnePay gateway setting pages. (Commit 3c818d3)
+* Add rating and support links in the end of the settings page #30
+* Fix two issues related to supporting VND for PayPal Checkout #77
+
 ### 1.4.5 - 2019.10.22
 
 * Fix VND for PP Standard: wrong currency and gross (total) price in email confirmation #65

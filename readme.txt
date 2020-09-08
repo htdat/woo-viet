@@ -2,9 +2,9 @@
 Contributors: htdat, thup90, longnguyen
 Tags: OnePay WooCommerce, OnePay Vietnam, WooCommerce Vietnam, vietnam, vietnamese, vietnam provinces, paypal for vietnam dong, vnd, vietnam dong, vietnam currency, vietnam customization
 Requires at least: 4.3
-Tested up to: 5.2.4
+Tested up to: 5.5.1
 Requires PHP: 5.6
-Stable tag: 1.4.5
+Stable tag: 1.5.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -25,14 +25,16 @@ Xem phiên bản tiếng Việt tại đây [https://vi.wordpress.org/plugins/wo
 * Support `VND` for [the PayPal Standard gateway](https://docs.woocommerce.com/document/paypal-standard/). Convert `VND` prices to any PayPal supported currency before sending visitors to the PayPal pages.
 * Support `VND` for [the PayPal Express Checkout gateway](https://docs.woocommerce.com/document/paypal-express-checkout/).
 * Add [the OnePay domestic (local ATM cards) gateway](http://onepay.com.vn/). Implement all methods in [the official documents](https://mtf.onepay.vn/developer/?page=modul_noidia_php): QueryDR, IPN, and Return URL.
+* Add [the OnePay international (Visa, Master, JCB, Amex cards) gateway](http://onepay.com.vn/). Implement all methods in [the official documents](https://mtf.onepay.vn/developer/?page=modul_quocte_php): QueryDR, IPN, and Return URL.
+
 
 = ROAD MAP =
 
 In the future, this plugin will add more and more features for the Vietnam market:
 
 * Integrate at least one solution for collecting money by phone cards.
-* Integrate the Vietnam payment gateways like 1Pay, OnePay, BaoKim, Ngan Luong, etc.
-* Integrate the Vietnam shipping solutions like ShipChung, Giaohangnhanh, ViettelPost, etc.
+* Integrate the Vietnam payment gateways like Momo, VNPay, BaoKim, Ngan Luong, etc.
+* Integrate the Vietnam shipping solutions like Giaohangnhanh, Giao Hang Tiet Kiem, VNPost, ViettelPost, etc.
 
 = WHERE CAN I CONTRIBUTE MY CODE OR IDEA? =
 
@@ -76,6 +78,10 @@ Follow these steps to install and use the plugin:
 See all change logs on [GitHub repo](https://github.com/htdat/woo-viet#changelog).
 
 == Upgrade Notice ==
+
+= 1.5.0 =
+
+Version 1.5.0 comes with a new gateway OnePay International and other small improvements.
 
 = 1.4 =
 
