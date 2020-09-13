@@ -4,7 +4,7 @@ Tags: OnePay WooCommerce, OnePay Vietnam, WooCommerce Vietnam, vietnam, vietname
 Requires at least: 4.3
 Tested up to: 5.5.1
 Requires PHP: 5.6
-Stable tag: 1.5.0
+Stable tag: 1.5.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 

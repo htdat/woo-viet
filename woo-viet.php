@@ -7,10 +7,10 @@
  * Author URI: https://profiles.wordpress.org/htdat
  * Text Domain: woo-viet
  * Domain Path: /languages
- * Version: 1.5.0
+ * Version: 1.5.1
  *
  * WC requires at least: 3.0
- * WC tested up to: 4.4.1
+ * WC tested up to: 4.5.1
  *
  * License:     GPLv2+
  */
@@ -257,7 +257,7 @@ class WooViet {
 
 		// Check if "Support VND for the PayPal Standard gateway" is enabled
 		if ( 'yes' == $settings['vnd_paypal_standard']['enabled']
-		     AND class_exists( 'WC_Gateway_PPEC' )
+		     AND class_exists( 'WC_Gateway_Paypal' )
 		     AND 'VND' == get_woocommerce_currency()
 		) {
 			include( WOO_VIET_DIR . 'inc/class-wooviet-vnd-paypal-standard.php' );

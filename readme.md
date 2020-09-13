@@ -8,6 +8,10 @@ Xem phiên bản tiếng Việt tại đây https://vi.wordpress.org/plugins/woo
 
 ## Changelog
 
+### 1.5.1 - 2020.09.13 
+
+* Fix the loading of WooViet_VND_PayPal_Standard
+
 ### 1.5.0 - 2020.09.10
 
 * Add the OnePay international gateway #74 
