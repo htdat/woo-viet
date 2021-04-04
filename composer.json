@@ -15,5 +15,9 @@
   "require-dev": {
     "squizlabs/php_codesniffer": "3.*",
     "wp-coding-standards/wpcs": "2.3.0"
+  },
+  "scripts": {
+	"check": "./vendor/squizlabs/php_codesniffer/bin/phpcs",
+	"fix": "./vendor/squizlabs/php_codesniffer/bin/phpcbf"
   }
 }

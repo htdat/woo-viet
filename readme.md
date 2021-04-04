@@ -6,6 +6,14 @@ See here https://wordpress.org/plugins/woo-viet/
 
 Xem phiên bản tiếng Việt tại đây https://vi.wordpress.org/plugins/woo-viet/
 
+## Development 
+
+This plugin uses PHPCS to enhance WordPress coding standards. To run it properly:
+
+1. Run `composer install` (only the first time).
+2. `composer check`: check PHPCS with [WordPress coding standard](https://packagist.org/packages/wp-coding-standards/wpcs).
+3. `composer fix`: fix PHPCS errors (with `phpcbf`) if possible. 
+
 ## Changelog
 
 ### 1.5.1 - 2020.09.13 
