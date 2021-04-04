@@ -1,0 +1,31 @@
+{
+  "name": "woo-viet",
+  "version": "1.0.0",
+  "description": "Woo Viet - WooCommerce for Vietnam",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "husky": "^6.0.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/htdat/woo-viet.git"
+  },
+  "keywords": [
+    "woo-viet",
+    "WooCommerce",
+    "Vietnam"
+  ],
+  "author": "htdat",
+  "license": "GPL-2.0-or-later",
+  "bugs": {
+    "url": "https://github.com/htdat/woo-viet/issues"
+  },
+  "homepage": "https://github.com/htdat/woo-viet#readme"
+}

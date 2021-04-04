@@ -1,0 +1,6 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# ./vendor/squizlabs/php_codesniffer/bin/phpcs
+# echo 'echo  [Husky] pre-commit';
+exit 0;
