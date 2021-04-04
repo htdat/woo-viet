@@ -7,6 +7,9 @@ Thumbs.db
 # Temporary folders
 /_temp
 
-# PHPStorm 
-
+# PHPStorm
 /.idea
+
+# Package folders
+/vendor
+/node_modules
