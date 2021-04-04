@@ -1,0 +1,19 @@
+{
+  "name": "htdat/woo-viet",
+  "description": "Woo Viet - WooCommerce for Vietnam",
+  "type": "wordpress-plugin",
+  "license": "GPL-2.0-or-later",
+  "authors": [
+    {
+      "name": "Dat Hoang",
+      "homepage": "https://github.com/htdat"
+    }
+  ],
+  "require": {
+    "php": ">=5.6"
+  },
+  "require-dev": {
+    "squizlabs/php_codesniffer": "3.*",
+    "wp-coding-standards/wpcs": "2.3.0"
+  }
+}

@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<ruleset>
+	<config name="minimum_supported_wp_version" value="5.5" />
+	<config name="testVersion" value="5.6-"/>
+
+	<!-- Check all PHP files in directory tree by default. -->
+	<arg name="extensions" value="php"/>
+	<file>.</file>
+
+	<rule ref="WordPress"/>
+
+	<!-- Show sniff codes in all reports -->
+	<arg value="s"/>
+
+	<arg name="colors"/>
+
+	<!-- Ignore git, in case someone created a branch ending in ".php" or something -->
+	<exclude-pattern>/.git/*</exclude-pattern>
+
+	<!-- Ignore external libraries -->
+	<exclude-pattern>/node_modules</exclude-pattern>
+	<exclude-pattern>/vendor</exclude-pattern>
+	<exclude-pattern>/lib</exclude-pattern>
+
+	<!-- Check valid textdomain. -->
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="woo-viet"/>
+			</property>
+		</properties>
+	</rule>
+</ruleset>
