@@ -10,7 +10,9 @@ Xem phiên bản tiếng Việt tại đây https://vi.wordpress.org/plugins/woo
 
 ### 1.5.2 - 2021.10.xx 
 
-* Update - tested with WP 5.8.1 and WC 5.7.1.
+* Update - tested with WP 5.8.1 and WC 5.7.1. #86
+* Dev - Add GitHub Actions for WPorg deploy and asset update #87
+* Update provinces and cities as of July 1st, 2021 #81. Thanks @daohoangson!
 
 ### 1.5.1 - 2020.09.13 
 
