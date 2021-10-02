@@ -8,6 +8,10 @@ Xem phiên bản tiếng Việt tại đây https://vi.wordpress.org/plugins/woo
 
 ## Changelog
 
+### 1.5.2 - 2021.10.xx 
+
+* Update - tested with WP 5.8.1 and WC 5.7.1.
+
 ### 1.5.1 - 2020.09.13 
 
 * Fix the loading of WooViet_VND_PayPal_Standard
