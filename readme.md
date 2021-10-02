@@ -8,7 +8,7 @@ Xem phiên bản tiếng Việt tại đây https://vi.wordpress.org/plugins/woo
 
 ## Changelog
 
-### 1.5.2 - 2021.10.xx 
+### 1.5.2 - 2021.10.03 
 
 * Update - tested with WP 5.8.1 and WC 5.7.1. #86
 * Dev - Add GitHub Actions for WPorg deploy and asset update #87
