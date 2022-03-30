@@ -48,6 +48,11 @@ class WooViet {
 			array(
 				'enabled' => 'yes',
 			),
+		'use_goship'                    =>
+            array(
+                'enabled' => 'no',
+                'version' => 'release',
+			),
 		'change_currency_symbol'      =>
 			array(
 				'enabled' => 'yes',
@@ -230,7 +235,7 @@ class WooViet {
 		}
 
 		// Check if "Add provinces for Vietnam	" is enabled.
-		if ( 'yes' == $settings['add_province']['enabled'] ) {
+		if ( 'yes' == $settings['add_province']['enabled'] && 'no' == $settings['use_goship']['enabled']) {
 			include( WOO_VIET_DIR . 'inc/class-wooviet-provinces.php' );
 			$this->Provinces = new WooViet_Provinces();
 
