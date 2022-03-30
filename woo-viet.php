@@ -51,7 +51,8 @@ class WooViet
             ],
         'use_goship'                    =>
             [
-                'enabled' => 'false',
+                'enabled' => 'no',
+                'version' => 'release',
             ],
         'change_currency_symbol'      =>
             [
@@ -284,33 +285,6 @@ class WooViet
                 $settings['vnd_paypal_express_checkout']['rate'],
                 $settings['vnd_paypal_express_checkout']['currency']
             );
-        }
-
-        // Check if "Support VND for the PayPal Express Checkout gateway" is enabled
-        if ('yes' == $settings['use_goship']['enabled']) {
-            require_once ABSPATH . 'wp-admin/includes/plugin.php';
-            $installed_plugins = get_plugins();
-            $goship_installed = array_key_exists('woo-goship/woo-goship.php', $installed_plugins) || in_array('woo-goship/woo-goship.php', $installed_plugins, true);
-            if (!$goship_installed) {
-                require_once ABSPATH . 'wp-admin/includes/file.php';
-                require_once ABSPATH . 'wp-admin/includes/misc.php';
-                include_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
-                include_once ABSPATH . 'wp-admin/includes/class-plugin-upgrader.php';
-                include_once ABSPATH . 'wp-admin/includes/class-plugin-installer-skin.php';
-
-                $type  = 'web';
-                $title = sprintf(__('Installing Plugin from URL: %s'), esc_html($download_url));
-                $url   = 'update.php?action=install-plugin';
-                $nonce = 'plugin-download';
-
-                $download_url = 'https://github.com/KingDarkness/woo-goship/releases/download/1.0/woo-goship.zip';
-                $upgrader = new Plugin_Upgrader(new Plugin_Installer_Skin(compact('type', 'title', 'url', 'nonce')));
-                $upgrader->install($download_url);
-            }
-
-            if (!is_plugin_active('woo-goship/woo-goship.php')) {
-                activate_plugin('woo-goship/woo-goship.php');
-            }
         }
     }
 

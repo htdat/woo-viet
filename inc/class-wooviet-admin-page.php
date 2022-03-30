@@ -40,6 +40,10 @@ class WooViet_Admin_Page
         if (wp_verify_nonce($_REQUEST['wooviet_nonce'], 'wooviet_save_settings')) {
             update_option('woo-viet', $_REQUEST['settings']);
 
+            if (isset($_REQUEST['settings']['use_goship'])) {
+                $this->action_for_goship($_REQUEST['settings']['use_goship']['enabled'], $_REQUEST['settings']['use_goship']['version'], $_REQUEST['do_update_goship']);
+            }
+
             $this->message =
                 '<div class="updated notice"><p><strong>' .
                 __('Settings saved', 'woo-viet') .
@@ -49,6 +53,21 @@ class WooViet_Admin_Page
                 '<div class="error notice"><p><strong>' .
                 __('Can not save settings! Please refresh this page.', 'woo-viet') .
                 '</p></strong></div>';
+        }
+    }
+
+    private function action_for_goship($state, $version = 'release', $update = 'no')
+    {
+        include(WOO_VIET_DIR . 'inc/class-wooviet-use-goship.php');
+        $goship = new WooViet_Use_Goship($version);
+        if ($state == 'yes') {
+            $success = $goship->install_and_active($update == 'yes');
+            if ($success && $update !== 'yes') {
+                $goship->redirect_to_setting();
+                exit();
+            }
+        } else {
+            $goship->deactive();
         }
     }
 
@@ -170,6 +189,9 @@ class WooViet_Admin_Page
                     </tr>
 			    <tr>
                         <th scope="row"><?php _e('Use Goship shipping', 'woo-viet') ?><br/>
+                        <?php if ($settings['use_goship']['enabled'] == 'yes'): ?>
+        <a href="<?php echo admin_url('admin.php?page=wc-settings&tab=shipping&section=woo_goship') ?>"> <?php _e('Setting', 'woo-viet') ?> </a>
+                        <?php endif; ?>
                         </th>
                         <td>
                             <input name="settings[use_goship][enabled]" type="hidden" value="no">
@@ -178,6 +200,19 @@ class WooViet_Admin_Page
             echo 'checked="checked"';
         } ?>>
                             <label for="use_goship"><?php _e('Enabled', 'woo-viet') ?></label>
+                            <br/>
+                            <br/>
+                            <input type="text" name="settings[use_goship][version]"
+                                   value="<?php echo $settings['use_goship']['version'] ?>"
+                                   id="use_goship_version" class="small-text">
+                            <label for="use_goship_version"><?php _e('Use goship version (default: <code>release</code>. All version in <a href="https://github.com/KingDarkness/woo-goship/releases" target="_blank">here</a>)', 'woo-viet') ?></label>
+                            <br/>
+                            <br/>
+                            <input name="do_update_goship" type="hidden" value="no">
+                            <input name="do_update_goship" type="checkbox" id="do_update_goship" value="yes">
+                            <label for="do_update_goship"><?php _e('Do update Goship', 'woo-viet') ?></label>
+                            <br/>
+                            <br/>
                         </td>
                     </tr>
                     <tr>
