@@ -9,24 +9,21 @@ include_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
 include_once ABSPATH . 'wp-admin/includes/class-plugin-upgrader.php';
 include_once ABSPATH . 'wp-admin/includes/class-plugin-installer-skin.php';
 
-
 class Quiet_Skin extends Plugin_Installer_Skin
 {
-    public function feedback($feedback, ...$args)
+    public function feedback($feedback)
     {
         // just keep it quiet
     }
 }
 
 /**
- * The class to add the support for VND when using the PayPal Standard gateway
+ * The class connect to goship.io
  *
- * @see https://docs.woocommerce.com/document/paypal-standard/
+ * @see https://doc.goship.io 
  *
- * Reference: https://gist.github.com/vinefruit/3eb76c85707dcd254841
- *
- * @author   htdat
- * @since    1.0
+ * @author   KingDarkness
+ * @since    v1.1
  *
  */
 class WooViet_Use_Goship
