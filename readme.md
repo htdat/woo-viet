@@ -8,6 +8,10 @@ Xem phiên bản tiếng Việt tại đây https://vi.wordpress.org/plugins/woo
 
 ## Changelog
 
+### 1.5.3 - 2024.01.13 
+
+* Update - Sanitize admin settings to avoid XSS. Thanks Dhabaleshwar Das.
+
 ### 1.5.2 - 2021.10.03 
 
 * Update - tested with WP 5.8.1 and WC 5.7.1. #86

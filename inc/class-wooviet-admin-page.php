@@ -36,7 +36,7 @@ class WooViet_Admin_Page {
 	 */
 	public function save_settings() {
 		if ( wp_verify_nonce( $_REQUEST['wooviet_nonce'], 'wooviet_save_settings' ) ) {
-			update_option( 'woo-viet', $_REQUEST['settings'] );
+			update_option( 'woo-viet', $this->sanitize_settings( $_REQUEST['settings'] ) );
 
 			$this->message =
 				'<div class="updated notice"><p><strong>' .
@@ -327,4 +327,25 @@ class WooViet_Admin_Page {
         <?php
 	}
 
+	/**
+	 * Sanitize admin settings.
+	 *
+	 * @author   htdat
+	 * @since    1.5.3
+	 *
+	 * @param  array  $settings User input settings.
+	 *
+	 * @return array
+	 */
+	private function sanitize_settings( array $settings ): array {
+		$sanitized_settings = array();
+
+		foreach ( $settings as $feature => $feature_options ) {
+			foreach ( $feature_options as $option => $value ) {
+				$sanitized_settings[ $feature ][ $option ] = esc_html( sanitize_text_field( $value ) );
+			}
+		}
+
+		return $sanitized_settings;
+	}
 }
