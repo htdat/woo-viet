@@ -41,7 +41,7 @@ class WooViet_Cities {
 		 * @source: https://github.com/daohoangson/dvhcvn
 		 */
 		$cities['VN'] = array(
-			'THANH-PHO-HUE'        => array(
+			'THUA-THIEN-HUE'        => array(
 				'Huyện A Lưới',
 				'Huyện Phú Lộc',
 				'Huyện Phú Vang',
@@ -52,7 +52,7 @@ class WooViet_Cities {
 				'Thị xã Hương Trà',
 				'Thị xã Phong Điền',
 			),
-			'THANH-PHO-HA-NOI'        => array(
+			'HA-NOI'        => array(
 				'Huyện Ba Vì',
 				'Huyện Chương Mỹ',
 				'Huyện Gia Lâm',
@@ -84,7 +84,7 @@ class WooViet_Cities {
 				'Quận Đống Đa',
 				'Thị xã Sơn Tây',
 			),
-			'TP-CAN-THO'        => array(
+			'CAN-THO'        => array(
 				'Huyện Châu Thành',
 				'Huyện Châu Thành A',
 				'Huyện Cù Lao Dung',
@@ -113,7 +113,7 @@ class WooViet_Cities {
 				'Thị xã Ngã Năm',
 				'Thị xã Vĩnh Châu',
 			),
-			'TP-HAI-PHONG'        => array(
+			'HAI-PHONG'        => array(
 				'Huyện An Lão',
 				'Huyện Bình Giang',
 				'Huyện Bạch Long Vĩ',
@@ -142,7 +142,7 @@ class WooViet_Cities {
 				'Thành phố Thuỷ Nguyên',
 				'Thị xã Kinh Môn',
 			),
-			'TP-HO-CHI-MINH'        => array(
+			'HO-CHI-MINH'        => array(
 				'Huyện Bàu Bàng',
 				'Huyện Bình Chánh',
 				'Huyện Bắc Tân Uyên',
@@ -182,7 +182,7 @@ class WooViet_Cities {
 				'Thành phố Tân Uyên',
 				'Thành phố Vũng Tàu',
 			),
-			'TP-DA-NANG'        => array(
+			'DA-NANG'        => array(
 				'Huyện Bắc Trà My',
 				'Huyện Duy Xuyên',
 				'Huyện Hiệp Đức',
@@ -209,7 +209,7 @@ class WooViet_Cities {
 				'Thành phố Tam Kỳ',
 				'Thị xã Điện Bàn',
 			),
-			'TINH-AN-GIANG'        => array(
+			'AN-GIANG'        => array(
 				'Huyện An Biên',
 				'Huyện An Minh',
 				'Huyện An Phú',
@@ -236,7 +236,7 @@ class WooViet_Cities {
 				'Thị xã Tân Châu',
 				'Thị xã Tịnh Biên',
 			),
-			'TINH-BAC-NINH'        => array(
+			'BAC-NINH'        => array(
 				'Huyện Gia Bình',
 				'Huyện Hiệp Hoà',
 				'Huyện Lương Tài',
@@ -256,7 +256,7 @@ class WooViet_Cities {
 				'Thị xã Từ Sơn',
 				'Thị xã Việt Yên',
 			),
-			'TINH-CAO-BANG'        => array(
+			'CAO-BANG'        => array(
 				'Huyện Bảo Lâm',
 				'Huyện Bảo Lạc',
 				'Huyện Hoà An',
@@ -268,7 +268,7 @@ class WooViet_Cities {
 				'Huyện Trùng Khánh',
 				'Thành phố Cao Bằng',
 			),
-			'TINH-CA-MAU'        => array(
+			'CA-MAU'        => array(
 				'Huyện Cái Nước',
 				'Huyện Hoà Bình',
 				'Huyện Hồng Dân',
@@ -286,7 +286,7 @@ class WooViet_Cities {
 				'Thành phố Cà Mau',
 				'Thị xã Giá Rai',
 			),
-			'TINH-GIA-LAI'        => array(
+			'GIA-LAI'        => array(
 				'Huyện An Lão',
 				'Huyện Chư Prông',
 				'Huyện Chư Păh',
@@ -316,7 +316,7 @@ class WooViet_Cities {
 				'Thị xã Ayun Pa',
 				'Thị xã Hoài Nhơn',
 			),
-			'TINH-HA-TINH'        => array(
+			'HA-TINH'        => array(
 				'Huyện Can Lộc',
 				'Huyện Cẩm Xuyên',
 				'Huyện Hương Khê',
@@ -330,7 +330,7 @@ class WooViet_Cities {
 				'Thị xã Hồng Lĩnh',
 				'Thị xã Kỳ Anh',
 			),
-			'TINH-HUNG-YEN'        => array(
+			'HUNG-YEN'        => array(
 				'Huyện Hưng Hà',
 				'Huyện Khoái Châu',
 				'Huyện Kim Động',
@@ -350,7 +350,7 @@ class WooViet_Cities {
 				'Thành phố Thái Bình',
 				'Thị xã Mỹ Hào',
 			),
-			'TINH-KHANH-HOA'        => array(
+			'KHANH-HOA'        => array(
 				'Huyện Bác Ái',
 				'Huyện Cam Lâm',
 				'Huyện Diên Khánh',
@@ -368,7 +368,7 @@ class WooViet_Cities {
 				'Thành phố Nha Trang',
 				'Thị xã Ninh Hoà',
 			),
-			'TINH-LAI-CHAU'        => array(
+			'LAI-CHAU'        => array(
 				'Huyện Mường Tè',
 				'Huyện Nậm Nhùn',
 				'Huyện Phong Thổ',
@@ -378,7 +378,7 @@ class WooViet_Cities {
 				'Huyện Tân Uyên',
 				'Thành phố Lai Châu',
 			),
-			'TINH-LAO-CAI'        => array(
+			'LAO-CAI'        => array(
 				'Huyện Bát Xát',
 				'Huyện Bảo Thắng',
 				'Huyện Bảo Yên',
@@ -398,7 +398,7 @@ class WooViet_Cities {
 				'Thị xã Nghĩa Lộ',
 				'Thị xã Sa Pa',
 			),
-			'TINH-LAM-DONG'        => array(
+			'LAM-DONG'        => array(
 				'Huyện Bảo Lâm',
 				'Huyện Bắc Bình',
 				'Huyện Cư Jút',
@@ -428,7 +428,7 @@ class WooViet_Cities {
 				'Thành phố Đà Lạt',
 				'Thị xã La Gi',
 			),
-			'TINH-LANG-SON'        => array(
+			'LANG-SON'        => array(
 				'Huyện Bình Gia',
 				'Huyện Bắc Sơn',
 				'Huyện Cao Lộc',
@@ -441,7 +441,7 @@ class WooViet_Cities {
 				'Huyện Đình Lập',
 				'Thành phố Lạng Sơn',
 			),
-			'TINH-NGHE-AN'        => array(
+			'NGHE-AN'        => array(
 				'Huyện Anh Sơn',
 				'Huyện Con Cuông',
 				'Huyện Diễn Châu',
@@ -463,7 +463,7 @@ class WooViet_Cities {
 				'Thị xã Hoàng Mai',
 				'Thị xã Thái Hoà',
 			),
-			'TINH-NINH-BINH'        => array(
+			'NINH-BINH'        => array(
 				'Huyện Bình Lục',
 				'Huyện Gia Viễn',
 				'Huyện Giao Thuỷ',
@@ -487,7 +487,7 @@ class WooViet_Cities {
 				'Thị xã Duy Tiên',
 				'Thị xã Kim Bảng',
 			),
-			'TINH-PHU-THO'        => array(
+			'PHU-THO'        => array(
 				'Huyện Bình Xuyên',
 				'Huyện Cao Phong',
 				'Huyện Cẩm Khê',
@@ -521,7 +521,7 @@ class WooViet_Cities {
 				'Thành phố Vĩnh Yên',
 				'Thị xã Phú Thọ',
 			),
-			'TINH-QUANG-NGAI'        => array(
+			'QUANG-NGAI'        => array(
 				'Huyện Ba Tơ',
 				'Huyện Bình Sơn',
 				'Huyện Ia H\'Drai',
@@ -546,7 +546,7 @@ class WooViet_Cities {
 				'Thành phố Quảng Ngãi',
 				'Thị xã Đức Phổ',
 			),
-			'TINH-QUANG-NINH'        => array(
+			'QUANG-NINH'        => array(
 				'Huyện Ba Chẽ',
 				'Huyện Bình Liêu',
 				'Huyện Cô Tô',
@@ -561,7 +561,7 @@ class WooViet_Cities {
 				'Thành phố Đông Triều',
 				'Thị xã Quảng Yên',
 			),
-			'TINH-QUANG-TRI'        => array(
+			'QUANG-TRI'        => array(
 				'Huyện Bố Trạch',
 				'Huyện Cam Lộ',
 				'Huyện Gio Linh',
@@ -581,7 +581,7 @@ class WooViet_Cities {
 				'Thị xã Ba Đồn',
 				'Thị xã Quảng Trị',
 			),
-			'TINH-SON-LA'        => array(
+			'SON-LA'        => array(
 				'Huyện Bắc Yên',
 				'Huyện Mai Sơn',
 				'Huyện Mường La',
@@ -595,7 +595,7 @@ class WooViet_Cities {
 				'Thành phố Sơn La',
 				'Thị xã Mộc Châu',
 			),
-			'TINH-THANH-HOA'        => array(
+			'THANH-HOA'        => array(
 				'Huyện Bá Thước',
 				'Huyện Cẩm Thuỷ',
 				'Huyện Hoằng Hoá',
@@ -623,7 +623,7 @@ class WooViet_Cities {
 				'Thị xã Bỉm Sơn',
 				'Thị xã Nghi Sơn',
 			),
-			'TINH-THAI-NGUYEN'        => array(
+			'THAI-NGUYEN'        => array(
 				'Huyện Ba Bể',
 				'Huyện Bạch Thông',
 				'Huyện Chợ Mới',
@@ -642,7 +642,7 @@ class WooViet_Cities {
 				'Thành phố Sông Công',
 				'Thành phố Thái Nguyên',
 			),
-			'TINH-TUYEN-QUANG'        => array(
+			'TUYEN-QUANG'        => array(
 				'Huyện Bắc Mê',
 				'Huyện Bắc Quang',
 				'Huyện Chiêm Hoá',
@@ -662,7 +662,7 @@ class WooViet_Cities {
 				'Thành phố Hà Giang',
 				'Thành phố Tuyên Quang',
 			),
-			'TINH-TAY-NINH'        => array(
+			'TAY-NINH'        => array(
 				'Huyện Bến Cầu',
 				'Huyện Bến Lức',
 				'Huyện Châu Thành',
@@ -687,7 +687,7 @@ class WooViet_Cities {
 				'Thị xã Kiến Tường',
 				'Thị xã Trảng Bàng',
 			),
-			'TINH-VINH-LONG'        => array(
+			'VINH-LONG'        => array(
 				'Huyện Ba Tri',
 				'Huyện Bình Tân',
 				'Huyện Bình Đại',
@@ -714,7 +714,7 @@ class WooViet_Cities {
 				'Thị xã Bình Minh',
 				'Thị xã Duyên Hải',
 			),
-			'TINH-DIEN-BIEN'        => array(
+			'DIEN-BIEN'        => array(
 				'Huyện Mường Chà',
 				'Huyện Mường Nhé',
 				'Huyện Mường Ảng',
@@ -726,7 +726,7 @@ class WooViet_Cities {
 				'TP.Điện Biên Phủ',
 				'Thị xã Mường Lay',
 			),
-			'TINH-DAK-LAK'        => array(
+			'DAK-LAK'        => array(
 				'Huyện Buôn Đôn',
 				'Huyện Cư Kuin',
 				'Huyện Cư M\'gar',
@@ -752,7 +752,7 @@ class WooViet_Cities {
 				'Thị xã Sông Cầu',
 				'Thị xã Đông Hòa',
 			),
-			'TINH-DONG-NAI'        => array(
+			'DONG-NAI'        => array(
 				'Huyện Bù Gia Mập',
 				'Huyện Bù Đăng',
 				'Huyện Bù Đốp',
@@ -776,7 +776,7 @@ class WooViet_Cities {
 				'Thị xã Bình Long',
 				'Thị xã Phước Long',
 			),
-			'TINH-DONG-THAP'        => array(
+			'DONG-THAP'        => array(
 				'Huyện Cai Lậy',
 				'Huyện Cao Lãnh',
 				'Huyện Châu Thành',
