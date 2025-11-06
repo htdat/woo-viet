@@ -18,6 +18,27 @@ abstract class WooViet_OnePay_Abstract extends WC_Payment_Gateway {
 	/** @var WC_Logger Logger instance */
 	public static $log = false;
 
+	/** @var bool Test mode flag */
+	protected $testmode;
+
+	/** @var string OnePay merchant ID */
+	protected $merchant_id;
+
+	/** @var string OnePay access code */
+	protected $access_code;
+
+	/** @var string OnePay secure secret */
+	protected $secure_secret;
+
+	/** @var string OnePay user */
+	protected $user;
+
+	/** @var string OnePay password */
+	protected $password;
+
+	/** @var bool Debug mode flag */
+	protected $debug;
+
 	/**
 	 * Configure $method_title and $method_description
 	 */
